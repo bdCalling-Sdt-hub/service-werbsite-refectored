@@ -9,3 +9,16 @@
 .serviceShadow {
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.16);
 }
+
+@layer components {
+  .no-spinner::-webkit-outer-spin-button,
+  .no-spinner::-webkit-inner-spin-button {
+    @apply appearance-none;
+    margin: 0;
+  }
+
+  .no-spinner {
+    -moz-appearance: textfield;
+  }
+}
+

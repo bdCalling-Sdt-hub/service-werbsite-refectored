@@ -6,28 +6,41 @@ import { context } from "@/app/Context";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setUser, TUser } from "@/redux/features/users/authSlice";
+import { TbUser } from "react-icons/tb";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function Nav() {
-  const appContext = useContext(context);
-  const userData = appContext?.userData;
-
-  const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
-  // const [reviewed, setReviewed] = React.useState<string[]>([]);
+  const appContext = useContext(context);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const { user, isLoading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      dispatch(setUser({ user: null, isLoading: true }));
+      fetch(apiUrl + "auth/session", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            dispatch(setUser({ user: res.data, isLoading: false } ));
+          }
+        });
+    } else {
+      dispatch(setUser({ user: null, isLoading: false } ));
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     nonReview().then((res) => {
-  //       if (res.data) {
-  //         setReviewed(res.data);
-  //       }
-  //     });
-  //   }
-  // }, [userData]);
-
+  // console.log(user, isLoading);
   return (
     <nav className="flex items-center justify-between lg:px-10 z-10 lg:py-[12px] px-2 py-4 bg-green-900 fixed w-full text-white">
       <Link href="/">
@@ -41,31 +54,26 @@ export default function Nav() {
         />
       </Link>
 
-      {userData ? (
+      {user ? (
         <div className="flex items-center gap-7">
           <ul className="flex items-center gap-7">
-            {/* {reviewed && reviewed.length > 0 && (
-              <Link
-                href="/reviews"
-                className="font-medium hover:text-green-500 transition-all"
-              >
-                Reviews
-              </Link>
-            )} */}
-            {userData.type === "PROVIDER" && (
+            {user.type === "PROVIDER" && (
               <>
-                <Link
-                  href="/dashboard"
-                  className="font-medium hover:text-green-500 transition-all lg:block hidden"
-                >
-                  Dashboard
-                </Link>
-                {/* <Link
-                  href="/my-services"
-                  className="font-medium hover:text-green-500 transition-all"
-                >
-                  Services
-                </Link> */}
+                {user.business ? (
+                  <Link
+                    href="/dashboard"
+                    className="font-medium hover:text-green-500 transition-all lg:block hidden"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    href="/register-business"
+                    className="font-medium hover:text-green-500 transition-all lg:block hidden"
+                  >
+                    Business Registration
+                  </Link>
+                )}
               </>
             )}
           </ul>
@@ -73,14 +81,7 @@ export default function Nav() {
             className="flex items-center justify-center gap-2 relative cursor-pointer"
             onClick={() => setIsOpen((prev) => !prev)}
           >
-            <Image
-              src={userData.image ? apiUrl + userData.image : "/user.png"}
-              alt="user"
-              width={60}
-              height={60}
-              className="rounded-full w-[60px] h-[60px]"
-            />
-            <p className="font-medium">{userData.firstName}</p>
+            <p className="font-medium">{user.firstName}</p>
             <svg
               width="20"
               height="20"
@@ -104,8 +105,15 @@ export default function Nav() {
                 />
               )}
             </svg>
+            <Image
+              src={user.image ? apiUrl + user.image : "/user.png"}
+              alt="user"
+              width={60}
+              height={60}
+              className="rounded-full w-[54px] h-[60px] select-none"
+            />
             {isOpen ? (
-              <ul className="absolute bg-[#D9D9D9] rounded-md py-2 top-12 right-0 cursor-default flex flex-col z-10 text-black">
+              <ul className="absolute bg-[#D9D9D9] rounded-md py-2 top-[70px] right-0 cursor-default flex flex-col z-10 text-black">
                 <Link href="/profile" className="py-2 px-6 hover:bg-[#E8E8E8]">
                   Profile
                 </Link>
@@ -115,7 +123,7 @@ export default function Nav() {
                 >
                   Notifications
                 </Link>
-                {userData.type === "PROVIDER" && (
+                {user.type === "PROVIDER" && (
                   <>
                     <Link
                       href="/dashboard"
@@ -138,21 +146,23 @@ export default function Nav() {
                   </>
                 )}
                 <li
-                  className="py-2 px-6 hover:bg-[#E8E8E8]"
-                  onClick={() => Swal.fire({
-                    text: "Are you sure you want to logout?",
-                    showCancelButton: true,
-                    confirmButtonText: "Logout",
-                    cancelButtonText: "Close",
-                    showConfirmButton: true,
-                    confirmButtonColor: "#DC2626",
-                  }).then((res) => {
-                    if (res.isConfirmed) {
-                      Cookies.remove("token");
-                      appContext?.setUserData(undefined);
-                      router.push("/");
-                    }
-                  })}
+                  className="py-2 px-6 hover:bg-[#E8E8E8] cursor-pointer"
+                  onClick={() =>
+                    Swal.fire({
+                      text: "Are you sure you want to logout?",
+                      showCancelButton: true,
+                      confirmButtonText: "Logout",
+                      cancelButtonText: "Close",
+                      showConfirmButton: true,
+                      confirmButtonColor: "#DC2626",
+                    }).then((res) => {
+                      if (res.isConfirmed) {
+                        Cookies.remove("token");
+                        appContext?.setUserData(undefined);
+                        router.push("/");
+                      }
+                    })
+                  }
                 >
                   Logout
                 </li>

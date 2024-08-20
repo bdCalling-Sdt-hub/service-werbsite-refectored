@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { Context } from "./Context";
+import StoreProvider from "./StoreProvider";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,14 +22,14 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
-        <Context>
+      <StoreProvider>
+        <body className={poppins.className}>
           <Nav />
           <div className="h-20"></div>
           {children}
           <Footer />
-        </Context>
-      </body>
+        </body>
+      </StoreProvider>
     </html>
   );
 }
