@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export type TBusiness = {
+  id: string;
   mainServiceId: string;
   mainService: {
     id: string;

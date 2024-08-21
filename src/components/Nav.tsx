@@ -23,20 +23,29 @@ export default function Nav() {
     const token = Cookies.get("token");
     if (token) {
       dispatch(setUser({ user: null, isLoading: true }));
-      fetch(apiUrl + "auth/session", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.ok) {
-            dispatch(setUser({ user: res.data, isLoading: false } ));
-          }
-        });
+      try {
+        fetch(apiUrl + "auth/session", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.ok) {
+              dispatch(setUser({ user: res.data, isLoading: false }));
+            }
+          })
+          .catch((err) => {
+            router.push("/login");
+            dispatch(setUser({ user: null, isLoading: false }));
+          });
+      } catch (error) {
+        router.push("/login");
+        dispatch(setUser({ user: null, isLoading: false }));
+      }
     } else {
-      dispatch(setUser({ user: null, isLoading: false } ));
+      dispatch(setUser({ user: null, isLoading: false }));
     }
   }, []);
 

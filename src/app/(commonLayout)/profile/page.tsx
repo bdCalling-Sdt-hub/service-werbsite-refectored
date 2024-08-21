@@ -2,12 +2,15 @@
 import "react-quill/dist/quill.snow.css";
 import React, { use, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import profileDemo from "../../../assets/images/profile-demo.jpg";
 import BusinessRegisterSuggation from "@/components/BusinessRegisterSuggation";
 import dynamic from "next/dynamic";
 import { TBusiness, TUser } from "@/redux/features/users/authSlice";
+import Swal from "sweetalert2";
+import { CustomSpinner } from "@/components/CustomSpinner";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -19,8 +22,9 @@ export default function Page() {
   const { user, isLoading: userDataLoading } = useAppSelector(
     (state) => state.auth
   );
-  const [changes, setChanges] = useState<{ [key: string]: string }>({});
+  const [userData, setUserData] = useState<{ [key: string]: string }>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imageFile, setImageFile] = useState<File>();
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     main: "",
@@ -89,56 +93,113 @@ export default function Page() {
         website: website || "",
       });
       setSearchParams({ main: mainService.name });
-      setBusinessData(c=> ({...c, mainServiceId: mainServiceId}))
+      setBusinessData((c) => ({ ...c, mainServiceId: mainServiceId }));
     }
-  }, [user?.business]);
+    setUserData({
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      mobile: user?.mobile || "",
+    });
+  }, [user]);
   useEffect(() => {
     try {
       fetch(`${apiUrl}services?name=${searchParams.main}`)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.ok) {
-          setServices(res.data);
-        }
-      })
-      .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.ok) {
+            setServices(res.data);
+          }
+        })
+        .catch((err) => console.log(err));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }, [searchParams.main]);
 
-  console.log(businessData);
   if (!userDataLoading && !user) router.push("/login");
 
   async function handelEdit(e: React.FormEvent<HTMLFormElement>) {
-    // e.preventDefault();
-    // if (changes.newPassword || changes.confirmPassword) {
-    //   if (changes.newPassword !== changes.confirmPassword) {
-    //     alert("new password and confirm password not matched");
-    //     return;
-    //   }
-    // }
-    // const res = await changeUserData(changes);
-    // alert(res.message);
-  }
-  async function uploadImage(e: React.ChangeEvent<HTMLInputElement>) {
-    // const file = e.target.files?.[0];
-    // if (!file) return;
-    // const formData = new FormData();
-    // formData.append("image", file);
-    // const res = await uploadProfileImage(formData);
-    // if (res.data) {
-    //   appContext?.setUserData((prev) => {
-    //     if (!prev) return prev;
-    //     return { ...prev, image: res.data.image };
-    //   });
-    // } else {
-    //   alert(res.message);
-    // }
+    e.preventDefault();
+    if (userData.newPassword || userData.confirmPassword) {
+      if (userData.newPassword !== userData.confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          text: "new password and confirm password not matched",
+        });
+        return;
+      }
+    }
+    setIsLoading(true);
+    try {
+      const token = Cookies.get("token");
+      const formData = new FormData();
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+      for (const [key, value] of Object.entries(userData)) {
+        formData.append(key, value);
+      }
+      const res = await fetch(apiUrl + "users/" + user?.id, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        body: formData,
+      });
+      const result = await res.json();
+      if (result.ok) {
+        if (user?.business) {
+          const businessRes = await fetch(
+            apiUrl + "businesses/" + user?.business?.id,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+              },
+
+              body: JSON.stringify(businessData),
+            }
+          );
+          const businessResult = await businessRes.json();
+          if (businessResult.ok) {
+            setIsLoading(false);
+            Swal.fire({
+              icon: "success",
+              text: "Updating successful!",
+            });
+          } else {
+            setIsLoading(false);
+            Swal.fire({
+              icon: "error",
+              text: businessResult.message,
+            });
+          }
+        } else {
+          setIsLoading(false);
+          Swal.fire({
+            icon: "success",
+            text: result.message,
+          });
+        }
+      } else {
+        setIsLoading(false);
+        Swal.fire({
+          icon: "error",
+          text: result.message,
+        });
+      }
+    } catch (error) {
+      setIsLoading(false);
+      Swal.fire({
+        icon: "error",
+        text: "Something went wrong. Please try again later.",
+      });
+    }
+    // console.log({ user, businessData });
   }
 
   if (!user) return <h1 className="min-h-screen">Loading...</h1>;
-
   return (
     <section className="rounded-2xl p-8 lg:p-14 max-w-4xl lg:max-w-5xl mx-auto">
       <h1 className="font-medium text-2xl lg:text-4xl">My profile</h1>
@@ -147,7 +208,13 @@ export default function Page() {
         <div className="space-y-7">
           <div className="my-10 flex items-center gap-4 relative">
             <Image
-              src={user.image ? apiUrl + "/" + user.image : profileDemo}
+              src={
+                imageFile
+                  ? URL.createObjectURL(imageFile)
+                  : user?.image
+                  ? apiUrl + "/" + user?.image
+                  : profileDemo
+              }
               alt="profile"
               className="rounded-full w-[120px] h-[120px] border"
               width={120}
@@ -156,12 +223,19 @@ export default function Page() {
             <div>
               <input
                 type="file"
+                accept="image/*"
+                multiple={false}
                 name="profileImage"
                 className="hidden"
                 ref={fileInputRef}
-                onChange={uploadImage}
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setImageFile(e.target.files[0]);
+                  }
+                }}
               />
               <button
+                type="button"
                 onClick={() => fileInputRef?.current?.click()}
                 className="rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-white bg-green-600 text-white font-light"
               >
@@ -174,8 +248,10 @@ export default function Page() {
             <input
               type="text"
               name="name"
-              defaultValue={user.firstName}
-              onChange={(e) => setChanges({ ...changes, name: e.target.value })}
+              value={userData.firstName}
+              onChange={(e) =>
+                setUserData({ ...userData, firstName: e.target.value })
+              }
               required
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Name"
@@ -187,8 +263,10 @@ export default function Page() {
               type="text"
               name="name"
               required
-              defaultValue={user.lastName}
-              onChange={(e) => setChanges({ ...changes, name: e.target.value })}
+              onChange={(e) =>
+                setUserData({ ...userData, lastName: e.target.value })
+              }
+              value={userData.lastName}
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Name"
             />
@@ -200,10 +278,7 @@ export default function Page() {
               name="email"
               required
               readOnly
-              defaultValue={user.email}
-              onChange={(e) =>
-                setChanges({ ...changes, email: e.target.value })
-              }
+              value={user?.email}
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Email"
             />
@@ -212,10 +287,10 @@ export default function Page() {
             <label className="font-medium text-black-500">Mobile Number</label>
             <input
               type="text"
-              name="number"
-              defaultValue={user.mobile ?? ""}
+              name="mobile"
+              value={userData.mobile ?? ""}
               onChange={(e) =>
-                setChanges({ ...changes, mobile: e.target.value })
+                setUserData({ ...userData, mobile: e.target.value })
               }
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Your Number"
@@ -227,7 +302,7 @@ export default function Page() {
               type="password"
               name="newPassword"
               onChange={(e) =>
-                setChanges({ ...changes, newPassword: e.target.value })
+                setUserData({ ...userData, newPassword: e.target.value })
               }
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="New Password"
@@ -241,7 +316,7 @@ export default function Page() {
               type="password"
               name="confirmPassword"
               onChange={(e) =>
-                setChanges({ ...changes, confirmPassword: e.target.value })
+                setUserData({ ...userData, confirmPassword: e.target.value })
               }
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Confirm Password"
@@ -533,8 +608,11 @@ export default function Page() {
           </div>
         )}
         <div className="mt-3 flex justify-center lg:justify-start">
-          <button className="rounded-t-[3px] border-[.5px] border-b-2 w-[220px] py-3 px-4 border-white bg-green-600 text-white font-light">
-            Save Changes
+          <button
+            disabled={isLoading}
+            className="w-[220px] bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+          >
+            Save Changes {isLoading && <CustomSpinner />}
           </button>
         </div>
       </form>
