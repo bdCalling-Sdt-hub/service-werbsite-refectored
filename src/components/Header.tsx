@@ -15,10 +15,11 @@ export default function Header() {
 
   useEffect(() => {
     if (search.length > 0) {
-      fetch(apiUrl + "business?name=" + search)
+      fetch(apiUrl + "businesses?name=" + search)
         .then((res) => res.json())
         .then((res) => {
           setBusiness(res.data);
+          console.log(res.data)
         })
         .catch((err) => {
           console.log(err);
@@ -103,16 +104,16 @@ export default function Header() {
                       >
                         <Image
                           src={business.image}
-                          alt={business.businessNames}
+                          alt={business.names}
                           width={56}
                           height={56}
                           className="rounded-full"
                         />
                         <div className="text-start">
                           <p className="text-lg font-medium">
-                            {business.businessName}
+                            {business.name}
                           </p>
-                          <span className="text-sm">{business.location}</span>
+                          <span className="text-sm">{business.address}</span>
                         </div>
                       </li>
                     ))}

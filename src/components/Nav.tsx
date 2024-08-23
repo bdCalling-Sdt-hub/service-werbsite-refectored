@@ -2,63 +2,27 @@
 import React, { useContext, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { context } from "@/app/Context";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setUser, TUser } from "@/redux/features/users/authSlice";
-import { TbUser } from "react-icons/tb";
+import { useAppSelector } from "@/redux/hooks";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function Nav() {
   const router = useRouter();
-  const appContext = useContext(context);
   const [isOpen, setIsOpen] = React.useState(false);
   const { user, isLoading } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      dispatch(setUser({ user: null, isLoading: true }));
-      try {
-        fetch(apiUrl + "auth/session", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.ok) {
-              dispatch(setUser({ user: res.data, isLoading: false }));
-            }
-          })
-          .catch((err) => {
-            router.push("/login");
-            dispatch(setUser({ user: null, isLoading: false }));
-          });
-      } catch (error) {
-        router.push("/login");
-        dispatch(setUser({ user: null, isLoading: false }));
-      }
-    } else {
-      dispatch(setUser({ user: null, isLoading: false }));
-    }
-  }, []);
-
-  // console.log(user, isLoading);
   return (
-    <nav className="flex items-center justify-between lg:px-10 z-10 lg:py-[12px] px-2 py-4 bg-green-900 fixed w-full text-white">
+    <nav className="flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white">
       <Link href="/">
         <Image
           src="/LOGO.png"
           alt="logo"
           className="w-36 lg:w-56"
-          width={227}
-          height={60}
+          width={1000}
+          height={1000}
           priority
         />
       </Link>
@@ -66,12 +30,12 @@ export default function Nav() {
       {user ? (
         <div className="flex items-center gap-7">
           <ul className="flex items-center gap-7">
-            {user.type === "PROVIDER" && (
+            {user.type === "PROVIDER" ? (
               <>
                 {user.business ? (
                   <Link
                     href="/dashboard"
-                    className="font-medium hover:text-green-500 transition-all lg:block hidden"
+                    className="font-medium hover:text-green-400 transition-all lg:block hidden"
                   >
                     Dashboard
                   </Link>
@@ -84,6 +48,8 @@ export default function Nav() {
                   </Link>
                 )}
               </>
+            ) : (
+              <></>
             )}
           </ul>
           <div
@@ -114,13 +80,15 @@ export default function Nav() {
                 />
               )}
             </svg>
-            <Image
-              src={user.image ? apiUrl + user.image : "/user.png"}
-              alt="user"
-              width={60}
-              height={60}
-              className="rounded-full w-[54px] h-[60px] select-none"
-            />
+            <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+              <Image
+                src={user.image ? apiUrl + user.image : "/user.png"}
+                alt="user"
+                width={60}
+                height={60}
+                className="rounded-full w-full h-full select-none object-cover"
+              />
+            </div>
             {isOpen ? (
               <ul className="absolute bg-[#D9D9D9] rounded-md py-2 top-[70px] right-0 cursor-default flex flex-col z-10 text-black">
                 <Link href="/profile" className="py-2 px-6 hover:bg-[#E8E8E8]">
@@ -167,7 +135,6 @@ export default function Nav() {
                     }).then((res) => {
                       if (res.isConfirmed) {
                         Cookies.remove("token");
-                        appContext?.setUserData(undefined);
                         router.push("/");
                       }
                     })

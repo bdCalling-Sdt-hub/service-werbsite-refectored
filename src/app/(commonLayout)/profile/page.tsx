@@ -1,6 +1,6 @@
 "use client";
 import "react-quill/dist/quill.snow.css";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -44,7 +44,7 @@ export default function Page() {
     name: "",
     address: "",
     services: [""],
-    city: "",
+    suburb: "",
     state: "",
     postalCode: "",
     mobile: "",
@@ -59,7 +59,7 @@ export default function Page() {
         abn,
         about,
         address,
-        city,
+        suburb,
         mainServiceId,
         mainService,
         mobile,
@@ -78,7 +78,7 @@ export default function Page() {
         abn,
         about,
         address,
-        city,
+        suburb,
         mainServiceId,
         mainService,
         mobile,
@@ -486,11 +486,11 @@ export default function Page() {
             />
             <input
               type="text"
-              name="city"
-              placeholder="City"
-              value={businessData.city}
+              name="suburb"
+              placeholder="suburb"
+              value={businessData.suburb}
               onChange={(e) =>
-                setBusinessData({ ...businessData, city: e.target.value })
+                setBusinessData({ ...businessData, suburb: e.target.value })
               }
               required
               className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"

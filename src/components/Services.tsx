@@ -58,18 +58,22 @@ export default function Services() {
   }, [active]);
 
   function loadMore() {
-    fetch(
-      apiUrl +
-        `services?page=${page}&limit=15&` +
-        (active ? `name=${active.toLocaleLowerCase()}` : "")
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.ok) {
-          setServices([...services, ...json.data]);
-          setPage(json.pagination?.nextPage);
-        }
-      });
+    try {
+      fetch(
+        apiUrl +
+          `services?page=${page}&limit=15&` +
+          (active ? `name=${active.toLocaleLowerCase()}` : "")
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.ok) {
+            setServices([...services, ...json.data]);
+            setPage(json.pagination?.nextPage);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

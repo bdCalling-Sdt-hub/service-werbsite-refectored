@@ -2,9 +2,9 @@
 import Link from "next/link";
 import React, { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { context } from "@/app/Context";
 import Swal from "sweetalert2";
 import { CustomSpinner } from "@/components/CustomSpinner";
+import HomeBackButton from "@/components/HomeBackButton";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -14,10 +14,8 @@ export default function Page({
 }: {
   searchParams: { provider?: string };
 }) {
-  const appContext = useContext(context);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  if (appContext?.userData?.isVerified) router.push("/profile");
 
   const [passShow, setPassShow] = useState(false);
   const [conPassShow, setConPassShow] = useState(false);
@@ -87,7 +85,7 @@ export default function Page({
   }
 
   return (
-    <div className="min-h-[80vh] flex justify-center items-center px-3 py-10">
+    <div className="min-h-screen flex flex-col justify-center items-center px-3 py-10">
       <form
         className="max-w-screen-md w-full rounded-2xl border-green-500 mx-auto border p-11 grid grid-cols-2 gap-8"
         onSubmit={handleSubmit}
@@ -348,6 +346,7 @@ export default function Page({
           </Link>
         </p>
       </form>
+      <HomeBackButton/>
     </div>
   );
 }

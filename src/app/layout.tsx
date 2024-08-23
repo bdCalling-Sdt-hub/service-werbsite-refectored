@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import StoreProvider from "./StoreProvider";
 
 const poppins = Poppins({
@@ -20,15 +18,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <StoreProvider>
-        <body className={poppins.className}>
-          <Nav />
-          <div className="h-20"></div>
-          {children}
-          <Footer />
-        </body>
+        <body className={poppins.className}>{children}</body>
       </StoreProvider>
     </html>
   );

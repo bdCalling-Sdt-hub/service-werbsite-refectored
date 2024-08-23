@@ -17,21 +17,20 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     mainServiceId: "",
-    website: "",
     abn: "",
     license: "",
     about: "",
-    openHour: "",
     name: "",
     address: "",
-    services: [""],
-    city: "",
+    suburb: "",
     state: "",
     postalCode: "",
     mobile: "",
     phone: "",
-    facebook: "",
-    instagram: "",
+    // services: [""],
+    // openHour: "",
+    // facebook: "",
+    // instagram: "",
   });
   const [searchParams, setSearchParams] = useState({
     main: "",
@@ -65,6 +64,14 @@ export default function Page() {
         setIsLoading(false);
         return;
       }
+      if (isNaN(Number(data.abn))) {
+        Swal.fire({
+          icon: "error",
+          text: "Business ABN must be number!",
+        });
+        setIsLoading(false);
+        return;
+      }
       const res = await fetch(apiUrl + "businesses", {
         method: "POST",
         headers: {
@@ -74,6 +81,10 @@ export default function Page() {
         body: JSON.stringify({ ...data, abn: Number(data.abn) }),
       }).then((res) => res.json());
       if (res.ok) {
+        Swal.fire({
+          icon: "success",
+          text: res.message,
+        });
         setIsLoading(false);
         router.push("/dashboard");
       } else {
@@ -106,13 +117,13 @@ export default function Page() {
     }
   }, [searchParams.main]);
   return (
-    <div className="px-3">
+    <div className="px-3 min-h-screen flex justify-center items-center">
       <form
-        className="max-w-screen-md rounded-2xl border-green-500 mx-auto border p-11 grid grid-cols-2 gap-8 mt-20 "
+        className=" rounded-2xl border-green-500 mx-auto border py-16 px-7 lg:px-11 grid grid-cols-1 gap-8 mt-10 "
         onSubmit={handelSubmit}
       >
-        <h2 className="text-4xl font-medium text-center col-span-2">
-          Tell us more about your Business
+        <h2 className="text-2xl lg:text-4xl font-medium text-center">
+          Tell more about your Business
         </h2>
         <input
           type="text"
@@ -121,7 +132,7 @@ export default function Page() {
           value={data.name}
           onChange={(e) => setData({ ...data, name: e.target.value })}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <div className="relative">
           <input
@@ -141,7 +152,7 @@ export default function Page() {
             }}
             value={searchParams.main}
             required
-            className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+            className="mt-1 p-3 w-full border border-black-500 rounded "
           />
           {mainFocus && (
             <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100">
@@ -162,14 +173,14 @@ export default function Page() {
           )}
         </div>
         <input
-          type="number"
+          type="text"
           name="abn"
           placeholder="Business ABN"
           value={data.abn}
           onChange={(e) => setData({ ...data, abn: e.target.value })}
           required
           style={{ appearance: "textfield", MozAppearance: "textfield" }}
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1 no-spinner"
+          className="mt-1 p-3 w-full border border-black-500 rounded no-spinner"
         />
         <input
           type="text"
@@ -177,7 +188,7 @@ export default function Page() {
           placeholder="Business License(If any)"
           value={data.license}
           onChange={(e) => setData({ ...data, license: e.target.value })}
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
           type="text"
@@ -186,7 +197,7 @@ export default function Page() {
           value={data.mobile}
           onChange={(e) => setData({ ...data, mobile: e.target.value })}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
           type="text"
@@ -194,10 +205,10 @@ export default function Page() {
           placeholder="Business Phone (Optional)"
           value={data.phone}
           onChange={(e) => setData({ ...data, phone: e.target.value })}
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
 
-        <h3 className="text-xl font-medium col-span-2">Business Address</h3>
+        <h3 className="text-xl font-medium">Business Address</h3>
         <input
           type="text"
           name="address"
@@ -212,25 +223,16 @@ export default function Page() {
           onChange={(e) => setData({ ...data, address: e.target.value })}
           autoComplete="off"
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
           type="text"
-          name="city"
-          placeholder="Business City"
-          value={data.city}
-          onChange={(e) => setData({ ...data, city: e.target.value })}
+          name="suburb"
+          placeholder="Business Suburb"
+          value={data.suburb}
+          onChange={(e) => setData({ ...data, suburb: e.target.value })}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
-        />
-        <input
-          type="text"
-          name="postalCode"
-          placeholder="Business Postal Code"
-          value={data.postalCode}
-          onChange={(e) => setData({ ...data, postalCode: e.target.value })}
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
           type="text"
@@ -239,9 +241,18 @@ export default function Page() {
           value={data.state}
           onChange={(e) => setData({ ...data, state: e.target.value })}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
+          className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
+          type="text"
+          name="postalCode"
+          placeholder="Business Postal Code"
+          value={data.postalCode}
+          onChange={(e) => setData({ ...data, postalCode: e.target.value })}
+          required
+          className="mt-1 p-3 w-full border border-black-500 rounded"
+        />
+        {/* <input
           type="string"
           name="openingHr"
           placeholder="Opening hours"
@@ -251,7 +262,7 @@ export default function Page() {
           className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 "
         />
         <div className="w-full col-span-2 h-80">
-          <h3 className="text-xl font-medium pb-4">About About Company</h3>
+          <h3 className="text-xl font-medium pb-4">About Company</h3>
           <ReactQuill
             theme="snow"
             value={data.about}
@@ -259,32 +270,6 @@ export default function Page() {
             className="h-3/4"
           />
         </div>
-
-        <h3 className="text-xl font-medium col-span-2">Social links</h3>
-        <input
-          type="text"
-          name="website"
-          placeholder="Business Website (If any)"
-          value={data.website}
-          onChange={(e) => setData({ ...data, website: e.target.value })}
-          className="p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
-        />
-        <input
-          type="text"
-          name="facebook"
-          placeholder="Facebook Link (If any)"
-          value={data.facebook}
-          onChange={(e) => setData({ ...data, facebook: e.target.value })}
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
-        />
-        <input
-          type="text"
-          name="instagram"
-          placeholder="Instagram Link (If any)"
-          value={data.instagram}
-          onChange={(e) => setData({ ...data, instagram: e.target.value })}
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 lg:col-span-1"
-        />
         <div className="w-full col-span-2 flex flex-col">
           <h3 className="text-xl font-medium mb-4">Add your services</h3>
           {data.services?.map((service: any, index: any) => (
@@ -329,11 +314,11 @@ export default function Page() {
           >
             Add new service
           </button>
-        </div>
+        </div> */}
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+          className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
         >
           Save
           {isLoading && <CustomSpinner />}

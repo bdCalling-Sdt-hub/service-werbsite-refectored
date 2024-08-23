@@ -16,13 +16,19 @@ export type TBusiness = {
   name: string;
   address: string;
   services: string[]; // Array of strings for services
-  city: string;
+  city?: string;
+  suburb: string;
   state: string;
   postalCode: string;
   mobile: string;
   phone?: string;
   facebook?: string;
   instagram?: string;
+  logo?: string;
+  user?: {
+    image?: string;
+    email?: string;
+  };
 };
 export type TUser = {
   id: string;
