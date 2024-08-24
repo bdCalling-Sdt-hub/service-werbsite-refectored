@@ -59,7 +59,6 @@ export default function Page() {
 
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    return console.log(businessData);
     try {
       setIsLoading(true);
       const token = Cookies.get("token");
@@ -122,7 +121,7 @@ export default function Page() {
       });
     }
   }
-  console.log(businessData);
+  // console.log(businessData);
   // console.log(addressData);
   useEffect(() => {}, [searchParams.main]);
   return (
@@ -143,7 +142,7 @@ export default function Page() {
             setBusinessData({ ...businessData, name: e.target.value })
           }
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
         <div className="relative">
           <input
@@ -163,7 +162,7 @@ export default function Page() {
             }}
             value={searchParams.main}
             required
-            className="mt-1 p-3 w-full border border-black-500 rounded "
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
           />
           {focus?.mainCate && (
             <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
@@ -196,7 +195,7 @@ export default function Page() {
           }
           required
           style={{ appearance: "textfield", MozAppearance: "textfield" }}
-          className="mt-1 p-3 w-full border border-black-500 rounded no-spinner"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black no-spinner"
         />
         <input
           type="text"
@@ -206,7 +205,7 @@ export default function Page() {
           onChange={(e) =>
             setBusinessData({ ...businessData, license: e.target.value })
           }
-          className="mt-1 p-3 w-full border border-black-500 rounded"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
         <input
           type="text"
@@ -217,7 +216,7 @@ export default function Page() {
             setBusinessData({ ...businessData, mobile: e.target.value })
           }
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
         <input
           type="text"
@@ -227,7 +226,7 @@ export default function Page() {
           onChange={(e) =>
             setBusinessData({ ...businessData, phone: e.target.value })
           }
-          className="mt-1 p-3 w-full border border-black-500 rounded"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
 
         <h3 className="text-xl font-medium">Business Address</h3>
@@ -247,7 +246,7 @@ export default function Page() {
           }
           autoComplete="off"
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
         <div className="relative">
           <input
@@ -267,7 +266,7 @@ export default function Page() {
             }}
             value={searchParams.suburb}
             required
-            className="mt-1 p-3 w-full border border-black-500 rounded "
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
           />
           {focus?.suburb && (
             <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
@@ -314,7 +313,7 @@ export default function Page() {
             }}
             value={searchParams.postalCode}
             required
-            className="mt-1 p-3 w-full border border-black-500 rounded "
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
           />
           {focus?.postalCode && (
             <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
@@ -355,7 +354,7 @@ export default function Page() {
             });
           }}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded "
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
         >
           <option hidden>Select State</option>
           {stateData?.data.map((item: TUniObject, indx: number) => (
@@ -369,7 +368,7 @@ export default function Page() {
           value={data.openHour}
           onChange={(e) => setData({ ...data, openHour: e.target.value })}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded col-span-2 "
+          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black col-span-2 "
         />
         <div className="w-full col-span-2 h-80">
           <h3 className="text-xl font-medium pb-4">About Company</h3>
