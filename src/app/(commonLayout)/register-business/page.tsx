@@ -12,6 +12,7 @@ import {
   useGetStateQuery,
 } from "@/redux/features/address/addressApi";
 import { TUniObject } from "@/types";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -44,9 +45,6 @@ export default function Page() {
     postalCode: "",
   });
   const [focus, setFocus] = useState<{ [key: string]: boolean }>();
-
-  const [suburbFocus, setSuburbFocus] = useState(false);
-  const [suburbs, setSuburbs] = useState<any>([]);
   const { data: serviceData } = useGetServicesesQuery([
     { name: "name", value: searchParams.main },
   ]);
@@ -234,12 +232,6 @@ export default function Page() {
           type="text"
           name="address"
           placeholder="Business Address"
-          onFocus={() => setSuburbFocus(true)}
-          onBlur={() =>
-            setTimeout(() => {
-              setSuburbFocus(false);
-            }, 300)
-          }
           value={businessData.address}
           onChange={(e) =>
             setBusinessData({ ...businessData, address: e.target.value })

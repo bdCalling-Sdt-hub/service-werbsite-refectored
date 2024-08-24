@@ -1,61 +1,49 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useGetBunsinessQuery } from "@/redux/features/business/businessApi";
+import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
+import businessImage from "@/assets/images/business-image.png";
+import { useGetAddressQuery } from "@/redux/features/address/addressApi";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function Header() {
-  const [search, setSearch] = useState("");
-  const [business, setBusiness] = useState<any[]>([]);
-  const [services, setServices] = useState<any[]>([]);
-  const [searchActive, setSearchActive] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    if (search.length > 0) {
-      fetch(apiUrl + "businesses?name=" + search)
-        .then((res) => res.json())
-        .then((res) => {
-          setBusiness(res.data);
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      fetch(apiUrl + "services?name=" + search)
-        .then((res) => res.json())
-        .then((res) => {
-          setServices(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setBusiness([]);
-      setServices([]);
-    }
-  }, [search]);
-
+  const [searchQuery, setSearchQuery] = useState<{ [key: string]: any }>();
+  const [search, setSearch] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
   const [postcode, setPostcode] = useState("");
   const [suburbFocus, setSuburbFocus] = useState(false);
-  const [suburbs, setSuburbs] = useState<any>([]);
-
-  useEffect(() => {
-    // searchSuburbAction(postcode).then((res) => {
-    //   if (res.data) {
-    //     setSuburbs(res.data);
-    //   }
-    // });
-  }, [postcode]);
+  const { data: servicesData } = useGetServicesesQuery([
+    { name: "name", value: search },
+  ]);
+  const { data: businessData } = useGetBunsinessQuery([
+    { name: "name", value: search },
+  ]);
+  const { data: addressData } = useGetAddressQuery([
+    { name: "postalCode", value: postcode },
+    { name: "limit", value: 5 },
+  ]);
 
   function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (search.length === 0 || !postcode) return;
-    router.push(`/search?search=${search}&postcode=${postcode}`);
+    if (
+      !searchQuery?.serviceId ||
+      !searchQuery?.postalCode ||
+      !searchQuery?.suburb
+    ) {
+      return setSearchQuery((c) => ({
+        ...c,
+        message: "Select service name and postcode from dropdown!",
+      }));
+    }
+    router.push(
+      `/business?service=${searchQuery?.serviceId}&postcode=${searchQuery?.postalCode}&suburb=${searchQuery?.suburb}`
+    );
   }
-
   return (
     <header>
       <div className="relative hidden lg:block h-40 w-full ">
@@ -89,42 +77,62 @@ export default function Header() {
                       setSearchActive(false);
                     }, 300)
                   }
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setSearchQuery((c) => ({ ...c, message: "" }));
+                  }}
                   className="lg:w-[391px] h-12 focus:outline-none p-3 rounded border-[#343333] border border-r-0 font-medium"
                   placeholder="What services are you looking for"
                 />
                 {searchActive && (
-                  <ul className="absolute bg-white w-full text-lg rounded-b-lg max-h-60 overflow-y-scroll">
-                    {business.map((business: any, index) => (
-                      <li
-                        key={index}
-                        onClick={() => router.push("/business/" + business.id)}
-                        // onClick={() => setSearch(business.businessName)}
-                        className="text-black-500 py-2 hover:bg-slate-100 cursor-pointer flex gap-2 px-4"
-                      >
-                        <Image
-                          src={business.image}
-                          alt={business.names}
-                          width={56}
-                          height={56}
-                          className="rounded-full"
-                        />
-                        <div className="text-start">
-                          <p className="text-lg font-medium">
-                            {business.name}
-                          </p>
-                          <span className="text-sm">{business.address}</span>
-                        </div>
-                      </li>
-                    ))}
-                    {services.length > 0 && (
+                  <ul className="absolute bg-white shadow-md w-full text-lg rounded-b-lg max-h-60 overflow-y-auto">
+                    {businessData?.data &&
+                      search.length > 0 &&
+                      businessData?.data.map((business: any, index: number) => (
+                        <li
+                          key={index}
+                          onClick={() =>
+                            router.push("/business/" + business.id)
+                          }
+                          // onClick={() => setSearch(business.businessName)}
+                          className="text-black-500 py-2 hover:bg-slate-100 cursor-pointer flex gap-2 px-4 mb-1"
+                        >
+                          <div className="h-16 w-20">
+                            <Image
+                              src={
+                                business?.user.image
+                                  ? apiUrl + business?.user.image
+                                  : businessImage
+                              }
+                              alt={business.names}
+                              width={100}
+                              height={100}
+                              className="rounded w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="text-start">
+                            <p className="text-lg font-medium">
+                              {business.name}
+                            </p>
+                            <span className="text-sm">{business.address}</span>
+                          </div>
+                        </li>
+                      ))}
+                    {servicesData?.data.length > 0 && (
                       <li className="text-white py-2 bg-black">Services</li>
                     )}
-                    {services.map((service: any, index) => (
+                    {servicesData?.data.map((service: any, index: number) => (
                       <li
                         key={index}
-                        className="py-2 hover:bg-slate-100 cursor-pointer"
-                        onClick={() => setSearch(service.name)}
+                        className="py-2 hover:bg-slate-100 cursor-pointer text-left px-4"
+                        onClick={() => {
+                          setSearch(service.name);
+                          setSearchQuery((c) => ({
+                            ...c,
+                            message: "",
+                            serviceId: service.id,
+                          }));
+                        }}
                       >
                         {service.name}
                       </li>
@@ -140,7 +148,10 @@ export default function Header() {
                   onFocus={() => setSuburbFocus(true)}
                   onBlur={() => setTimeout(() => setSuburbFocus(false), 300)}
                   value={postcode}
-                  onChange={(e) => setPostcode(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery((c) => ({ ...c, message: "" }));
+                    setPostcode(e.target.value);
+                  }}
                   placeholder="Post Code"
                   autoComplete="off"
                   required
@@ -161,17 +172,23 @@ export default function Header() {
                   />
                 </svg>
                 {suburbFocus && (
-                  <ul className="w-full absolute bg-slate-200 rounded-b-md top-12">
-                    {suburbs.map((suburb: any, index: any) => (
+                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-sm top-12">
+                    {addressData?.data.map((item: any, index: any) => (
                       <li
                         key={index}
-                        className="hover:bg-slate-300 p-2 cursor-pointer"
+                        className="hover:bg-slate-300 p-2 cursor-pointer text-left"
                         onClick={() => {
-                          setPostcode(suburb.name + ", " + suburb.postcode);
+                          setPostcode(item.suburb + "-" + item.postalCode);
                           setSuburbFocus(false);
+                          setSearchQuery((c) => ({
+                            ...c,
+                            message: "",
+                            suburb: item.suburb,
+                            postalCode: item.postalCode,
+                          }));
                         }}
                       >
-                        {suburb.name + ", " + suburb.postcode}
+                        {item.suburb + " - " + item.postalCode}
                       </li>
                     ))}
                   </ul>
@@ -197,6 +214,11 @@ export default function Header() {
               </svg>
             </button>
           </form>
+          {searchQuery?.message && (
+            <small className="text-red-500 text-sm block w-full -mt-1.5 text-left">
+              {searchQuery?.message}
+            </small>
+          )}
         </div>
       </div>
     </header>

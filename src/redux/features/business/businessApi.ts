@@ -2,12 +2,6 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const businessApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getPortfolios: builder.query({
-      query: (businessId) => ({
-        url: `portfolios?businessId=${businessId}`,
-      }),
-      providesTags: ["portfolio"],
-    }),
     // postPortfolio: builder.mutation({
     //   query: (data) => {
     //     return {
@@ -36,23 +30,23 @@ const businessApi = baseApi.injectEndpoints({
       },
       providesTags: ["business"],
     }),
-    // getSingleBunsiness: builder.query({
-    //   query: (args) => {
-    //     const params = new URLSearchParams();
-    //     if (args) {
-    //       args.forEach((item) => {
-    //         params.append(item.name, item.value);
-    //       });
-    //     }
-    //     return {
-    //       url: "/payments/chart",
-    //       method: "GET",
-    //       params,
-    //     };
-    //   },
-    //   providesTags: ["earning"],
-    // }),
+    getBunsiness: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: { [key: string]: any }) => {
+            params.append(item.name, item.value);
+          });
+        }
+        return {
+          url: "businesses",
+          method: "GET",
+          params,
+        };
+      },
+      providesTags: ["business"],
+    }),
   }),
 });
 
-export const { useGetSingleBunsinessQuery } = businessApi;
+export const { useGetSingleBunsinessQuery, useGetBunsinessQuery } = businessApi;

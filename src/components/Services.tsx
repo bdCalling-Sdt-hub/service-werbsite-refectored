@@ -43,37 +43,41 @@ export default function Services() {
   ];
 
   useEffect(() => {
-    fetch(
-      apiUrl +
-        `services?page=1&limit=15&` +
-        (active !== "All" && active ? `name=${active.toLocaleLowerCase()}` : "")
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.ok) {
-          setServices(json.data);
-          setPage(json.pagination?.nextPage);
-        }
-      });
-  }, [active]);
-
-  function loadMore() {
     try {
       fetch(
         apiUrl +
-          `services?page=${page}&limit=15&` +
-          (active ? `name=${active.toLocaleLowerCase()}` : "")
+          `services?page=1&limit=15&` +
+          (active !== "All" && active
+            ? `name=${active.toLocaleLowerCase()}`
+            : "")
       )
         .then((res) => res.json())
         .then((json) => {
           if (json.ok) {
-            setServices([...services, ...json.data]);
+            setServices(json.data);
             setPage(json.pagination?.nextPage);
           }
-        });
+        })
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
     }
+  }, [active]);
+
+  function loadMore() {
+    fetch(
+      apiUrl +
+        `services?page=${page}&limit=15&` +
+        (active ? `name=${active.toLocaleLowerCase()}` : "")
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok) {
+          setServices([...services, ...json.data]);
+          setPage(json.pagination?.nextPage);
+        }
+      })
+      .catch((error) => console.log(error));
   }
 
   return (

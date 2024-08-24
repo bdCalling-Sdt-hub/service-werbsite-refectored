@@ -13,6 +13,12 @@ import { CustomSpinner } from "@/components/CustomSpinner";
 import profileDemo from "@/assets/images/profile-demo.jpg";
 import { PiCameraPlusBold } from "react-icons/pi";
 import LoaderWraperComp from "@/components/LoaderWraperComp";
+import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
+import {
+  useGetAddressQuery,
+  useGetStateQuery,
+} from "@/redux/features/address/addressApi";
+import { TUniObject } from "@/types";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -30,11 +36,10 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     main: "",
+    suburb: "",
+    postalCode: "",
   });
-  const [services, setServices] = useState<any>([]);
-  const [mainFocus, setMainFocus] = useState(false);
-  const [suburbFocus, setSuburbFocus] = useState(false);
-  const [suburbs, setSuburbs] = useState<any>([]);
+  const [focus, setFocus] = useState<{ [key: string]: boolean }>();
   const [businessData, setBusinessData] = useState({
     mainServiceId: "",
     mainService: { name: "", id: "" },
@@ -54,6 +59,16 @@ export default function Page() {
     facebook: "",
     instagram: "",
   });
+  const { data: serviceData } = useGetServicesesQuery([
+    { name: "name", value: searchParams.main },
+  ]);
+  const { data: addressData } = useGetAddressQuery([
+    { name: "state", value: businessData.state },
+    { name: "suburb", value: searchParams.suburb },
+    { name: "postalCode", value: searchParams.postalCode },
+  ]);
+  const { data: stateData } = useGetStateQuery(undefined);
+
   useEffect(() => {
     if (user?.business) {
       const {
@@ -81,41 +96,27 @@ export default function Page() {
         about,
         address,
         suburb,
+        postalCode,
+        state,
         mainServiceId,
         mainService,
         mobile,
         openHour,
-        postalCode,
         services: [...services],
-        state,
         facebook: facebook || "",
         instagram: instagram || "",
         license: license || "",
         phone: phone || "",
         website: website || "",
       });
-      setSearchParams({ main: mainService.name });
-      setBusinessData((c) => ({ ...c, mainServiceId: mainServiceId }));
+      setSearchParams({ main: mainService.name, suburb, postalCode });
+      setBusinessData((c) => c);
     }
     setUserData({
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
     });
   }, [user]);
-  useEffect(() => {
-    try {
-      fetch(`${apiUrl}services?name=${searchParams.main}`)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.ok) {
-            setServices(res.data);
-          }
-        })
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log(error);
-    }
-  }, [searchParams.main]);
 
   if (!userDataLoading && !user) router.push("/login");
 
@@ -205,9 +206,6 @@ export default function Page() {
       });
     }
   }
-  // if (userDataLoading) return <h1 className="min-h-screen">Loading...</h1>;
-  // console.log(user?.business, businessData);
-
   return (
     <section className="rounded-2xl p-8 lg:p-14 max-w-4xl lg:max-w-5xl mx-auto">
       <h1 className="font-medium text-2xl lg:text-4xl py-10">
@@ -274,36 +272,38 @@ export default function Page() {
                   name="businessMainCategory"
                   placeholder="Business Main Category"
                   autoComplete="off"
-                  onFocus={() => setMainFocus(true)}
+                  onFocus={() => setFocus((c) => ({ ...c, main: true }))}
                   onBlur={() =>
                     setTimeout(() => {
-                      setMainFocus(false);
+                      setFocus((c) => ({ ...c, main: false }));
                     }, 300)
                   }
                   onChange={(e) => {
                     setBusinessData({ ...businessData, mainServiceId: "" });
-                    setSearchParams({ main: e.target.value });
+                    setSearchParams((c) => ({ ...c, main: e.target.value }));
                   }}
                   value={searchParams.main}
                   required
-                  disabled
                   className="w-full h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
                 />
-                {mainFocus && (
+                {focus?.main && (
                   <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-lg divide-y divide-gray-100">
-                    {services.map((service: any) => (
+                    {serviceData?.data.map((service: any) => (
                       <li
                         key={service.id}
                         className={
                           "hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
                         }
                         onClick={() => {
-                          setSearchParams({ main: service.name });
+                          setSearchParams((c) => ({
+                            ...c,
+                            main: service.name,
+                          }));
                           setBusinessData({
                             ...businessData,
                             mainServiceId: service.id,
                           });
-                          setMainFocus(false);
+                          setFocus((c) => ({ ...c, main: false }));
                         }}
                       >
                         {service.name}
@@ -392,42 +392,143 @@ export default function Page() {
                 className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
               />
             </div>
-            <input
-              type="text"
-              name="postalCode"
-              placeholder="Postal Code"
-              value={businessData.postalCode}
-              onChange={(e) =>
-                setBusinessData({ ...businessData, postalCode: e.target.value })
-              }
-              required
-              disabled
-              className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-            />
-            <input
-              type="text"
-              name="subarb"
-              placeholder="Subarb"
-              value={businessData.suburb}
-              onChange={(e) =>
-                setBusinessData({ ...businessData, suburb: e.target.value })
-              }
-              required
-              disabled
-              className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-            />
-            <input
-              type="text"
-              name="state"
-              placeholder="State"
-              value={businessData.state}
-              onChange={(e) =>
-                setBusinessData({ ...businessData, state: e.target.value })
-              }
-              required
-              disabled
-              className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-            />
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">Business Suburb</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="suburb"
+                  placeholder="Business Suburb"
+                  autoComplete="off"
+                  onFocus={() => setFocus((c) => ({ ...c, suburb: true }))}
+                  onBlur={() =>
+                    setTimeout(() => {
+                      setFocus((c) => ({ ...c, suburb: false }));
+                    }, 300)
+                  }
+                  onChange={(e) => {
+                    setBusinessData({ ...businessData, suburb: "" });
+                    setSearchParams((c) => ({ ...c, suburb: e.target.value }));
+                  }}
+                  value={searchParams.suburb}
+                  required
+                  className="mt-1 p-3 w-full border border-black-500 rounded"
+                />
+                {focus?.suburb && (
+                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+                    {addressData?.data.map((address: any) => (
+                      <li
+                        key={address.id}
+                        className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                        onClick={() => {
+                          setSearchParams((c) => ({
+                            ...c,
+                            postalCode: address.postalCode,
+                            suburb: address.suburb,
+                          }));
+                          setBusinessData({
+                            ...businessData,
+                            state: address.state,
+                            postalCode: address.postalCode,
+                            suburb: address.suburb,
+                          });
+                          setFocus((c) => ({ ...c, suburb: false }));
+                        }}
+                      >
+                        {address.suburb}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">Postal Code</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="postalCode"
+                  placeholder="Postal code"
+                  autoComplete="off"
+                  onFocus={() => setFocus((c) => ({ ...c, postalCode: true }))}
+                  onBlur={() =>
+                    setTimeout(() => {
+                      setFocus((c) => ({ ...c, postalCode: false }));
+                    }, 300)
+                  }
+                  onChange={(e) => {
+                    setBusinessData({ ...businessData, postalCode: "" });
+                    setSearchParams((c) => ({
+                      ...c,
+                      postalCode: e.target.value,
+                    }));
+                  }}
+                  value={searchParams.postalCode}
+                  required
+                  className="mt-1 p-3 w-full border border-black-500 rounded "
+                />
+                {focus?.postalCode && (
+                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+                    {addressData?.data.map((address: any) => (
+                      <li
+                        key={address.id}
+                        className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                        onClick={() => {
+                          setSearchParams((c) => ({
+                            ...c,
+                            suburb: "",
+                            postalCode: address.postalCode,
+                          }));
+                          setBusinessData({
+                            ...businessData,
+                            suburb: "",
+                            postalCode: address.postalCode,
+                          });
+                          setFocus((c) => ({ ...c, postalCode: false }));
+                        }}
+                      >
+                        {address.postalCode}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">
+                Business state
+              </label>
+              <select
+                name="state"
+                value={businessData.state}
+                onChange={(e) => {
+                  setSearchParams((c) => ({
+                    ...c,
+                    suburb: "",
+                    postalCode: "",
+                  }));
+                  setBusinessData({
+                    ...businessData,
+                    suburb: "",
+                    postalCode: "",
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+                required
+                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2 placeholder:text-gray-500"
+              >
+                <option hidden className=" text-gray-500">
+                  Select State
+                </option>
+                {stateData?.data.map((item: TUniObject, indx: number) => (
+                  <option
+                    key={indx}
+                    value={item.state}
+                    label={item.state}
+                  ></option>
+                ))}
+              </select>
+            </div>
             <div className="w-full flex flex-col">
               <label className="font-medium text-black-500">
                 Opening hours
@@ -567,7 +668,7 @@ export default function Page() {
                   onClick={() => fileInputRef?.current?.click()}
                   className="rounded-t-[3px] py-2 px-3 border-white bg-green-400 text-white font-light flex items-center gap-1"
                 >
-                  Upload picture <PiCameraPlusBold />
+                  Upload Logo <PiCameraPlusBold />
                 </button>
               </div>
             </div>
