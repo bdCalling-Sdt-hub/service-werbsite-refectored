@@ -278,11 +278,13 @@ export default function Page() {
                   onClick={() => {
                     setSearchParams((c) => ({
                       ...c,
+                      postalCode: address.postalCode,
                       suburb: address.suburb,
                     }));
                     setBusinessData({
                       ...businessData,
                       state: address.state,
+                      postalCode: address.postalCode,
                       suburb: address.suburb,
                     });
                     setFocus((c) => ({ ...c, suburb: false }));
@@ -294,26 +296,6 @@ export default function Page() {
             </ul>
           )}
         </div>
-        <select
-          name="state"
-          value={businessData.state}
-          onChange={(e) => {
-            setSearchParams((c) => ({ ...c, suburb: "", postalCode: "" }));
-            setBusinessData({
-              ...businessData,
-              suburb: "",
-              postalCode: "",
-              [e.target.name]: e.target.value,
-            });
-          }}
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded "
-        >
-          <option hidden>Select State</option>
-          {stateData?.data.map((item: TUniObject, indx: number) => (
-            <option key={indx} value={item.state} label={item.state}></option>
-          ))}
-        </select>
         <div className="relative">
           <input
             type="text"
@@ -343,10 +325,12 @@ export default function Page() {
                   onClick={() => {
                     setSearchParams((c) => ({
                       ...c,
+                      suburb: "",
                       postalCode: address.postalCode,
                     }));
                     setBusinessData({
                       ...businessData,
+                      suburb: "",
                       postalCode: address.postalCode,
                     });
                     setFocus((c) => ({ ...c, postalCode: false }));
@@ -358,6 +342,26 @@ export default function Page() {
             </ul>
           )}
         </div>
+        <select
+          name="state"
+          value={businessData.state}
+          onChange={(e) => {
+            setSearchParams((c) => ({ ...c, suburb: "", postalCode: "" }));
+            setBusinessData({
+              ...businessData,
+              suburb: "",
+              postalCode: "",
+              [e.target.name]: e.target.value,
+            });
+          }}
+          required
+          className="mt-1 p-3 w-full border border-black-500 rounded "
+        >
+          <option hidden>Select State</option>
+          {stateData?.data.map((item: TUniObject, indx: number) => (
+            <option key={indx} value={item.state} label={item.state}></option>
+          ))}
+        </select>
         {/* <input
           type="string"
           name="openingHr"
