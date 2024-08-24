@@ -6,6 +6,12 @@ import "react-quill/dist/quill.snow.css";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { CustomSpinner } from "@/components/CustomSpinner";
+import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
+import {
+  useGetAddressQuery,
+  useGetStateQuery,
+} from "@/redux/features/address/addressApi";
+import { TUniObject } from "@/types";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -15,7 +21,7 @@ if (!apiUrl) throw new Error("API URL is not defined");
 export default function Page() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({
+  const [businessData, setBusinessData] = useState({
     mainServiceId: "",
     abn: "",
     license: "",
@@ -34,15 +40,26 @@ export default function Page() {
   });
   const [searchParams, setSearchParams] = useState({
     main: "",
+    suburb: "",
+    postalCode: "",
   });
-  const [services, setServices] = useState<any>([]);
-  const [mainFocus, setMainFocus] = useState(false);
+  const [focus, setFocus] = useState<{ [key: string]: boolean }>();
 
   const [suburbFocus, setSuburbFocus] = useState(false);
   const [suburbs, setSuburbs] = useState<any>([]);
+  const { data: serviceData } = useGetServicesesQuery([
+    { name: "name", value: searchParams.main },
+  ]);
+  const { data: addressData } = useGetAddressQuery([
+    { name: "state", value: businessData.state },
+    { name: "suburb", value: searchParams.suburb },
+    { name: "postalCode", value: searchParams.postalCode },
+  ]);
+  const { data: stateData } = useGetStateQuery(undefined);
 
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    return console.log(businessData);
     try {
       setIsLoading(true);
       const token = Cookies.get("token");
@@ -56,7 +73,7 @@ export default function Page() {
         setIsLoading(false);
         return;
       }
-      if (!data.mainServiceId) {
+      if (!businessData.mainServiceId) {
         Swal.fire({
           icon: "error",
           text: "Please select a main service form the list.",
@@ -64,7 +81,7 @@ export default function Page() {
         setIsLoading(false);
         return;
       }
-      if (isNaN(Number(data.abn))) {
+      if (isNaN(Number(businessData.abn))) {
         Swal.fire({
           icon: "error",
           text: "Business ABN must be number!",
@@ -78,7 +95,10 @@ export default function Page() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
         },
-        body: JSON.stringify({ ...data, abn: Number(data.abn) }),
+        body: JSON.stringify({
+          ...businessData,
+          abn: Number(businessData.abn),
+        }),
       }).then((res) => res.json());
       if (res.ok) {
         Swal.fire({
@@ -102,20 +122,9 @@ export default function Page() {
       });
     }
   }
-  useEffect(() => {
-    try {
-      fetch(`${apiUrl}services?name=${searchParams.main}`)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.ok) {
-            setServices(res.data);
-          }
-        })
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log(error);
-    }
-  }, [searchParams.main]);
+  console.log(businessData);
+  // console.log(addressData);
+  useEffect(() => {}, [searchParams.main]);
   return (
     <div className="px-3 min-h-screen flex justify-center items-center">
       <form
@@ -129,8 +138,10 @@ export default function Page() {
           type="text"
           name="businessName"
           placeholder="Business Name"
-          value={data.name}
-          onChange={(e) => setData({ ...data, name: e.target.value })}
+          value={businessData.name}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, name: e.target.value })
+          }
           required
           className="mt-1 p-3 w-full border border-black-500 rounded"
         />
@@ -140,30 +151,33 @@ export default function Page() {
             name="businessMainCategory"
             placeholder="Business Main Category"
             autoComplete="off"
-            onFocus={() => setMainFocus(true)}
+            onFocus={() => setFocus((c) => ({ ...c, mainCate: true }))}
             onBlur={() =>
               setTimeout(() => {
-                setMainFocus(false);
+                setFocus((c) => ({ ...c, mainCate: false }));
               }, 300)
             }
             onChange={(e) => {
-              setData({ ...data, mainServiceId: "" });
-              setSearchParams({ main: e.target.value });
+              setBusinessData({ ...businessData, mainServiceId: "" });
+              setSearchParams((c) => ({ ...c, main: e.target.value }));
             }}
             value={searchParams.main}
             required
             className="mt-1 p-3 w-full border border-black-500 rounded "
           />
-          {mainFocus && (
-            <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100">
-              {services.map((service: any) => (
+          {focus?.mainCate && (
+            <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+              {serviceData?.data.map((service: any) => (
                 <li
                   key={service.id}
                   className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
                   onClick={() => {
-                    setSearchParams({ main: service.name });
-                    setData({ ...data, mainServiceId: service.id });
-                    setMainFocus(false);
+                    setSearchParams((c) => ({ ...c, main: service.name }));
+                    setBusinessData({
+                      ...businessData,
+                      mainServiceId: service.id,
+                    });
+                    setFocus((c) => ({ ...c, mainCate: false }));
                   }}
                 >
                   {service.name}
@@ -176,8 +190,10 @@ export default function Page() {
           type="text"
           name="abn"
           placeholder="Business ABN"
-          value={data.abn}
-          onChange={(e) => setData({ ...data, abn: e.target.value })}
+          value={businessData.abn}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, abn: e.target.value })
+          }
           required
           style={{ appearance: "textfield", MozAppearance: "textfield" }}
           className="mt-1 p-3 w-full border border-black-500 rounded no-spinner"
@@ -186,16 +202,20 @@ export default function Page() {
           type="text"
           name="license"
           placeholder="Business License(If any)"
-          value={data.license}
-          onChange={(e) => setData({ ...data, license: e.target.value })}
+          value={businessData.license}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, license: e.target.value })
+          }
           className="mt-1 p-3 w-full border border-black-500 rounded"
         />
         <input
           type="text"
           name="mobile"
           placeholder="Business Mobile"
-          value={data.mobile}
-          onChange={(e) => setData({ ...data, mobile: e.target.value })}
+          value={businessData.mobile}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, mobile: e.target.value })
+          }
           required
           className="mt-1 p-3 w-full border border-black-500 rounded"
         />
@@ -203,8 +223,10 @@ export default function Page() {
           type="text"
           name="phone"
           placeholder="Business Phone (Optional)"
-          value={data.phone}
-          onChange={(e) => setData({ ...data, phone: e.target.value })}
+          value={businessData.phone}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, phone: e.target.value })
+          }
           className="mt-1 p-3 w-full border border-black-500 rounded"
         />
 
@@ -219,39 +241,123 @@ export default function Page() {
               setSuburbFocus(false);
             }, 300)
           }
-          value={data.address}
-          onChange={(e) => setData({ ...data, address: e.target.value })}
+          value={businessData.address}
+          onChange={(e) =>
+            setBusinessData({ ...businessData, address: e.target.value })
+          }
           autoComplete="off"
           required
           className="mt-1 p-3 w-full border border-black-500 rounded"
         />
-        <input
-          type="text"
-          name="suburb"
-          placeholder="Business Suburb"
-          value={data.suburb}
-          onChange={(e) => setData({ ...data, suburb: e.target.value })}
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
-        />
-        <input
-          type="text"
+        <div className="relative">
+          <input
+            type="text"
+            name="suburb"
+            placeholder="Business Suburb"
+            autoComplete="off"
+            onFocus={() => setFocus((c) => ({ ...c, suburb: true }))}
+            onBlur={() =>
+              setTimeout(() => {
+                setFocus((c) => ({ ...c, suburb: false }));
+              }, 300)
+            }
+            onChange={(e) => {
+              setBusinessData({ ...businessData, suburb: "" });
+              setSearchParams((c) => ({ ...c, suburb: e.target.value }));
+            }}
+            value={searchParams.suburb}
+            required
+            className="mt-1 p-3 w-full border border-black-500 rounded "
+          />
+          {focus?.suburb && (
+            <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+              {addressData?.data.map((address: any) => (
+                <li
+                  key={address.id}
+                  className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                  onClick={() => {
+                    setSearchParams((c) => ({
+                      ...c,
+                      suburb: address.suburb,
+                    }));
+                    setBusinessData({
+                      ...businessData,
+                      state: address.state,
+                      suburb: address.suburb,
+                    });
+                    setFocus((c) => ({ ...c, suburb: false }));
+                  }}
+                >
+                  {address.suburb}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <select
           name="state"
-          placeholder="Business State"
-          value={data.state}
-          onChange={(e) => setData({ ...data, state: e.target.value })}
+          value={businessData.state}
+          onChange={(e) => {
+            setSearchParams((c) => ({ ...c, suburb: "", postalCode: "" }));
+            setBusinessData({
+              ...businessData,
+              suburb: "",
+              postalCode: "",
+              [e.target.name]: e.target.value,
+            });
+          }}
           required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
-        />
-        <input
-          type="text"
-          name="postalCode"
-          placeholder="Business Postal Code"
-          value={data.postalCode}
-          onChange={(e) => setData({ ...data, postalCode: e.target.value })}
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded"
-        />
+          className="mt-1 p-3 w-full border border-black-500 rounded "
+        >
+          <option hidden>Select State</option>
+          {stateData?.data.map((item: TUniObject, indx: number) => (
+            <option key={indx} value={item.state} label={item.state}></option>
+          ))}
+        </select>
+        <div className="relative">
+          <input
+            type="text"
+            name="postalCode"
+            placeholder="Postal code"
+            autoComplete="off"
+            onFocus={() => setFocus((c) => ({ ...c, postalCode: true }))}
+            onBlur={() =>
+              setTimeout(() => {
+                setFocus((c) => ({ ...c, postalCode: false }));
+              }, 300)
+            }
+            onChange={(e) => {
+              setBusinessData({ ...businessData, postalCode: "" });
+              setSearchParams((c) => ({ ...c, postalCode: e.target.value }));
+            }}
+            value={searchParams.postalCode}
+            required
+            className="mt-1 p-3 w-full border border-black-500 rounded "
+          />
+          {focus?.postalCode && (
+            <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+              {addressData?.data.map((address: any) => (
+                <li
+                  key={address.id}
+                  className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                  onClick={() => {
+                    setSearchParams((c) => ({
+                      ...c,
+                      postalCode: address.postalCode,
+                    }));
+                    setBusinessData({
+                      ...businessData,
+                      postalCode: address.postalCode,
+                    });
+                    setFocus((c) => ({ ...c, postalCode: false }));
+                  }}
+                >
+                  {address.postalCode}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         {/* <input
           type="string"
           name="openingHr"

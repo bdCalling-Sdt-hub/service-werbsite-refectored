@@ -10,3 +10,5 @@ export type TSideItem = {
     subPath: string;
   }[];
 };
+
+export type TUniObject = { [key: string]: string };
