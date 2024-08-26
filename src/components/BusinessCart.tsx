@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import BusinessContact from "./Business/BusinessContact";
+import BusinessContact from "./business/BusinessContact";
 import businessLogo from "@/assets/images/business-image.png";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
