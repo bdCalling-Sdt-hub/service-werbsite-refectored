@@ -3,8 +3,8 @@ import { useGetSingleBunsinessQuery } from "@/redux/features/business/businessAp
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import cateLogo from "@/assets/images/cate-logo.png";
-import BusinessDetails from "@/components/business/BusinessDetails";
-import PortfolioList from "@/components/business/PortfolioList";
+import BusinessDetails from "@/components/Business/BusinessDetails";
+import PortfolioList from "@/components/Business/PortfolioList";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");

@@ -12,23 +12,15 @@ const businessApi = baseApi.injectEndpoints({
     //   },
     //   invalidatesTags: ["portfolio"],
     // }),
-    // deletePortfolio: builder.mutation({
-    //   query: (id) => {
-    //     return {
-    //       url: `portfolios/${id}`,
-    //       method: "DELETE",
-    //     };
-    //   },
-    //   invalidatesTags: ["portfolio"],
-    // }),
-    getSingleBunsiness: builder.query({
-      query: (id) => {
+    addMessage: builder.mutation({
+      query: ({ id, data }) => {
         return {
-          url: `businesses/${id}`,
-          method: "GET",
+          url: `messages`,
+          method: "POST",
+          body: data,
         };
       },
-      providesTags: ["business"],
+      invalidatesTags: ["portfolio"],
     }),
     getBunsiness: builder.query({
       query: (args) => {
@@ -46,7 +38,20 @@ const businessApi = baseApi.injectEndpoints({
       },
       providesTags: ["business"],
     }),
+    getSingleBunsiness: builder.query({
+      query: (id) => {
+        return {
+          url: `businesses/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["message"],
+    }),
   }),
 });
 
-export const { useGetSingleBunsinessQuery, useGetBunsinessQuery } = businessApi;
+export const {
+  useGetSingleBunsinessQuery,
+  useGetBunsinessQuery,
+  useAddMessageMutation,
+} = businessApi;

@@ -32,12 +32,12 @@ export default function Page() {
         }),
       });
       const result = await res.json();
+      // console.log(result)
       if (result.statusCode === 401) {
         setIsLoading(false);
-        router.push("/verify?id=" + result.data.id);
+        router.push("/verify?id=" + result.data?.id);
         return;
       }
-      console.log(result);
       if (res.ok) {
         setIsLoading(false);
         Cookies.set("token", result.data.token);
@@ -226,7 +226,7 @@ export default function Page() {
           </Link>
         </p>
       </form>
-      <HomeBackButton/>
+      <HomeBackButton />
     </div>
   );
 }

@@ -36,7 +36,7 @@ export type TUser = {
   lastName: string;
   email: string;
   mobile: string | null;
-  type: "ADMIN" | "USER" | "PROVIDER";
+  type: "ADMIN" | "USER" | "PROVIDER" | "CUSTOMER";
   image: string | null;
   isVerified: boolean;
   business: TBusiness | null;

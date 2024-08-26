@@ -18,11 +18,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en">
       <StoreProvider>
-        <body className={poppins.className}>{children}</body>
+        <body className={poppins.className}>
+          {children}
+          <div id="portal"></div>
+        </body>
       </StoreProvider>
     </html>
   );
