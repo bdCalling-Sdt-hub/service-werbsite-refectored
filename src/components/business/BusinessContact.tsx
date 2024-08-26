@@ -4,9 +4,9 @@ import { useAppSelector } from "@/redux/hooks";
 import Modal from "../Reusable/Modal";
 import { CustomSpinner } from "../CustomSpinner";
 import { LuSendHorizonal } from "react-icons/lu";
-import { useAddMessageMutation } from "@/redux/features/business/businessApi";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAddMessageMutation } from "@/redux/features/message/messageApi";
 
 export default function BusinessContact({
   number,

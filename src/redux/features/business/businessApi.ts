@@ -12,16 +12,6 @@ const businessApi = baseApi.injectEndpoints({
     //   },
     //   invalidatesTags: ["portfolio"],
     // }),
-    addMessage: builder.mutation({
-      query: ({ id, data }) => {
-        return {
-          url: `messages`,
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["portfolio"],
-    }),
     getBunsiness: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -53,5 +43,4 @@ const businessApi = baseApi.injectEndpoints({
 export const {
   useGetSingleBunsinessQuery,
   useGetBunsinessQuery,
-  useAddMessageMutation,
 } = businessApi;
