@@ -48,7 +48,7 @@ export default function PortfolioCart({
       <div className="lg:h-[275px] lg:max-w-[250px] rounded overflow-hidden relative object-center">
         <Image
           src={apiUrl + data.image}
-          alt={data.title}
+          alt={"Title"}
           width={800}
           height={800}
           className="w-full h-full"

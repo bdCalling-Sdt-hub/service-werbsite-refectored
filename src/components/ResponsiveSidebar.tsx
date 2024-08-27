@@ -43,7 +43,7 @@ const ResponsiveSidebar = () => {
     {
       name: "Upgrade Plan",
       icon: FaCloudArrowUp,
-      path: "/dashboard/upgrade",
+      path: "/dashboard/upgrade-plane",
     },
     {
       name: "Account",

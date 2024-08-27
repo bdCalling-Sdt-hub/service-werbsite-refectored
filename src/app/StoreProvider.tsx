@@ -21,7 +21,7 @@ export default function StoreProvider({
     children: React.ReactNode;
   }>) => {
     const router = useRouter();
-    const { user, isLoading } = useAppSelector((state) => state.auth);
+    // const { user, isLoading } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     useEffect(() => {
       const token = Cookies.get("token");

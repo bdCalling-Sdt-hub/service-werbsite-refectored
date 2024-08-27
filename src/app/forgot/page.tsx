@@ -3,6 +3,8 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import HomeBackButton from "@/components/HomeBackButton";
+import Image from "next/image";
+import authUndraw from "@/assets/images/auth-undraw.png";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -41,31 +43,41 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center px-3 py-10">
-      <form
-        className="max-w-screen-md rounded-2xl border-green-500 mt-20 mx-auto border lg:p-11 p-5 flex flex-col gap-7"
-        onSubmit={handelSubmit}
-      >
-        <h2 className="text-4xl font-medium">Forgot Password</h2>
-        <p className="text-black-400">
-          Please enter your Email Address to reset your password.
-        </p>
-        <input
-          type="email"
-          placeholder="Your Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="p-3 w-full border border-black-500 rounded-md focus:outline-none"
+    <div className="flex items-center justify-center lg:px-20">
+      <div className="w-3/4 lg:w-3/6 pl-6 hidden lg:block">
+        <Image
+          src={authUndraw}
+          alt="authentication"
+          width={1000}
+          height={1000}
         />
-        <button
-          type="submit"
-          className="w-full bg-green-500 p-3 text-white rounded-md"
+      </div>
+      <div className="min-h-screen w-full flex flex-col justify-center items-center px-3 py-10">
+        <form
+          className="max-w-screen-md rounded-2xl border-green-500 mt-20 mx-auto border lg:p-11 p-5 flex flex-col gap-7"
+          onSubmit={handelSubmit}
         >
-          Send OTP
-        </button>
-      </form>
-      <HomeBackButton/>
+          <h2 className="text-4xl font-medium">Forgot Password</h2>
+          <p className="text-black-400">
+            Please enter your Email Address to reset your password.
+          </p>
+          <input
+            type="email"
+            placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="p-3 w-full border border-black-500 rounded-md focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="w-full bg-green-500 p-3 text-white rounded-md"
+          >
+            Send OTP
+          </button>
+        </form>
+        <HomeBackButton />
+      </div>
     </div>
   );
 }

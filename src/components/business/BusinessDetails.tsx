@@ -9,8 +9,15 @@ function BusinessDetails({ businesDetails }: { businesDetails: TBusiness }) {
   // console.log(businesDetails);
   return (
     <div className="space-y-5 lg:space-y-7">
-      <div className="">
+      {/* <div className="">
         <Image src={businessImage} alt="image1" className="" />
+      </div> */}
+      <div className="space-y-4">
+        <h3 className="font-medium text-xl">Description</h3>
+        <p
+          className=""
+          dangerouslySetInnerHTML={{ __html: businesDetails?.about }}
+        />
       </div>
       <div className="space-y-4">
         <h2 className="font-medium text-xl ">My Services</h2>
@@ -24,13 +31,6 @@ function BusinessDetails({ businesDetails }: { businesDetails: TBusiness }) {
             </li>
           ))}
         </ul>
-      </div>
-      <div className="space-y-4">
-        <h3 className="font-medium text-xl">Description</h3>
-        <p
-          className=""
-          dangerouslySetInnerHTML={{ __html: businesDetails?.about }}
-        />
       </div>
       <ul className="flex flex-col gap-5 text-black-400">
         <li className="flex items-center gap-3">
@@ -170,7 +170,7 @@ function BusinessDetails({ businesDetails }: { businesDetails: TBusiness }) {
       </ul>
       <BusinessContact
         email={businesDetails?.user?.email}
-        number={businesDetails?.phone }
+        number={businesDetails?.phone}
       />
     </div>
   );

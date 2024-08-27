@@ -97,34 +97,36 @@ export default function BusinessContact({
           </button>
         </div>
       )}
-      <Modal
-        isOpen={modal}
-        onClose={handleModalClose}
-        className="w-full max-w-[600px] p-8 bg-white rounded-lg"
-      >
-        <Modal.Header>Write your message :</Modal.Header>
-        <form onSubmit={handelSubmit} className="w-full space-y-3">
-          <textarea
-            name="message"
-            placeholder="Text.."
-            value={formData?.message}
-            onChange={(e) =>
-              setFormData((c) => ({ ...c, [e.target.name]: e.target.value }))
-            }
-            required
-            rows={6}
-            className="p-3 w-full border border-black-500 rounded-md focus:outline-none"
-          />
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed py-3 px-10 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
-          >
-            Send
-            {isLoading ? <CustomSpinner /> : <LuSendHorizonal />}
-          </button>
-        </form>
-      </Modal>
+      {user?.type === "CUSTOMER" && (
+        <Modal
+          isOpen={modal}
+          onClose={handleModalClose}
+          className="w-full max-w-[600px] p-8 bg-white rounded-lg"
+        >
+          <Modal.Header>Write your message :</Modal.Header>
+          <form onSubmit={handelSubmit} className="w-full space-y-3">
+            <textarea
+              name="message"
+              placeholder="Text.."
+              value={formData?.message}
+              onChange={(e) =>
+                setFormData((c) => ({ ...c, [e.target.name]: e.target.value }))
+              }
+              required
+              rows={6}
+              className="p-3 w-full border border-black-500 rounded-md focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed py-3 px-10 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+            >
+              Send
+              {isLoading ? <CustomSpinner /> : <LuSendHorizonal />}
+            </button>
+          </form>
+        </Modal>
+      )}
     </>
   );
 }

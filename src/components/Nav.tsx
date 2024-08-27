@@ -5,13 +5,15 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setUser } from "@/redux/features/users/authSlice";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function Nav() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = React.useState(false);
   const { user } = useAppSelector((state) => state.auth);
   return (
@@ -123,7 +125,7 @@ export default function Nav() {
                   </>
                 )}
                 <li
-                  className="py-2 px-6 hover:bg-[#E8E8E8] cursor-pointer"
+                  className="py-2 px-6 text-green-600 hover:bg-[#E8E8E8] cursor-pointer"
                   onClick={() =>
                     Swal.fire({
                       text: "Are you sure you want to logout?",
@@ -134,6 +136,7 @@ export default function Nav() {
                       confirmButtonColor: "#DC2626",
                     }).then((res) => {
                       if (res.isConfirmed) {
+                        dispatch(setUser({ user: null, isLoading: false }));
                         Cookies.remove("token");
                         router.push("/");
                       }

@@ -116,7 +116,7 @@ export default function Page() {
     }
   }, [searchParams.main]);
 
-  if (!userDataLoading && !user) router.push("/login");
+  // if (!userDataLoading && !user) router.push("/login");
 
   async function handelEdit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
