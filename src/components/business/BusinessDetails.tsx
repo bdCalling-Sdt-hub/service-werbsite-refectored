@@ -52,9 +52,8 @@ function BusinessDetails({ businesDetails }: { businesDetails: TBusiness }) {
             businesDetails?.address,
             businesDetails?.suburb,
             businesDetails?.state,
-            "Australia",
           ].map((item: string | undefined, index: number) =>
-            index !== 0 ? ", " + item : item
+            item && index !== 0 ? ", " + item : item
           )}
         </li>
         <li className="flex items-center gap-3">

@@ -1,9 +1,37 @@
-import React from 'react'
+import SubscriptionCard from "@/components/SubscriptionCard";
+import React from "react";
 
-const UpgradePlane = () => {
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+if (!apiUrl) throw new Error("API URL is not defined");
+
+const UpgradePlane = async () => {
+  const res = await fetch(`${apiUrl}subscriptions?limit=100`, {
+    cache: "no-store",
+  });
+  const { data: subscriptionData } = await res.json();
+//   console.log(subscriptionData);
   return (
-    <div>UpgradePlane</div>
-  )
-}
+    <div className="bg-green-50 ">
+      <section className="lg:px-36 lg:py-16 px-2 py-3 text-center min-h-screen">
+        <h1 className="text-3xl font-semibold text-green-800">
+          The Right Plan for Your Business
+        </h1>
+        <p className="text-black-500 mt-2">
+          We have several powerful plans to showcase your business and get
+          discovered
+          <br />
+          as a creative entrepreneurs. Everything you need.
+        </p>
+        <div className="flex flex-col lg:flex-row justify-center gap-4 mt-8">
+          {subscriptionData?.map(
+            (plan: { [key: string]: any }, index: number) => (
+              <SubscriptionCard key={index} data={plan} />
+            )
+          )}
+        </div>
+      </section>
+    </div>
+  );
+};
 
-export default UpgradePlane
+export default UpgradePlane;

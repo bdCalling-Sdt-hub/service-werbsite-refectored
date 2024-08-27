@@ -15,7 +15,7 @@ export default async function RootLayout({
   return (
     <div>
       <Nav />
-      <div className="h-20"></div>
+      <div className="h-20 protal"></div>
       {children}
       <Footer />
     </div>

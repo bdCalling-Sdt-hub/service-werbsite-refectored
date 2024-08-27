@@ -20,12 +20,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <StoreProvider>
-        <body className={poppins.className}>
-          {children}
-          <div id="portal"></div>
-        </body>
-      </StoreProvider>
+      <body className={poppins.className}>
+        <StoreProvider>{children}</StoreProvider>
+        <div id="portal" />
+      </body>
     </html>
   );
 }

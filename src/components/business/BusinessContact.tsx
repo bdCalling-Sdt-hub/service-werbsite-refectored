@@ -23,6 +23,7 @@ export default function BusinessContact({
   const handleModalClose = () => {
     setModal((prev) => !prev);
   };
+  const { user } = useAppSelector((state) => state.auth);
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
@@ -51,7 +52,6 @@ export default function BusinessContact({
       });
     }
   }
-  const { user } = useAppSelector((state) => state.auth);
   return (
     <>
       {user?.type === "CUSTOMER" && (
