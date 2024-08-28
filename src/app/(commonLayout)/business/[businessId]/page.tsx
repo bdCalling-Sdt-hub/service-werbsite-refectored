@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import cateLogo from "@/assets/images/cate-logo.png";
 import BusinessDetails from "@/components/business/BusinessDetails";
 import PortfolioList from "@/components/business/PortfolioList";
+import Review from "@/components/business/Review";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -19,7 +20,7 @@ export default function Page({ params }: { params: { businessId: string } }) {
   // console.log(params)
   // console.log(data, isLoading, isError);
   return (
-    <section className="min-h-screen px-4 py-10 lg:px-[150px] lg:py-16 lg:grid grid-cols-12 gap-12 space-y-10 lg:space-y-0 relative" >
+    <section className="min-h-screen px-4 py-10 lg:px-[150px] lg:py-16 lg:grid grid-cols-12 gap-12 space-y-10 lg:space-y-0 relative">
       <div className="w-full col-span-3 text-center lg:sticky top-5">
         <div className="w-[200px] h-[200px] mx-auto shadow-inner border border-blue-500/10 rounded-full">
           <Image
@@ -59,9 +60,21 @@ export default function Page({ params }: { params: { businessId: string } }) {
         </div>
         {
           {
-            "Business Details": <BusinessDetails businesDetails={data?.data} />,
-            Portfolio: <PortfolioList  businessId={params.businessId} />,
-            // Review: <Review providerId={providerId} />,
+            "Business Details": (
+              <BusinessDetails
+                businesDetails={data?.data}
+                isLoading={isLoading}
+                isError={isError}
+              />
+            ),
+            Portfolio: <PortfolioList businessId={params.businessId} />,
+            Review: (
+              <Review
+              businesDetails={data?.data}
+              isLoading={isLoading}
+              isError={isError}
+              />
+            ),
           }[activeTab]
         }
       </div>

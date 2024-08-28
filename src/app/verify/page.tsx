@@ -8,6 +8,8 @@ import { CustomSpinner } from "@/components/CustomSpinner";
 import HomeBackButton from "@/components/HomeBackButton";
 import Image from "next/image";
 import authUndraw from "@/assets/images/auth-undraw.png";
+import { setUser } from "@/redux/features/users/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -17,9 +19,10 @@ export default function Page({
 }: {
   searchParams: { id?: string };
 }) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   if (!searchParams.id) {
     router.push("/login");
@@ -61,6 +64,7 @@ export default function Page({
       if (res.ok) {
         setIsLoading(false);
         Cookies.set("token", result.data.token);
+        dispatch(setUser({ user: result.data?.user, isLoading: false }));
         if (result.data.user.type === "PROVIDER") {
           if (result.data.user.business) {
             router.push("/dashboard");

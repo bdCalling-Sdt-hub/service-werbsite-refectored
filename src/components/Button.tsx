@@ -14,7 +14,6 @@ export default function Bu({
   id: string;
   minimumStar: number;
 }) {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const neededStar = minimumStar > 40;
 
@@ -33,7 +32,7 @@ export default function Bu({
         body: JSON.stringify({
           subscriptionId: id,
           cancelUrl: curreentUrl + "/dashboard/upgrade-plane",
-          successUrl: curreentUrl + "/",
+          successUrl: curreentUrl + "/dashboard",
         }),
       });
       const result = await res.json();

@@ -29,6 +29,7 @@ export type TBusiness = {
     image?: string;
     email?: string;
   };
+  
 };
 export type TUser = {
   id: string;

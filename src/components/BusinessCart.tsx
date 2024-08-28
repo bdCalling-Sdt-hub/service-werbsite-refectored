@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BusinessContact from "./business/BusinessContact";
 import businessLogo from "@/assets/images/business-image.png";
+import generateStars from "./business/generateStar";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -21,22 +22,35 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
           />
         </div>
       </Link>
-      <div>
+      <div className="space-y-6 lg:space-y-4">
         <Link
           href={"/business/" + data.id}
           className="text-2xl font-medium hover:text-green-500"
         >
           {data.name}
         </Link>
+        <div className="flex justify-start gap-1.5">
+          <span className="pr-1">Ratings :</span> {generateStars(5)}
+          {`[${data._count?.reviews}]`}
+        </div>
         <div
-          className="my-4 line-clamp-3"
+          className="line-clamp-3"
           dangerouslySetInnerHTML={{ __html: data?.about }}
         />
-        <BusinessContact
-          email={data?.user?.email}
-          number={data.mobile}
-          businessId={data.id}
-        />
+        <div className="flex flex-col lg:flex-row gap-4 items-center">
+          <BusinessContact
+            email={data?.user?.email}
+            number={data.mobile}
+            businessId={data.id}
+          />
+          {
+            <Link href={`/business/${data.id}`}>
+              <button className="flex items-center justify-center gap-2 w-52 h-16 rounded-md text-black border hover:bg-gray-50">
+                See more...
+              </button>
+            </Link>
+          }
+        </div>
       </div>
     </div>
   );

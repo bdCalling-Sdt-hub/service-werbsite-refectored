@@ -1,4 +1,4 @@
-const Star = (
+export const Star = (
   <svg
     width="18"
     height="18"
@@ -16,7 +16,7 @@ const Star = (
     />
   </svg>
 );
-const EmptyStar = (
+export const EmptyStar = (
   <svg
     width="18"
     height="19"
