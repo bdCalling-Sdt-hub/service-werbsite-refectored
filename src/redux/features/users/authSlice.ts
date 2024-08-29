@@ -20,6 +20,8 @@ export type TBusiness = {
   suburb: string;
   state: string;
   postalCode: string;
+  latitude: number | null;
+  longitude: number | null;
   mobile: string;
   phone?: string;
   facebook?: string;
@@ -29,7 +31,6 @@ export type TBusiness = {
     image?: string;
     email?: string;
   };
-  
 };
 export type TUser = {
   id: string;
@@ -65,6 +66,7 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      state.isLoading = false;
       // state.token = null;
     },
   },

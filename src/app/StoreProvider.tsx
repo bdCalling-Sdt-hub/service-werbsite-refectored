@@ -41,11 +41,11 @@ export default function StoreProvider({
               }
             })
             .catch((err) => {
-              router.push("/login");
+              router.push("/");
               dispatch(setUser({ user: null, isLoading: false }));
             });
         } catch (error) {
-          router.push("/login");
+          router.push("/");
           dispatch(setUser({ user: null, isLoading: false }));
         }
       } else {

@@ -38,7 +38,8 @@ export default function Bu({
       const result = await res.json();
       if (result.ok) {
         setIsLoading(false);
-        window.open(result.data?.url, "_blank", "noopener,noreferrer");
+        window.location = result?.data?.url;
+        // window.open(result.data?.url, "noopener,noreferrer");
       } else {
         Swal.fire({
           icon: "error",

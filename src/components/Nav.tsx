@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setUser } from "@/redux/features/users/authSlice";
+import { logout } from "@/redux/features/users/authSlice";
+import profileDemo from "@/assets/images/profile-demo.jpg";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -44,9 +45,28 @@ export default function Nav() {
                 ) : (
                   <Link
                     href="/register-business"
-                    className="font-medium hover:text-green-500 transition-all lg:block hidden"
+                    className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-green-600 text-green-600 bg-green-50"
                   >
-                    Business Registration
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 9C11.6569 9 13 7.65685 13 6C13 4.34315 11.6569 3 10 3C8.34315 3 7 4.34315 7 6C7 7.65685 8.34315 9 10 9Z"
+                        fill="#058240"
+                      />
+                      <path
+                        d="M3 18C3 14.134 6.13401 11 10 11C13.866 11 17 14.134 17 18H3Z"
+                        fill="#058240"
+                      />
+                    </svg>
+                    <span className="lg:block hidden">
+                      Join as a Professional
+                    </span>
+                    <span className="lg:hidden block">Join</span>
                   </Link>
                 )}
               </>
@@ -84,7 +104,7 @@ export default function Nav() {
             </svg>
             <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
               <Image
-                src={user.image ? apiUrl + user.image : "/user.png"}
+                src={user.image ? apiUrl + user.image : profileDemo}
                 alt="user"
                 width={60}
                 height={60}
@@ -136,7 +156,7 @@ export default function Nav() {
                       confirmButtonColor: "#DC2626",
                     }).then((res) => {
                       if (res.isConfirmed) {
-                        dispatch(setUser({ user: null, isLoading: false }));
+                        dispatch(logout());
                         Cookies.remove("token");
                         router.push("/");
                       }

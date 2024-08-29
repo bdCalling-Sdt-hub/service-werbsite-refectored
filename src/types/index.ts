@@ -12,3 +12,12 @@ export type TSideItem = {
 };
 
 export type TUniObject = { [key: string]: string };
+
+export type TGPlaceAddress = {
+  address: string;
+  postalCode: string;
+  state: string;
+  suburb: string;
+  longitude?: number | null;
+  latitude?: number | null;
+} ;

@@ -14,11 +14,8 @@ import profileDemo from "@/assets/images/profile-demo.jpg";
 import { PiCameraPlusBold } from "react-icons/pi";
 import LoaderWraperComp from "@/components/LoaderWraperComp";
 import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
-import {
-  useGetAddressQuery,
-  useGetStateQuery,
-} from "@/redux/features/address/addressApi";
-import { TUniObject } from "@/types";
+import GooglePlaceAddress from "@/components/GooglePlaceAddress";
+import { TGPlaceAddress } from "@/types";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -30,14 +27,20 @@ export default function Page() {
   const { user, isLoading: userDataLoading } = useAppSelector(
     (state) => state.auth
   );
+  const [allAddress, setAllAddress] = useState<TGPlaceAddress>({
+    address: "",
+    postalCode: "",
+    state: "",
+    suburb: "",
+    latitude: null,
+    longitude: null,
+  });
   const [userData, setUserData] = useState<{ [key: string]: string }>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File>();
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     main: "",
-    suburb: "",
-    postalCode: "",
   });
   const [focus, setFocus] = useState<{ [key: string]: boolean }>();
   const [businessData, setBusinessData] = useState({
@@ -49,11 +52,7 @@ export default function Page() {
     about: "",
     openHour: "",
     name: "",
-    address: "",
     services: [""],
-    suburb: "",
-    state: "",
-    postalCode: "",
     mobile: "",
     phone: "",
     facebook: "",
@@ -62,12 +61,6 @@ export default function Page() {
   const { data: serviceData } = useGetServicesesQuery([
     { name: "name", value: searchParams.main },
   ]);
-  const { data: addressData } = useGetAddressQuery([
-    { name: "state", value: businessData.state },
-    { name: "suburb", value: searchParams.suburb },
-    { name: "postalCode", value: searchParams.postalCode },
-  ]);
-  const { data: stateData } = useGetStateQuery(undefined);
 
   useEffect(() => {
     if (user?.business) {
@@ -75,15 +68,17 @@ export default function Page() {
         name,
         abn,
         about,
-        address,
-        suburb,
         mainServiceId,
         mainService,
         mobile,
         openHour,
-        postalCode,
-        services,
         state,
+        postalCode,
+        suburb,
+        address,
+        latitude,
+        longitude,
+        services,
         facebook,
         instagram,
         license,
@@ -94,10 +89,6 @@ export default function Page() {
         name,
         abn,
         about,
-        address,
-        suburb,
-        postalCode,
-        state,
         mainServiceId,
         mainService,
         mobile,
@@ -109,8 +100,16 @@ export default function Page() {
         phone: phone || "",
         website: website || "",
       });
-      setSearchParams({ main: mainService.name, suburb, postalCode });
+      setSearchParams({ main: mainService.name });
       setBusinessData((c) => c);
+      setAllAddress({
+        state,
+        postalCode,
+        suburb,
+        address,
+        latitude,
+        longitude,
+      });
     }
     setUserData({
       firstName: user?.firstName || "",
@@ -158,6 +157,7 @@ export default function Page() {
       const result = await res.json();
       if (result.ok) {
         if (user?.business) {
+          // return  console.log({ ...businessData, ...allAddress });
           const businessRes = await fetch(
             apiUrl + "businesses/" + user?.business?.id,
             {
@@ -167,7 +167,7 @@ export default function Page() {
                 "Content-Type": "application/json",
               },
 
-              body: JSON.stringify(businessData),
+              body: JSON.stringify({ ...businessData, ...allAddress }),
             }
           );
           const businessResult = await businessRes.json();
@@ -374,161 +374,6 @@ export default function Page() {
                 className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
               />
             </div>
-            <h3 className="text-xl font-medium col-span-2">Business Address</h3>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
-                Business Address
-              </label>
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={businessData.address}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, address: e.target.value })
-                }
-                autoComplete="off"
-                required
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Business Suburb</label>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="suburb"
-                  placeholder="Business Suburb"
-                  autoComplete="off"
-                  onFocus={() => setFocus((c) => ({ ...c, suburb: true }))}
-                  onBlur={() =>
-                    setTimeout(() => {
-                      setFocus((c) => ({ ...c, suburb: false }));
-                    }, 300)
-                  }
-                  onChange={(e) => {
-                    setBusinessData({ ...businessData, suburb: "" });
-                    setSearchParams((c) => ({ ...c, suburb: e.target.value }));
-                  }}
-                  value={searchParams.suburb}
-                  required
-                  className="mt-1 p-3 w-full border border-black-500 rounded"
-                />
-                {focus?.suburb && (
-                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
-                    {addressData?.data.map((address: any) => (
-                      <li
-                        key={address.id}
-                        className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
-                        onClick={() => {
-                          setSearchParams((c) => ({
-                            ...c,
-                            postalCode: address.postalCode,
-                            suburb: address.suburb,
-                          }));
-                          setBusinessData({
-                            ...businessData,
-                            state: address.state,
-                            postalCode: address.postalCode,
-                            suburb: address.suburb,
-                          });
-                          setFocus((c) => ({ ...c, suburb: false }));
-                        }}
-                      >
-                        {address.suburb}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Postal Code</label>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="postalCode"
-                  placeholder="Postal code"
-                  autoComplete="off"
-                  onFocus={() => setFocus((c) => ({ ...c, postalCode: true }))}
-                  onBlur={() =>
-                    setTimeout(() => {
-                      setFocus((c) => ({ ...c, postalCode: false }));
-                    }, 300)
-                  }
-                  onChange={(e) => {
-                    setBusinessData({ ...businessData, postalCode: "" });
-                    setSearchParams((c) => ({
-                      ...c,
-                      postalCode: e.target.value,
-                    }));
-                  }}
-                  value={searchParams.postalCode}
-                  required
-                  className="mt-1 p-3 w-full border border-black-500 rounded "
-                />
-                {focus?.postalCode && (
-                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
-                    {addressData?.data.map((address: any) => (
-                      <li
-                        key={address.id}
-                        className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
-                        onClick={() => {
-                          setSearchParams((c) => ({
-                            ...c,
-                            suburb: "",
-                            postalCode: address.postalCode,
-                          }));
-                          setBusinessData({
-                            ...businessData,
-                            suburb: "",
-                            postalCode: address.postalCode,
-                          });
-                          setFocus((c) => ({ ...c, postalCode: false }));
-                        }}
-                      >
-                        {address.postalCode}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
-                Business state
-              </label>
-              <select
-                name="state"
-                value={businessData.state}
-                onChange={(e) => {
-                  setSearchParams((c) => ({
-                    ...c,
-                    suburb: "",
-                    postalCode: "",
-                  }));
-                  setBusinessData({
-                    ...businessData,
-                    suburb: "",
-                    postalCode: "",
-                    [e.target.name]: e.target.value,
-                  });
-                }}
-                required
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2 placeholder:text-gray-500"
-              >
-                <option hidden className=" text-gray-500">
-                  Select State
-                </option>
-                {stateData?.data.map((item: TUniObject, indx: number) => (
-                  <option
-                    key={indx}
-                    value={item.state}
-                    label={item.state}
-                  ></option>
-                ))}
-              </select>
-            </div>
             <div className="w-full flex flex-col">
               <label className="font-medium text-black-500">
                 Opening hours
@@ -543,6 +388,13 @@ export default function Page() {
                 }
                 required
                 className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+              />
+            </div>
+            <h3 className="text-xl font-medium col-span-2">Business Address</h3>
+            <div className="col-span-2 space-y-7">
+              <GooglePlaceAddress
+                allAddress={allAddress}
+                setAllAddress={setAllAddress}
               />
             </div>
             <h3 className="text-xl font-medium col-span-2">
