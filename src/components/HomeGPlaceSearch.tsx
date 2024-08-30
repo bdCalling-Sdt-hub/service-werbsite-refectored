@@ -51,7 +51,8 @@ const HomeGPlaceSearch = ({
       postalCode,
       state,
       suburb,
-      address: place.formatted_address || "",
+      address: `${postalCode}-${suburb}`,
+      // address: place.formatted_address || "",
       latitude: lat,
       longitude: lng,
     });
@@ -75,13 +76,13 @@ const HomeGPlaceSearch = ({
           <div className="relative">
             <input
               type="text"
-              placeholder="Street address"
+              placeholder="Post code"
               value={allAddress?.address}
               onChange={(e) =>
                 setAllAddress((c) => ({ ...c, address: e.target.value }))
               }
               required
-              className="w-[208px] h-12 pl-9  rounded border-[#343333] border focus:outline-none font-medium"
+              className="w-[208px] h-12 pl-8 pr-2 rounded border-[#343333] border focus:outline-none font-medium truncate"
             />
             <svg
               width="20"
@@ -89,7 +90,7 @@ const HomeGPlaceSearch = ({
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute ml-3 top-3.5"
+              className="absolute ml-2 top-3.5"
             >
               <path
                 fillRule="evenodd"

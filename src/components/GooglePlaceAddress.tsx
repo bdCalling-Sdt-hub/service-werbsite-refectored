@@ -85,6 +85,19 @@ const GooglePlaceAddress = ({
           </div>
         </Autocomplete>
         <div className="w-full flex flex-col">
+          <label className="font-medium text-black-500">Business Suburb</label>
+          <input
+            type="text"
+            placeholder="Business suburb"
+            value={allAddress.suburb}
+            onChange={(e) =>
+              setAllAddress((c) => ({ ...c, suburb: e.target.value }))
+            }
+            required
+            className="mt-2 p-3 w-full border border-black-500 rounded"
+          />
+        </div>
+        <div className="w-full flex flex-col">
           <label className="font-medium text-black-500">Postal Code</label>
           <input
             type="text"
@@ -98,26 +111,13 @@ const GooglePlaceAddress = ({
           />
         </div>
         <div className="w-full flex flex-col">
-          <label className="font-medium text-black-500">Business Address</label>
+          <label className="font-medium text-black-500">Business State</label>
           <input
             type="text"
             placeholder="Business state"
             value={allAddress.state}
             onChange={(e) =>
               setAllAddress((c) => ({ ...c, state: e.target.value }))
-            }
-            required
-            className="mt-2 p-3 w-full border border-black-500 rounded"
-          />
-        </div>
-        <div className="w-full flex flex-col">
-          <label className="font-medium text-black-500">Business Address</label>
-          <input
-            type="text"
-            placeholder="Business suburb"
-            value={allAddress.suburb}
-            onChange={(e) =>
-              setAllAddress((c) => ({ ...c, suburb: e.target.value }))
             }
             required
             className="mt-2 p-3 w-full border border-black-500 rounded"

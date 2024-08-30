@@ -143,6 +143,7 @@ export default function Page() {
           type="text"
           name="businessName"
           placeholder="Business Name"
+           autoComplete="off"
           value={businessData.name}
           onChange={(e) =>
             setBusinessData({ ...businessData, name: e.target.value })
@@ -195,6 +196,7 @@ export default function Page() {
           type="text"
           name="abn"
           placeholder="Business ABN"
+           autoComplete="off"
           value={businessData.abn}
           onChange={(e) =>
             setBusinessData({ ...businessData, abn: e.target.value })
@@ -206,6 +208,7 @@ export default function Page() {
         <input
           type="text"
           name="license"
+           autoComplete="off"
           placeholder="Business License(If any)"
           value={businessData.license}
           onChange={(e) =>
@@ -217,6 +220,7 @@ export default function Page() {
           type="text"
           name="mobile"
           placeholder="Business Mobile"
+           autoComplete="off"
           value={businessData.mobile}
           onChange={(e) =>
             setBusinessData({ ...businessData, mobile: e.target.value })
@@ -228,6 +232,7 @@ export default function Page() {
           type="text"
           name="phone"
           placeholder="Business Phone (Optional)"
+           autoComplete="off"
           value={businessData.phone}
           onChange={(e) =>
             setBusinessData({ ...businessData, phone: e.target.value })
