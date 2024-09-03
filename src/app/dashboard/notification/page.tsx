@@ -17,7 +17,7 @@ const Notification = () => {
         </div>
         <LoaderWraperComp isLoading={isLoading} isError={isError} height="h-[60vh]">
           <div className="py-[24px] space-y-[12px]">
-            {data?.data.map((notification: { [key: string]: any }, index: number) => (
+            {data?.data?.map((notification: { [key: string]: any }, index: number) => (
               <NotificationCart key={notification.id} data={notification} index={index}/>
             ))}
           </div>

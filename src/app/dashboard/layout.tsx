@@ -39,7 +39,7 @@ export default function DashboardLayout({
           <ResponsiveSidebar />
         </div>
         <div className="flex-1 pl-[60px] lg:pl-[326px]">
-          <div>{children}</div>
+          <div className="relative overflow-hidden">{children}</div>
           <Footer />
         </div>
       </div>

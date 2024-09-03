@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetBunsinessQuery } from "@/redux/features/business/businessApi";
 import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
 import businessImage from "@/assets/images/business-image.png";
 import HomeGPlaceSearch from "./HomeGPlaceSearch";
-import { TGPlaceAddress } from "@/types";
+import { TGPlaceAddress, TUniObject } from "@/types";
+import { useGetAddressQuery } from "@/redux/features/address/addressApi";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -30,8 +31,20 @@ export default function Header() {
   const { data: businessData } = useGetBunsinessQuery([
     { name: "name", value: search },
   ]);
+  const [focus, setFocus] = useState<TUniObject>({ postalCode: false });
+  // const [addressData, setAddressDaaddressData] = useState<TUniObject>([]);
+  const { data: addressData } = useGetAddressQuery([
+    {
+      name: "postcode",
+      value: searchQuery?.postalCode,
+    },
+    {
+      name: "limit",
+      value: 100,
+    },
+  ]);
+  console.log(addressData);
 
-  // console.log(allAddress);
   function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!searchQuery?.serviceId) {
@@ -140,10 +153,74 @@ export default function Header() {
                   </ul>
                 )}
               </div>
-              <HomeGPlaceSearch
-                allAddress={allAddress}
-                setAllAddress={setAllAddress}
-              />
+              <div className="relative">
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="postalCode"
+                    placeholder="Postal code"
+                    autoComplete="off"
+                    onFocus={() =>
+                      setFocus((c) => ({ ...c, postalCode: true }))
+                    }
+                    onBlur={() =>
+                      setTimeout(() => {
+                        setFocus((c) => ({ ...c, postalCode: false }));
+                      }, 300)
+                    }
+                    onChange={(e) => {
+                      setSearchQuery((c) => ({
+                        ...c,
+                        postalCode: e.target.value,
+                      }));
+                    }}
+                    value={searchQuery?.postalCode}
+                    required
+                    className="w-[208px] h-12 pl-8 pr-2 rounded border-[#343333] border focus:outline-none font-medium truncate"
+                  />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="absolute ml-2 top-3.5"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M5.05025 4.05025C7.78392 1.31658 12.2161 1.31658 14.9497 4.05025C17.6834 6.78392 17.6834 11.2161 14.9497 13.9497L10 18.8995L5.05025 13.9497C2.31658 11.2161 2.31658 6.78392 5.05025 4.05025ZM10 11C11.1046 11 12 10.1046 12 9C12 7.89543 11.1046 7 10 7C8.89543 7 8 7.89543 8 9C8 10.1046 8.89543 11 10 11Z"
+                      fill="#058240"
+                    />
+                  </svg>
+                </div>
+                {focus?.postalCode && (
+                  <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100 text-left z-10 max-h-44 overflow-y-auto">
+                    {addressData?.data?.map((address: any) => (
+                      <li
+                        key={address.id}
+                        className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                        onClick={() => {
+                          setSearchQuery((c) => ({
+                            ...c,
+                            postalCode: address.postcode + "-" + address.name,
+                          }));
+                          setAllAddress((c) => ({
+                            ...c,
+                            postalCode: address.postcode,
+                            suburb: address.suburb,
+                            latitude: address.latitude,
+                            longitude: address.longitude,
+                          }));
+                          setFocus((c) => ({ ...c, postalCode: false }));
+                        }}
+                      >
+                        {address.name}-{address.postcode}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
             <button className="flex items-center gap-2 rounded-[3px] py-3 px-3 bg-green-900 text-white">
               Search{" "}

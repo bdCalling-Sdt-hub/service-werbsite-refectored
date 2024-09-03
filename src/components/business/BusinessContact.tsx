@@ -27,7 +27,11 @@ export default function BusinessContact({
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      const res = await addMessage({ businessId, ...formData });
+      const res = await addMessage({
+        businessId,
+        ...formData,
+        type: "MESSAGE",
+      });
       if (res?.data?.ok) {
         Swal.fire({
           icon: "success",
@@ -51,26 +55,44 @@ export default function BusinessContact({
       });
     }
   }
+  async function handleCall() {
+    addMessage({
+      type: "CALL",
+      businessId: businessId,
+    });
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showCancelButton: true,
+      showDenyButton: false,
+      confirmButtonText: "📞 Call",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.open(`tel:+880 1837551821`);
+      }
+    });
+  }
   return (
     <>
       <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center  gap-4 text-white font-light">
-        <a href={"tel:" + number} target="_blank" className="line-clamp-1">
-          <button className="flex items-center justify-center gap-2 w-52 h-16 bg-green-500 rounded-md">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2.3999 3.5999C2.3999 2.93716 2.93716 2.3999 3.5999 2.3999H6.18335C6.76996 2.3999 7.27059 2.824 7.36702 3.40262L8.2542 8.72567C8.3408 9.24531 8.07837 9.76067 7.60718 9.99626L5.74941 10.9251C7.08897 14.2539 9.74592 16.9108 13.0747 18.2504L14.0035 16.3926C14.2391 15.9214 14.7545 15.659 15.2741 15.7456L20.5972 16.6328C21.1758 16.7292 21.5999 17.2298 21.5999 17.8165V20.3999C21.5999 21.0626 21.0626 21.5999 20.3999 21.5999H17.9999C9.38426 21.5999 2.3999 14.6155 2.3999 5.9999V3.5999Z"
-                fill="white"
-              />
-            </svg>
-            Call Now
-          </button>
-        </a>
+        {/* <a href={"tel:" + number} target="_blank" className="line-clamp-1"> */}
+        <button
+          onClick={handleCall}
+          className="flex items-center justify-center gap-2 w-52 h-16 bg-green-500 rounded-md"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.3999 3.5999C2.3999 2.93716 2.93716 2.3999 3.5999 2.3999H6.18335C6.76996 2.3999 7.27059 2.824 7.36702 3.40262L8.2542 8.72567C8.3408 9.24531 8.07837 9.76067 7.60718 9.99626L5.74941 10.9251C7.08897 14.2539 9.74592 16.9108 13.0747 18.2504L14.0035 16.3926C14.2391 15.9214 14.7545 15.659 15.2741 15.7456L20.5972 16.6328C21.1758 16.7292 21.5999 17.2298 21.5999 17.8165V20.3999C21.5999 21.0626 21.0626 21.5999 20.3999 21.5999H17.9999C9.38426 21.5999 2.3999 14.6155 2.3999 5.9999V3.5999Z"
+              fill="white"
+            />
+          </svg>
+          Call Now
+        </button>
         <button
           className="flex items-center  justify-center gap-2 w-52 h-16 bg-green-500 rounded-md"
           onClick={handleModalClose}

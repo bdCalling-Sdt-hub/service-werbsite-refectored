@@ -2,10 +2,11 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const reviewApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    addReview: builder.mutation({
-      query: ({ id, data }) => {
+    // review
+    createReview: builder.mutation({
+      query: (data) => {
         return {
-          url: `reviews?businessId=${id}`,
+          url: `reviews`,
           method: "POST",
           body: data,
         };
@@ -21,14 +22,28 @@ const reviewApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "review",
+          url: "reviews",
           method: "GET",
           params,
         };
       },
       providesTags: ["message"],
     }),
+    // communication
+    getSingleCommunication: builder.query({
+      query: (id) => {
+        return {
+          url: `communications/${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["communication"],
+    }),
   }),
 });
 
-export const { useGetReviewQuery , useAddReviewMutation } = reviewApi;
+export const {
+  useGetReviewQuery,
+  useGetSingleCommunicationQuery,
+  useCreateReviewMutation,
+} = reviewApi;

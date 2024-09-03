@@ -3,14 +3,15 @@ import { baseApi } from "@/redux/api/baseApi";
 const messageApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     addMessage: builder.mutation({
-      query: ({ id, data }) => {
+      query: ( data) => {
+        // console.log(data)
         return {
-          url: `messages`,
+          url: `communications`,
           method: "POST",
           body: data,
         };
       },
-      invalidatesTags: ["portfolio"],
+      invalidatesTags: ["message"],
     }),
     getMessage: builder.query({
       query: (args) => {
@@ -21,7 +22,7 @@ const messageApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "messages",
+          url: "communications",
           method: "GET",
           params,
         };

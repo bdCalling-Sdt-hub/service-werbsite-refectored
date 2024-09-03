@@ -27,7 +27,7 @@ const addressApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: `addresses`,
+          url: `suburbs`,
           method: "GET",
           params,
         };

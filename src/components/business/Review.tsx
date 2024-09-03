@@ -3,6 +3,7 @@ import generateStars from "./generateStar";
 import ReviewCart from "./ReviewCart";
 import { TBusiness } from "@/redux/features/users/authSlice";
 import { useGetReviewQuery } from "@/redux/features/review/reviewApi";
+import LoaderWraperComp from "../LoaderWraperComp";
 
 function Review({
   businesDetails,
@@ -13,30 +14,46 @@ function Review({
   isLoading: boolean;
   isError: boolean;
 }) {
-  const [page, setPage] = useState<number| null>(1);
-  const [reviews, setReviews] = useState<any[]>([]);
-  // const {data, isLoading, isError} = useGetReviewQuery([{
-  //   name: "page", value: page
-  // }])
+  const [page, setPage] = useState<number | null>(1);
+  const {
+    data,
+    isLoading: reviewLoading,
+    isError: reviewError,
+  } = useGetReviewQuery(
+    [
+      {
+        name: "businessId",
+        value: businesDetails?.id,
+      },
+    ],
+    { skip: !businesDetails?.id }
+  );
 
-  const totalRating = 0;
   // reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
 
+  // console.log(data?.data);
   return (
-    <div>
+    <LoaderWraperComp
+      isError={isError || reviewError}
+      isLoading={isLoading || reviewLoading}
+    >
       <div className="flex flex-col-reverse lg:flex-row">
         <div className="pt-5 pr-8 ">
           {/* <p className="font-medium text-xl ">Reviews ({reviews.length})</p> */}
           <p className="font-medium text-xl ">
-            {reviews.length} Customer review
+            {data?.pagination?.totalData || 0} Customer review
           </p>
-          <div className="flex items-center my-4">
-            {generateStars(5).map((star, index) => (
-              <span key={index}>{star}</span>
+          <div>
+            {data?.data?.ratings?.map((rate: any, indx: number) => (
+              <div key={indx} className="flex items-center my-4">
+                {generateStars(rate.star || 0).map((star, index) => (
+                  <span key={index}>{star}</span>
+                ))}
+                <span className="ml-2">
+                  [{isNaN(rate?.total) ? 0 : rate?.total}]
+                </span>
+              </div>
             ))}
-            <span className="ml-2">
-              ({isNaN(totalRating) ? 0 : totalRating}/5)
-            </span>
           </div>
           {/* <BusinessContact email="sadf" number="sdfl"/> */}
         </div>
@@ -56,21 +73,14 @@ function Review({
       </div>
       <h2 className="font-medium text-xl my-5">Top Review</h2>
       <div className="flex flex-col gap-8">
-        {reviews.length === 0 && (
+        {data?.data?.reviews?.length === 0 && (
           <h2 className="text-2xl font-medium text-center">No review found</h2>
         )}
-        {reviews.map((review, index) => (
-          <ReviewCart
-            key={index}
-            date={review.createdAt}
-            location={review.location}
-            name={review.name}
-            rating={review.rating}
-            review={review.review}
-          />
+        {data?.data?.reviews.map((review: any, index: number) => (
+          <ReviewCart key={index} reviewData={review} />
         ))}
       </div>
-    </div>
+    </LoaderWraperComp>
   );
 }
 

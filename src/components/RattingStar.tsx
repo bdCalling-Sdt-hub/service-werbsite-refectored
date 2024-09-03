@@ -13,7 +13,7 @@ const RattingStar = ({
 
   return (
     <div>
-      <div className="flex items-center gap-1 mb-1">
+      <div className="flex items-center gap-1 mb-0.5">
         {Array.from({ length: 5 }, (_, index) => (
           <svg
             key={index}

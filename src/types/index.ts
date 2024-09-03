@@ -11,7 +11,7 @@ export type TSideItem = {
   }[];
 };
 
-export type TUniObject = { [key: string]: string };
+export type TUniObject = { [key: string]: any };
 
 export type TGPlaceAddress = {
   address: string;

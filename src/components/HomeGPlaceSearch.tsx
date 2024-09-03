@@ -51,8 +51,7 @@ const HomeGPlaceSearch = ({
       postalCode,
       state,
       suburb,
-      address: `${postalCode}-${suburb}`,
-      // address: place.formatted_address || "",
+      address: place.formatted_address || "",
       latitude: lat,
       longitude: lng,
     });

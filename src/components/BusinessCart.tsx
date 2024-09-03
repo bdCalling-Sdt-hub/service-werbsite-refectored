@@ -45,7 +45,9 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
           />
           {
             <Link href={`/business/${data.id}`}>
-              <button className="flex items-center justify-center gap-2 w-52 h-16 rounded-md text-black border hover:bg-gray-50">
+             <button
+          className="flex items-center justify-center gap-2 w-52 h-16 bg-green-500 rounded-md text-white "
+        >
                 See more...
               </button>
             </Link>

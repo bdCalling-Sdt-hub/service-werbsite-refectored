@@ -10,7 +10,7 @@ if (!apiUrl) throw new Error("API URL is not defined");
 export default function BusinessList({
   searchParams,
 }: {
-  searchParams: { service: string; suburb: string; postcode: string };
+  searchParams: { service: string; suburb: string;};
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState<number | null>(null);
@@ -18,7 +18,7 @@ export default function BusinessList({
 
   useEffect(() => {
     fetch(
-      `${apiUrl}businesses?serviceId=${searchParams.service}&postalCode=${searchParams.postcode}&suburb=${searchParams.suburb}`
+      `${apiUrl}businesses?serviceId=${searchParams.service}&suburb=${searchParams.suburb}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -38,7 +38,7 @@ export default function BusinessList({
   const handleSeemore = async () => {
     try {
       const res = await fetch(
-        `${apiUrl}businesses?serviceId=${searchParams.service}&postalCode=${searchParams.postcode}&suburb=${searchParams.suburb}&page=${page}`
+        `${apiUrl}businesses?serviceId=${searchParams.service}&suburb=${searchParams.suburb}&page=${page}`
       );
       const result = await res.json();
       if (result.data) {
@@ -50,10 +50,10 @@ export default function BusinessList({
     }
   };
 
-  if (!searchParams.service || !searchParams.postcode || !searchParams.suburb)
-    return (
-      <h2 className="text-2xl font-medium text-center">No services found</h2>
-    );
+  // if (!searchParams.service || !searchParams.suburb)
+  //   return (
+  //     <h2 className="text-2xl font-medium text-center">No services found</h2>
+  //   );
   return (
     <LoaderWraperComp isLoading={isLoading} isError={false} height='h-[80vh]' dataEmpty={!business.length}>
       <section className="flex flex-col gap-8 lg:px-36 lg:py-16 px-2 py-4 min-h-screen ">

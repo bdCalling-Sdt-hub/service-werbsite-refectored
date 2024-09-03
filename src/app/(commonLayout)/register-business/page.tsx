@@ -143,7 +143,7 @@ export default function Page() {
           type="text"
           name="businessName"
           placeholder="Business Name"
-           autoComplete="off"
+          autoComplete="off"
           value={businessData.name}
           onChange={(e) =>
             setBusinessData({ ...businessData, name: e.target.value })
@@ -196,11 +196,13 @@ export default function Page() {
           type="text"
           name="abn"
           placeholder="Business ABN"
-           autoComplete="off"
+          autoComplete="off"
           value={businessData.abn}
-          onChange={(e) =>
-            setBusinessData({ ...businessData, abn: e.target.value })
-          }
+          onChange={(e) => {
+            var regex = /[0-9]|\./;
+            if (e.target.value && !regex.test(e.target.value)) return;
+            setBusinessData({ ...businessData, abn: e.target.value });
+          }}
           required
           style={{ appearance: "textfield", MozAppearance: "textfield" }}
           className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black no-spinner"
@@ -208,7 +210,7 @@ export default function Page() {
         <input
           type="text"
           name="license"
-           autoComplete="off"
+          autoComplete="off"
           placeholder="Business License(If any)"
           value={businessData.license}
           onChange={(e) =>
@@ -220,11 +222,13 @@ export default function Page() {
           type="text"
           name="mobile"
           placeholder="Business Mobile"
-           autoComplete="off"
+          autoComplete="off"
           value={businessData.mobile}
-          onChange={(e) =>
-            setBusinessData({ ...businessData, mobile: e.target.value })
-          }
+          onChange={(e) => {
+            // var regex = /[0-9]|\./;
+            // if (e.target.value && !regex.test(e.target.value)) return;
+            setBusinessData({ ...businessData, mobile: e.target.value });
+          }}
           required
           className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
@@ -232,11 +236,13 @@ export default function Page() {
           type="text"
           name="phone"
           placeholder="Business Phone (Optional)"
-           autoComplete="off"
+          autoComplete="off"
           value={businessData.phone}
-          onChange={(e) =>
-            setBusinessData({ ...businessData, phone: e.target.value })
-          }
+          onChange={(e) => {
+            // var regex = /[0-9]|\./;
+            // if (e.target.value && !regex.test(e.target.value)) return;
+            setBusinessData({ ...businessData, phone: e.target.value });
+          }}
           className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
         />
         <h3 className="text-xl font-medium">Business Address</h3>

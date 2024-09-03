@@ -167,7 +167,11 @@ export default function Page() {
                 "Content-Type": "application/json",
               },
 
-              body: JSON.stringify({ ...businessData, ...allAddress }),
+              body: JSON.stringify({
+                ...businessData,
+                ...allAddress,
+                abn: Number(businessData.abn),
+              }),
             }
           );
           const businessResult = await businessRes.json();
