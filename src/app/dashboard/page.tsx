@@ -93,7 +93,7 @@ export default function Page() {
         mainService,
         mobile,
         openHour,
-        services: [...services],
+        services: services.length ? [...services] : [""],
         facebook: facebook || "",
         instagram: instagram || "",
         license: license || "",

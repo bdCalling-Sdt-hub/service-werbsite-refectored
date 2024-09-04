@@ -23,7 +23,7 @@ export default function AddPortfolio() {
       } else {
         Swal.fire({
           icon: "error",
-          text: "Internal Server Error!!",
+          text: (res?.error as any).data?.message || "Internal Server Error!!",
           // text: res.error?.data.message ,
         });
       }

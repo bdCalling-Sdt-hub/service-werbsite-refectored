@@ -24,9 +24,9 @@ export default function Page({
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!searchParams.id) {
-    router.push("/login");
-  }
+  // if (!searchParams.id) {
+  //   router.push("/login");
+  // }
 
   const handelResend = async () => {
     try {
@@ -102,55 +102,55 @@ export default function Page({
           height={1000}
         />
       </div>
-    <div className=" min-h-screen w-full flex flex-col justify-center items-center  px-3 py-10">
-      <form
-        className="max-w-screen-md  rounded-2xl border-green-500 mt-20 mx-auto border lg:p-11 p-5 flex flex-col gap-7"
-        onSubmit={handelSubmit}
-      >
-        <h2 className="text-4xl font-medium">Verify Account</h2>
-        <p className="text-black-400">
-          Enter the 4-digit code sent to your emile address
-        </p>
-        <div className="text-4xl font-medium px-[5%]">
-          <OTPInput
-            value={otp}
-            onChange={setOtp}
-            numInputs={4}
-            inputStyle={{
-              height: "90px",
-              width: "20%",
-              margin: "4%",
-              background: "#E6F3EC",
-              border: "1px solid #058240",
-              marginRight: "10px",
-              outline: "none",
-              borderRadius: "20px",
-              color: "#4E4E4E",
-            }}
-            renderSeparator={<span> </span>}
-            renderInput={(props) => <input {...props} />}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <p className="text-black-400">Didn’t receive code?</p>
-          <span
-            className="text-green-500 cursor-pointer"
-            onClick={handelResend}
-          >
-            Resend
-          </span>
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+      <div className=" min-h-screen w-full flex flex-col justify-center items-center  px-3 py-10">
+        <form
+          className="max-w-screen-md  rounded-2xl border-green-500 mt-20 mx-auto border lg:p-11 p-5 flex flex-col gap-7"
+          onSubmit={handelSubmit}
         >
-          Verify Number
-          {isLoading && <CustomSpinner />}
-        </button>
-      </form>
-      <HomeBackButton/>
-    </div>
+          <h2 className="text-4xl font-medium">Verify Account</h2>
+          <p className="text-black-400">
+            Enter the 4-digit code sent to your emile address
+          </p>
+          <div className="text-4xl font-medium px-[5%]">
+            <OTPInput
+              value={otp}
+              onChange={setOtp}
+              numInputs={4}
+              inputStyle={{
+                height: "90px",
+                width: "20%",
+                margin: "4%",
+                background: "#E6F3EC",
+                border: "1px solid #058240",
+                marginRight: "10px",
+                outline: "none",
+                borderRadius: "20px",
+                color: "#4E4E4E",
+              }}
+              renderSeparator={<span> </span>}
+              renderInput={(props) => <input {...props} />}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-black-400">Didn’t receive code?</p>
+            <span
+              className="text-green-500 cursor-pointer"
+              onClick={handelResend}
+            >
+              Resend
+            </span>
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+          >
+            Verify Number
+            {isLoading && <CustomSpinner />}
+          </button>
+        </form>
+        <HomeBackButton />
+      </div>
     </div>
   );
 }

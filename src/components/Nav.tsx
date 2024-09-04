@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/users/authSlice";
 import profileDemo from "@/assets/images/profile-demo.jpg";
+import { MdOutlineLogout } from "react-icons/md";
+import { BsKey } from "react-icons/bs";
+import { LuUserCheck2 } from "react-icons/lu";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -17,8 +20,25 @@ export default function Nav() {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = React.useState(false);
   const { user } = useAppSelector((state) => state.auth);
+  const containerRef = useRef<any>(null);
+  const handleOutsideClick = (e: any) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(e.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   return (
-    <nav className="flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white">
+    <nav
+      className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white"
+    >
       <Link href="/">
         <Image
           src="/LOGO.png"
@@ -47,7 +67,6 @@ export default function Nav() {
                     href="/register-business"
                     className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-green-600 text-green-600 bg-green-50"
                   >
-                   
                     <span className="lg:block hidden">
                       Business Registration
                     </span>
@@ -60,7 +79,7 @@ export default function Nav() {
             )}
           </ul>
           <div
-            className="flex items-center justify-center gap-2 relative cursor-pointer"
+            className="flex items-center justify-center gap-2 cursor-pointer"
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <p className="font-medium">{user.firstName}</p>
@@ -97,40 +116,38 @@ export default function Nav() {
               />
             </div>
             {isOpen ? (
-              <ul className="absolute bg-[#D9D9D9] rounded-md py-2 top-[70px] right-0 cursor-default flex flex-col z-10 text-black">
-                <Link href="/profile" className="py-2 px-6 hover:bg-[#E8E8E8]">
-                  Profile
-                </Link>
-                <Link
-                  href="/notifications"
-                  className="py-2 px-6 hover:bg-[#E8E8E8]"
-                >
-                  Notifications
-                </Link>
-                {user.type === "PROVIDER" && (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      className="py-2 px-6 hover:bg-[#E8E8E8] block lg:hidden"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/portfolio"
-                      className="py-2 px-6 hover:bg-[#E8E8E8]"
-                    >
-                      Portfolio
-                    </Link>
-                    <Link
-                      href="/subscription"
-                      className="py-2 px-6 hover:bg-[#E8E8E8]"
-                    >
-                      Subscription
-                    </Link>
-                  </>
-                )}
+              <ul
+                ref={containerRef}
+                className="absolute bg-gray-200 rounded-sm py-2 top-[68px] lg:top-[84px] right-0 cursor-default flex flex-col z-10 text-black max-w-72 w-full shadow-xl divide-y-[0.2px] divide-emerald-400"
+              >
                 <li
-                  className="py-2 px-6 text-green-600 hover:bg-[#E8E8E8] cursor-pointer"
+                  className="py-4 px-4 hover:text-green-500 hover:bg-gray-100 cursor-pointer flex justify-start items-center whitespace-pre gap-4 text-lg font-medium"
+                  onClick={() => router.push("/profile")}
+                >
+                  <div className="bg-gray-300 p-2 rounded-full">
+                    <LuUserCheck2 size={22} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span>
+                      {user.firstName} {user.lastName}
+                    </span>
+                    <span className="text-sm font-normal text-gray-500">
+                      {user.email}
+                    </span>
+                  </div>
+                </li>
+                <li
+                  className="py-4 px-4 hover:text-green-500 hover:bg-gray-100 cursor-pointer flex justify-start items-center whitespace-pre gap-4 text-lg font-medium border-b"
+                  // onClick={() =>
+                  // }
+                >
+                  <div className="bg-gray-300 p-2 rounded-full">
+                    <BsKey size={22} />
+                  </div>
+                  Change Password
+                </li>
+                <li
+                  className="py-4 px-4 text-red-500 hover:bg-gray-100 cursor-pointer flex justify-start items-center gap-4 text-lg font-medium border-b"
                   onClick={() =>
                     Swal.fire({
                       text: "Are you sure you want to logout?",
@@ -148,6 +165,9 @@ export default function Nav() {
                     })
                   }
                 >
+                  <div className="bg-red-200 p-2 rounded-full">
+                    <MdOutlineLogout size={22} />
+                  </div>
                   Logout
                 </li>
               </ul>

@@ -1,22 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import HomeBackButton from "@/components/HomeBackButton";
 import Image from "next/image";
 import authUndraw from "@/assets/images/auth-undraw.png";
+import { CustomSpinner } from "@/components/CustomSpinner";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function Page() {
-  const [email, setEmail] = React.useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = React.useState("");
 
   async function handelSubmit(e: React.FormEvent) {
     try {
       e.preventDefault();
-
+      setIsLoading(true);
       const res = await fetch(apiUrl + "auth/forgot", {
         method: "POST",
         headers: {
@@ -24,17 +26,19 @@ export default function Page() {
         },
         body: JSON.stringify({ email }),
       }).then((res) => res.json());
-
       if (res.ok) {
-        router.push("/verify");
+        setIsLoading(false);
+        router.push(`/verify?id=${res?.data?.id}`);
       } else {
+        setIsLoading(false);
         Swal.fire({
           icon: "error",
           text: res.message,
         });
       }
     } catch (error) {
-      console.error(error);
+      setIsLoading(false);
+      // console.error(error);
       Swal.fire({
         icon: "error",
         text: "Something went wrong. Please try again later.",
@@ -71,9 +75,11 @@ export default function Page() {
           />
           <button
             type="submit"
-            className="w-full bg-green-500 p-3 text-white rounded-md"
+            disabled={isLoading}
+            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
           >
             Send OTP
+            {isLoading && <CustomSpinner />}
           </button>
         </form>
         <HomeBackButton />

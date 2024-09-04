@@ -27,7 +27,7 @@ const ReviewRating = () => {
       <LoaderWraperComp
         isError={reviewError}
         isLoading={reviewLoading || isLoading}
-        dataEmpty={data?.data?.length < 1}
+        dataEmpty={data?.data?.reviews?.length < 1}
         height="h-[80vh]"
       >
         <div className="flex flex-col gap-6">

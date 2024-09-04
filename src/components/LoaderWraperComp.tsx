@@ -30,7 +30,7 @@ const LoaderWraperComp = ({
           <h1 className="text-red-400">Something want wrong!</h1>
         ) : (
           <h1 className="text-green-400">
-            {isError ? isError : "Empty data!"}
+            {isError ? isError : "Data not Found!"}
           </h1>
         )}
       </div>

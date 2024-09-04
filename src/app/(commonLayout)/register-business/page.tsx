@@ -10,6 +10,8 @@ import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
 import { useAppSelector } from "@/redux/hooks";
 import GooglePlaceAddress from "@/components/GooglePlaceAddress";
 import { TGPlaceAddress } from "@/types";
+import Image from "next/image";
+import authUndraw from "@/assets/images/auth-undraw.png";
 
 // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -125,132 +127,141 @@ export default function Page() {
   }
   // console.log(businessData);
   // console.log(addressData);
-  useEffect(() => {
-    if (!isLoading && user?.business) {
-      router.push("/dashboard");
-    }
-  }, [user?.business]);
+  // useEffect(() => {
+  //   if (!isLoading && user?.business) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [user?.business]);
   return (
-    <div className="px-3 min-h-screen flex justify-center items-center">
-      <form
-        className=" rounded-2xl border-green-500 mx-auto border py-16 px-7 lg:px-11 grid grid-cols-1 gap-6 mt-10 "
-        onSubmit={handelSubmit}
-      >
-        <h2 className="text-2xl lg:text-4xl font-medium text-center">
-          Tell more about your Business
-        </h2>
-        <input
-          type="text"
-          name="businessName"
-          placeholder="Business Name"
-          autoComplete="off"
-          value={businessData.name}
-          onChange={(e) =>
-            setBusinessData({ ...businessData, name: e.target.value })
-          }
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
+    <div className="flex items-center justify-center lg:px-10">
+      <div className="w-3/4 lg:w-3/5 pl-6 hidden lg:block">
+        <Image
+          src={authUndraw}
+          alt="authentication"
+          width={1000}
+          height={1000}
         />
-        <div className="relative">
+      </div>
+      <div className=" min-h-screen w-full flex flex-col justify-center items-start  px-3 py-10">
+        <form
+          className=" rounded-2xl border-green-500 mx-auto border py-16 px-7 lg:px-11 grid grid-cols-1 gap-6 mt-10 "
+          onSubmit={handelSubmit}
+        >
+          <h2 className="text-2xl lg:text-4xl font-medium text-center">
+            Tell more about your Business
+          </h2>
           <input
             type="text"
-            name="businessMainCategory"
-            placeholder="Business Main Category"
+            name="businessName"
+            placeholder="Business Name"
             autoComplete="off"
-            onFocus={() => setFocus((c) => ({ ...c, mainCate: true }))}
-            onBlur={() =>
-              setTimeout(() => {
-                setFocus((c) => ({ ...c, mainCate: false }));
-              }, 300)
+            value={businessData.name}
+            onChange={(e) =>
+              setBusinessData({ ...businessData, name: e.target.value })
             }
-            onChange={(e) => {
-              setBusinessData({ ...businessData, mainServiceId: "" });
-              setSearchParams((c) => ({ ...c, main: e.target.value }));
-            }}
-            value={searchParams.main}
             required
-            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
           />
-          {focus?.mainCate && (
-            <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
-              {serviceData?.data.map((service: any) => (
-                <li
-                  key={service.id}
-                  className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
-                  onClick={() => {
-                    setSearchParams((c) => ({ ...c, main: service.name }));
-                    setBusinessData({
-                      ...businessData,
-                      mainServiceId: service.id,
-                    });
-                    setFocus((c) => ({ ...c, mainCate: false }));
-                  }}
-                >
-                  {service.name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <input
-          type="text"
-          name="abn"
-          placeholder="Business ABN"
-          autoComplete="off"
-          value={businessData.abn}
-          onChange={(e) => {
-            var regex = /[0-9]|\./;
-            if (e.target.value && !regex.test(e.target.value)) return;
-            setBusinessData({ ...businessData, abn: e.target.value });
-          }}
-          required
-          style={{ appearance: "textfield", MozAppearance: "textfield" }}
-          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black no-spinner"
-        />
-        <input
-          type="text"
-          name="license"
-          autoComplete="off"
-          placeholder="Business License(If any)"
-          value={businessData.license}
-          onChange={(e) =>
-            setBusinessData({ ...businessData, license: e.target.value })
-          }
-          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-        />
-        <input
-          type="text"
-          name="mobile"
-          placeholder="Business Mobile"
-          autoComplete="off"
-          value={businessData.mobile}
-          onChange={(e) => {
-            // var regex = /[0-9]|\./;
-            // if (e.target.value && !regex.test(e.target.value)) return;
-            setBusinessData({ ...businessData, mobile: e.target.value });
-          }}
-          required
-          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-        />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Business Phone (Optional)"
-          autoComplete="off"
-          value={businessData.phone}
-          onChange={(e) => {
-            // var regex = /[0-9]|\./;
-            // if (e.target.value && !regex.test(e.target.value)) return;
-            setBusinessData({ ...businessData, phone: e.target.value });
-          }}
-          className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-        />
-        <h3 className="text-xl font-medium">Business Address</h3>
-        <GooglePlaceAddress
-          allAddress={allAddress}
-          setAllAddress={setAllAddress}
-        />
-        {/* 
+          <div className="relative">
+            <input
+              type="text"
+              name="businessMainCategory"
+              placeholder="Business Main Category"
+              autoComplete="off"
+              onFocus={() => setFocus((c) => ({ ...c, mainCate: true }))}
+              onBlur={() =>
+                setTimeout(() => {
+                  setFocus((c) => ({ ...c, mainCate: false }));
+                }, 300)
+              }
+              onChange={(e) => {
+                setBusinessData({ ...businessData, mainServiceId: "" });
+                setSearchParams((c) => ({ ...c, main: e.target.value }));
+              }}
+              value={searchParams.main}
+              required
+              className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black "
+            />
+            {focus?.mainCate && (
+              <ul className="w-full absolute bg-slate-200 rounded-b-md shadow-md divide-y divide-gray-100  z-10">
+                {serviceData?.data.map((service: any) => (
+                  <li
+                    key={service.id}
+                    className="hover:bg-blue-400 hover:text-white py-1.5 px-3 cursor-pointer"
+                    onClick={() => {
+                      setSearchParams((c) => ({ ...c, main: service.name }));
+                      setBusinessData({
+                        ...businessData,
+                        mainServiceId: service.id,
+                      });
+                      setFocus((c) => ({ ...c, mainCate: false }));
+                    }}
+                  >
+                    {service.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <input
+            type="text"
+            name="abn"
+            placeholder="Business ABN"
+            autoComplete="off"
+            value={businessData.abn}
+            onChange={(e) => {
+              var regex = /[0-9]|\./;
+              if (e.target.value && !regex.test(e.target.value)) return;
+              setBusinessData({ ...businessData, abn: e.target.value });
+            }}
+            required
+            style={{ appearance: "textfield", MozAppearance: "textfield" }}
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black no-spinner"
+          />
+          <input
+            type="text"
+            name="license"
+            autoComplete="off"
+            placeholder="Business License(If any)"
+            value={businessData.license}
+            onChange={(e) =>
+              setBusinessData({ ...businessData, license: e.target.value })
+            }
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
+          />
+          <input
+            type="text"
+            name="mobile"
+            placeholder="Business Mobile"
+            autoComplete="off"
+            value={businessData.mobile}
+            onChange={(e) => {
+              // var regex = /[0-9]|\./;
+              // if (e.target.value && !regex.test(e.target.value)) return;
+              setBusinessData({ ...businessData, mobile: e.target.value });
+            }}
+            required
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Business Phone (Optional)"
+            autoComplete="off"
+            value={businessData.phone}
+            onChange={(e) => {
+              // var regex = /[0-9]|\./;
+              // if (e.target.value && !regex.test(e.target.value)) return;
+              setBusinessData({ ...businessData, phone: e.target.value });
+            }}
+            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
+          />
+          <h3 className="text-xl font-medium">Business Address</h3>
+          <GooglePlaceAddress
+            allAddress={allAddress}
+            setAllAddress={setAllAddress}
+          />
+          {/* 
         <div className="relative">
           <input
             type="text"
@@ -317,15 +328,16 @@ export default function Page() {
             <option key={indx} value={item.state} label={item.state}></option>
           ))}
         </select> */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
-        >
-          Save
-          {isLoading && <CustomSpinner />}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+          >
+            Save
+            {isLoading && <CustomSpinner />}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
