@@ -1,11 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetBunsinessQuery } from "@/redux/features/business/businessApi";
 import { useGetServicesesQuery } from "@/redux/features/services/serviceApi";
 import businessImage from "@/assets/images/business-image.png";
-import HomeGPlaceSearch from "./HomeGPlaceSearch";
 import { TGPlaceAddress, TUniObject } from "@/types";
 import { useGetAddressQuery } from "@/redux/features/address/addressApi";
 
@@ -36,27 +35,28 @@ export default function Header() {
   const { data: addressData } = useGetAddressQuery([
     {
       name: "postcode",
-      value: searchQuery?.postalCode,
+      value: searchQuery?.postalCode?.slice(0, 4) || "",
     },
     {
       name: "limit",
       value: 100,
     },
   ]);
-  console.log(addressData);
+  // console.log(addressData);
 
   function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!searchQuery?.serviceId) {
+    if (!searchQuery?.serviceId || !allAddress.postalCode) {
       return setSearchQuery((c) => ({
         ...c,
         message: "Select service name and postcode from dropdown!",
       }));
     }
     router.push(
-      `/business?service=${searchQuery?.serviceId}&longitude=${allAddress?.longitude}&latitude=${allAddress.latitude}`
+      `/business?service=${searchQuery?.serviceId}&service_name=${search}&suburb=${allAddress.suburb}&longitude=${allAddress?.longitude}&latitude=${allAddress.latitude}`
     );
   }
+
   return (
     <header>
       <div className="relative hidden lg:block h-40 w-full ">
@@ -92,7 +92,11 @@ export default function Header() {
                   }
                   onChange={(e) => {
                     setSearch(e.target.value);
-                    setSearchQuery((c) => ({ ...c, message: "" }));
+                    setSearchQuery((c) => ({
+                      ...c,
+                      serviceId: "",
+                      message: "",
+                    }));
                   }}
                   className="lg:w-[391px] h-12 focus:outline-none p-3 rounded border-[#343333] border border-r-0 font-medium"
                   placeholder="What services are you looking for"
@@ -169,6 +173,7 @@ export default function Header() {
                       }, 300)
                     }
                     onChange={(e) => {
+                      setAllAddress((c) => ({ ...c, postalCode: "" }));
                       setSearchQuery((c) => ({
                         ...c,
                         postalCode: e.target.value,
@@ -208,7 +213,7 @@ export default function Header() {
                           setAllAddress((c) => ({
                             ...c,
                             postalCode: address.postcode,
-                            suburb: address.suburb,
+                            suburb: address.name,
                             latitude: address.latitude,
                             longitude: address.longitude,
                           }));

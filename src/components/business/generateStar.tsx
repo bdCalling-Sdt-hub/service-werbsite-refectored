@@ -57,7 +57,7 @@ export const EmptyStar = (
   </svg>
 );
 
-export default function generateStars(rating: number) {
+export default function cgenerateStars(rating: number) {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (i < rating) {

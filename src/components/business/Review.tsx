@@ -28,10 +28,6 @@ function Review({
     ],
     { skip: !businesDetails?.id }
   );
-
-  // reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
-
-  // console.log(data?.data);
   return (
     <LoaderWraperComp
       isError={isError || reviewError}
@@ -39,7 +35,6 @@ function Review({
     >
       <div className="flex flex-col-reverse lg:flex-row">
         <div className="pt-5 pr-8 ">
-          {/* <p className="font-medium text-xl ">Reviews ({reviews.length})</p> */}
           <p className="font-medium text-xl ">
             {data?.pagination?.totalData || 0} Customer review
           </p>
@@ -72,7 +67,7 @@ function Review({
           </ul> */}
       </div>
       <h2 className="font-medium text-xl my-5">Top Review</h2>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6">
         {data?.data?.reviews?.length === 0 && (
           <h2 className="text-2xl font-medium text-center">No review found</h2>
         )}

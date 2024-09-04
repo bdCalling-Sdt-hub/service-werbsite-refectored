@@ -7,6 +7,7 @@ import { LuSendHorizonal } from "react-icons/lu";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useAddMessageMutation } from "@/redux/features/message/messageApi";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function BusinessContact({
   number,
@@ -17,6 +18,9 @@ export default function BusinessContact({
   email?: string;
   businessId?: string;
 }) {
+  const currentPath = usePathname();
+  const router = useRouter();
+  const location = window.location;
   const [addMessage, { isLoading }] = useAddMessageMutation();
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const [modal, setModal] = useState(false);
@@ -61,7 +65,7 @@ export default function BusinessContact({
       businessId: businessId,
     });
     Swal.fire({
-      title: "Do you want to save the changes?",
+      title: `Do you want to call the <br/> ${number}`,
       showCancelButton: true,
       showDenyButton: false,
       confirmButtonText: "📞 Call",
@@ -71,6 +75,7 @@ export default function BusinessContact({
       }
     });
   }
+  // console.log(search);
   return (
     <>
       <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center  gap-4 text-white font-light">
@@ -95,7 +100,17 @@ export default function BusinessContact({
         </button>
         <button
           className="flex items-center  justify-center gap-2 w-52 h-16 bg-green-500 rounded-md"
-          onClick={handleModalClose}
+          onClick={() => {
+            if (user?.id) {
+              handleModalClose();
+            } else {
+              router.push(
+                "/login?redirect_path=/" 
+                  // currentPath.slice(1).split("/").join("-") +
+                  // location.search
+              );
+            }
+          }}
         >
           <svg
             width="24"

@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "@/components/Header";
-import ReviewCart from "@/components/ClientReview";
 import Services from "@/components/Services";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
