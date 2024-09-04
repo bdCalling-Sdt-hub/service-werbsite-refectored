@@ -9,7 +9,7 @@ import NotificationCart from "@/components/NotificationCart";
 const Notification = () => {
   const { data, isLoading, isError } = useGetMessageQuery(undefined);
   //   console.log(data);
-  console.log({ data, isLoading, isError });
+  // console.log({ data, isLoading, isError });
   return (
     <div className="min-h-screen">
       <div className="bg-grayground min-h-[82vh] rounded-lg">

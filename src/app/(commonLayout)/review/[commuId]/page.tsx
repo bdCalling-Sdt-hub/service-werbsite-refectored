@@ -1,9 +1,7 @@
 "use client";
-import Modal from "@/components/Reusable/Modal";
 import { useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import businessImg from "@/assets/images/business-image.png";
 import RattingStar from "@/components/RattingStar";
 import { CustomSpinner } from "@/components/CustomSpinner";
 import { LuSendHorizonal } from "react-icons/lu";

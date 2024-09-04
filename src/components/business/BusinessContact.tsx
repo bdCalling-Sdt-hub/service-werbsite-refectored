@@ -20,7 +20,7 @@ export default function BusinessContact({
 }) {
   const currentPath = usePathname();
   const router = useRouter();
-  const location = window.location;
+  // const location = window.location;
   const [addMessage, { isLoading }] = useAddMessageMutation();
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const [modal, setModal] = useState(false);

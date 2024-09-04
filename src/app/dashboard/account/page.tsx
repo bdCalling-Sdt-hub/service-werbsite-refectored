@@ -25,7 +25,7 @@ const Account = () => {
         <div className="px-[32px] py-[32px] border-b border-[#b7b6b6c9]">
           <PageHeading title={"Payments list"} backPath="/dashboard" />
         </div>
-        <div className="max-w-full overflow-x-hidden">
+        <div className="max-w-full overflow-x-hidden mt-4">
           <div className="w-[600px] lg:w-full">
             <div className="grid grid-cols-12 gap-3 px-4 lg:px-10 py-3 bg-green-200 font-medium text-start">
               <p className="col-span-2">#SI</p>
