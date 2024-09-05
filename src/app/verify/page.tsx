@@ -27,7 +27,6 @@ export default function Page({
   // if (!searchParams.id) {
   //   router.push("/login");
   // }
-
   const handelResend = async () => {
     try {
       const res = await fetch(
@@ -48,6 +47,10 @@ export default function Page({
 
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // console.log({
+    //   userId: searchParams.id,
+    //   code: otp,
+    // });
     try {
       setIsLoading(true);
       const res = await fetch(apiUrl + "auth/otp", {
@@ -61,6 +64,7 @@ export default function Page({
         }),
       });
       const result = await res.json();
+      // console.log(res);
       if (res.ok) {
         setIsLoading(false);
         Cookies.set("token", result.data.token);
@@ -91,7 +95,7 @@ export default function Page({
       });
     }
   }
-
+  console.log(searchParams.id);
   return (
     <div className="flex items-center justify-center lg:px-10">
       <div className="w-3/4 lg:w-3/6 pl-6 hidden lg:block">

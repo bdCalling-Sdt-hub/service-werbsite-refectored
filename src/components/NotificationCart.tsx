@@ -21,23 +21,28 @@ const NotificationCart = ({
   return (
     <>
       <div
-        onClick={() => setModal(true)}
-        className={`flex items-center justify-start gap-4 px-[24px] py-[8px] cursor-pointer hover:shadow-md ${
+        // onClick={() => setModal(true)}
+        className={`flex items-start justify-start gap-4 px-4 lg:px-8 py-4 hover:shadow-md border-b ${
           index !== 0 && "hover:border-t border-gray-50"
         } duration-300`}
       >
-        <div className="w-[70px] h-[70px] relative">
+        <div className="w-[70px] min-w-[70px] h-[70px] min-h-[70px] relative">
           <Image
             src={data.user?.image ? apiUrl + data?.user?.image : businessLogo}
             alt={data.name}
             className="rounded-full w-full h-full border p-0.5 content-evenly "
-            width={150}
-            height={150}
+            width={500}
+            height={500}
             priority
           />
         </div>
-        <div className="space-y-2">
-          <h6 className="text-[#181414] ">
+        <div className="">
+          <p className="text-[16px] font-medium">
+            {data?.user?.firstName} {data?.user?.lastName}
+          </p>
+          <p>{data?.user?.mobile || "N/A"}</p>
+          <p className="text-sm text-gray-700 mt-3">{data?.message}</p>
+          {/* <h6 className="text-[#181414] ">
             You have received{" "}
             <span className="font-medium  capitalize">
               {data.type.toLowerCase()}
@@ -53,7 +58,7 @@ const NotificationCart = ({
               {new Date(data?.createdAt).toLocaleString()}
             </small>
             <IoIosNotificationsOutline className={`text-green-300`} size={13} />
-          </div>
+          </div> */}
         </div>
       </div>
       <Modal
@@ -62,7 +67,7 @@ const NotificationCart = ({
         className="w-full max-w-[600px] p-8 bg-white rounded-lg"
       >
         <Modal.Header>Write your message :</Modal.Header>
-        
+
         {/* <form onSubmit={handelSubmit} className="w-full space-y-3">
       <textarea
         name="message"

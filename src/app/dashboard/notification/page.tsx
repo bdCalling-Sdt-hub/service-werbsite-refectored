@@ -22,7 +22,7 @@ const Notification = () => {
           dataEmpty={data?.data?.length < 1}
           height="h-[60vh]"
         >
-          <div className="py-[24px] space-y-[12px]">
+          <div className="space-y-[12px] py-8 lg:py-10">
             {data?.data?.map(
               (notification: { [key: string]: any }, index: number) => (
                 <NotificationCart
