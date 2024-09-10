@@ -2,8 +2,7 @@
 
 import BusinessCart from "@/components/BusinessCart";
 import LoaderWraperComp from "@/components/LoaderWraperComp";
-import PageHeading from "@/components/PageHeading";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -20,6 +19,7 @@ export default function BusinessList({
   };
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [page, setPage] = useState<number | null>(null);
   const [business, setBusiness] = useState<{ [key: string]: any }[]>([]);
 
@@ -29,17 +29,20 @@ export default function BusinessList({
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data.data) {
+        // console.log(data.ok);
+        if (data.ok) {
           setBusiness(data.data);
           setPage(data.pagination.nextPage);
           setIsLoading(false);
         } else {
+          setIsError(true);
           setIsLoading(false);
         }
       })
       .catch((e) => {
+        setIsError(true);
         setIsLoading(false);
-        console.log(e);
+        // console.log(e);
       });
   }, []);
   const handleSeemore = async () => {
@@ -48,15 +51,19 @@ export default function BusinessList({
         `${apiUrl}businesses?serviceId=${searchParams.service}&page=${page}&longitude=${searchParams.longitude}&latitude=${searchParams.latitude}`
       );
       const result = await res.json();
-      if (result.data) {
+      if (result.ok) {
         setBusiness([...business, ...result.data]);
         setPage(result.pagination.nextPage);
+      } else {
+        setIsError(true);
       }
     } catch (error) {
-      console.log(error);
+      setIsError(true);
+      // console.log(error);
     }
   };
 
+  console.log(business);
   // if (!searchParams.service || !searchParams.suburb)
   //   return (
   //     <h2 className="text-2xl font-medium text-center">No services found</h2>
@@ -70,9 +77,9 @@ export default function BusinessList({
       </h1>
       <LoaderWraperComp
         isLoading={isLoading}
-        isError={false}
+        isError={isError}
         height="h-[80vh]"
-        dataEmpty={!business.length}
+        dataEmpty={business.length < 1}
       >
         <section className="flex flex-col gap-8 mt-5">
           {business.map((singleBusines, indx) => (
