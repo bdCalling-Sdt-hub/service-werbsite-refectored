@@ -9,7 +9,7 @@ export default function Services() {
   const [services, setServices] = useState<
     { id: string; name: string; image: string; description: string }[]
   >([]);
-  const [active, setActive] = useState<string>();
+  const [active, setActive] = useState<string>("All");
   const [page, setPage] = useState<null | number>(1);
 
   const characters = [
@@ -68,7 +68,7 @@ export default function Services() {
     fetch(
       apiUrl +
         `services?page=${page}&limit=15&` +
-        (active ? `name=${active.toLocaleLowerCase()}` : "")
+        (active !== "All" && active ? `name=${active.toLocaleLowerCase()}` : "")
     )
       .then((res) => res.json())
       .then((json) => {

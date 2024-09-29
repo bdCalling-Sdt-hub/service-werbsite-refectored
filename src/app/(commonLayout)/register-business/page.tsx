@@ -109,7 +109,7 @@ export default function Page() {
       }).then((res) => res.json());
       if (res.ok) {
         setIsLoading(false);
-        window.location = res?.data?.url;
+        window.location = res?.data?.url || "/dashboard";
       } else {
         setIsLoading(false);
         Swal.fire({
