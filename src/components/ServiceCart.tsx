@@ -28,7 +28,7 @@ export default function ServiceCart({
         height={225}
         priority
       />
-      <h3 className="text-black-400 text-lg mt-2">{name}</h3>
+      <h3 className="text-black-400 text-sm mt-2">{name}</h3>
     </div>
   );
 }

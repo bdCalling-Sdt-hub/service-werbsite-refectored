@@ -69,16 +69,20 @@ export default function Page({
         setIsLoading(false);
         Cookies.set("token", result.data.token);
         dispatch(setUser({ user: result.data?.user, isLoading: false }));
-        if (result.data.user.type === "PROVIDER") {
-          if (result.data.user.business) {
-            router.push("/dashboard");
-            return;
+        if (window.location.hash === "#from-register") {
+          if (result.data.user.type === "PROVIDER") {
+            if (result.data.user.business) {
+              router.push("/dashboard");
+              return;
+            } else {
+              router.push("/register-business");
+              return;
+            }
           } else {
-            router.push("/register-business");
-            return;
+            router.push("/profile");
           }
         } else {
-          router.push("/profile");
+          router.push(`/change-password?id=${searchParams.id}`);
         }
       } else {
         setIsLoading(false);
@@ -95,7 +99,7 @@ export default function Page({
       });
     }
   }
-  console.log(searchParams.id);
+  // console.log(searchParams.id);
   return (
     <div className="flex items-center justify-center lg:px-10">
       <div className="w-3/4 lg:w-3/6 pl-6 hidden lg:block">

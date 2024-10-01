@@ -4,7 +4,7 @@ import { useAppSelector } from "@/redux/hooks";
 import Modal from "../Reusable/Modal";
 import { CustomSpinner } from "../CustomSpinner";
 import { LuSendHorizonal } from "react-icons/lu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useAddMessageMutation } from "@/redux/features/message/messageApi";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,6 +26,7 @@ export default function BusinessContact({
   const [modal, setModal] = useState(false);
   const handleModalClose = () => {
     setModal((prev) => !prev);
+    router.push(currentPath)
   };
   const { user } = useAppSelector((state) => state.auth);
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -75,6 +76,11 @@ export default function BusinessContact({
       }
     });
   }
+  useEffect(()=> {
+    if (window.location.hash === "#send-message") {
+      setModal(true)
+    }
+  }, [])
   // console.log(search);
   return (
     <>
@@ -105,9 +111,9 @@ export default function BusinessContact({
               handleModalClose();
             } else {
               router.push(
-                "/login?redirect_path=/" 
-                  // currentPath.slice(1).split("/").join("-") +
-                  // location.search
+                "/login?redirect_path=/" +
+                  currentPath.slice(1).split("/").join("-") +
+                  location.search +"#send-message"
               );
             }
           }}

@@ -36,9 +36,7 @@ export default function Nav() {
     };
   }, []);
   return (
-    <nav
-      className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white"
-    >
+    <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white">
       <Link href="/">
         <Image
           src="/LOGO.png"
@@ -138,8 +136,9 @@ export default function Nav() {
                 </li>
                 <li
                   className="py-4 px-4 hover:text-green-500 hover:bg-gray-100 cursor-pointer flex justify-start items-center whitespace-pre gap-4 text-lg font-medium border-b"
-                  // onClick={() =>
-                  // }
+                  onClick={() =>
+                    router.push(`/change-password?id=${user.id}&from=nav`)
+                  }
                 >
                   <div className="bg-gray-300 p-2 rounded-full">
                     <BsKey size={22} />

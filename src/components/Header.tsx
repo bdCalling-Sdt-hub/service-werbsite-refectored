@@ -84,13 +84,14 @@ export default function Header() {
                   value={search}
                   required
                   autoComplete="off"
-                  onFocus={() => setSearchActive(true)}
+                  // onFocus={() => setSearchActive(true)}
                   onBlur={() =>
                     setTimeout(() => {
                       setSearchActive(false);
                     }, 300)
                   }
                   onChange={(e) => {
+                    setSearchActive(true);
                     setSearch(e.target.value);
                     setSearchQuery((c) => ({
                       ...c,
@@ -164,15 +165,16 @@ export default function Header() {
                     name="postalCode"
                     placeholder="Postal code"
                     autoComplete="off"
-                    onFocus={() =>
-                      setFocus((c) => ({ ...c, postalCode: true }))
-                    }
+                    // onFocus={() =>
+                    //   setFocus((c) => ({ ...c, postalCode: true }))
+                    // }
                     onBlur={() =>
                       setTimeout(() => {
                         setFocus((c) => ({ ...c, postalCode: false }));
                       }, 300)
                     }
                     onChange={(e) => {
+                      setFocus((c) => ({ ...c, postalCode: true }));
                       setAllAddress((c) => ({ ...c, postalCode: "" }));
                       setSearchQuery((c) => ({
                         ...c,

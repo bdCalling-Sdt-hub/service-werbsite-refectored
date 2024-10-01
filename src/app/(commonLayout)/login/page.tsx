@@ -25,6 +25,7 @@ export default function Page({
   const [show, setShow] = useState(false);
   const [credential, setCredential] = useState({ email: "", password: "" });
 
+  // console.log(searchParams?.redirect_path?.split("-").join("/"));
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     setIsLoading(true);
     try {
@@ -51,9 +52,13 @@ export default function Page({
         Cookies.set("token", result.data.token);
         dispatch(setUser({ user: result.data?.user, isLoading: false }));
         if (searchParams?.redirect_path) {
-          router.push("/" + searchParams?.redirect_path?.split("-").join("/"));
+          router.push(
+            searchParams?.redirect_path?.split("-").join("/") +
+              window.location.hash 
+          );
           return;
         }
+        // console.log(result)
         if (result.data.user.type === "PROVIDER") {
           if (result.data.user.business) {
             router.push("/dashboard");
@@ -141,14 +146,14 @@ export default function Page({
                   d="M12 16.01C13.0609 16.01 14.0783 15.5886 14.8284 14.8384C15.5786 14.0883 16 13.0709 16 12.01"
                   stroke="#000000"
                   strokeWidth="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M17.61 6.39004L6.38 17.62C4.6208 15.9966 3.14099 14.0944 2 11.99C6.71 3.76002 12.44 1.89004 17.61 6.39004Z"
                   stroke="#000000"
                   strokeWidth="1.5"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
@@ -162,15 +167,15 @@ export default function Page({
                   d="M6.38 17.62L3 21"
                   stroke="#000000"
                   strokeWidth="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M19.5695 8.42999C20.4801 9.55186 21.2931 10.7496 21.9995 12.01C17.9995 19.01 13.2695 21.4 8.76953 19.23"
                   stroke="#000000"
                   strokeWidth="1.5"
                   strokeLinecap="round"
-                  stroke-linejoin="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ) : (

@@ -63,7 +63,7 @@ export default function BusinessList({
     }
   };
 
-  console.log(business);
+  // console.log(business);
   // if (!searchParams.service || !searchParams.suburb)
   //   return (
   //     <h2 className="text-2xl font-medium text-center">No services found</h2>

@@ -35,15 +35,6 @@ export default function Page() {
 
   async function handelEdit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (userData.newPassword || userData.confirmPassword) {
-      if (userData.newPassword !== userData.confirmPassword) {
-        Swal.fire({
-          icon: "error",
-          text: "new password and confirm password not matched",
-        });
-        return;
-      }
-    }
     setIsLoading(true);
     try {
       const token = Cookies.get("token");
@@ -181,32 +172,7 @@ export default function Page() {
               placeholder="Your Number"
             />
           </div>
-          <div className="w-full flex flex-col">
-            <label className="font-medium text-black-500">New Password</label>
-            <input
-              type="password"
-              name="newPassword"
-              onChange={(e) =>
-                setUserData({ ...userData, newPassword: e.target.value })
-              }
-              className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
-              placeholder="New Password"
-            />
-          </div>
-          <div className="w-full flex flex-col">
-            <label className="font-medium text-black-500">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              onChange={(e) =>
-                setUserData({ ...userData, confirmPassword: e.target.value })
-              }
-              className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
-              placeholder="Confirm Password"
-            />
-          </div>
+       
         </div>
         <div className="mt-3 flex justify-center lg:justify-start">
           <button
