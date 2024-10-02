@@ -66,6 +66,7 @@ export default function Page({
       });
       // console.log(res)
       const result = await res.json();
+      // console.log(result)
       if (result.ok) {
         setIsLoading(false);
         router.push("/verify?id=" + result.data.id + "#from-register");
