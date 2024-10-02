@@ -18,7 +18,7 @@ const Account = () => {
     },
   ]);
 
-  console.log(data);
+  // console.log(data);
   return (
     <LoaderWraperComp isLoading={isLoading} isError={isError} height="h-[80vh]">
       <div className="min-h-[80vh] pt-1">
