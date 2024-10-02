@@ -64,6 +64,7 @@ export default function Page() {
 
   useEffect(() => {
     if (user?.business) {
+      console.log(user);
       const {
         name,
         abn,
@@ -85,6 +86,7 @@ export default function Page() {
         phone,
         website,
       } = user?.business as TBusiness;
+
       setBusinessData({
         name,
         abn,
@@ -93,7 +95,7 @@ export default function Page() {
         mainService,
         mobile,
         openHour,
-        services: services.length ? [...services] : [""],
+        services: services?.length ? [...services] : [""],
         facebook: facebook || "",
         instagram: instagram || "",
         license: license || "",
