@@ -39,7 +39,7 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
         </div>
         <ul className="flex flex-wrap items-center gap-3 text-white font-extralight">
           {/* <RiCustomerService2Line size={18} className="text-[#058240]"/> */}
-          {data?.services.map((skill: any, index: any) => (
+          {data?.services?.map((skill: any, index: any) => (
             <li
               key={index}
               className="p-1 px-2.5 bg-green-500 rounded-2xl text-[12px]"
