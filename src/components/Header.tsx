@@ -30,6 +30,7 @@ export default function Header() {
   const { data: businessData } = useGetBunsinessQuery([
     { name: "name", value: search },
   ]);
+
   const [focus, setFocus] = useState<TUniObject>({ postalCode: false });
   // const [addressData, setAddressDaaddressData] = useState<TUniObject>([]);
   const { data: addressData } = useGetAddressQuery([
@@ -174,6 +175,9 @@ export default function Header() {
                       }, 300)
                     }
                     onChange={(e) => {
+                      if (e.target.value && isNaN(Number(e.target.value)))
+                        return;
+
                       setFocus((c) => ({ ...c, postalCode: true }));
                       setAllAddress((c) => ({ ...c, postalCode: "" }));
                       setSearchQuery((c) => ({
@@ -181,7 +185,7 @@ export default function Header() {
                         postalCode: e.target.value,
                       }));
                     }}
-                    value={searchQuery?.postalCode}
+                    value={searchQuery?.postalCode || ""}
                     required
                     className="w-[208px] h-12 pl-8 pr-2 rounded border-[#343333] border focus:outline-none font-medium truncate"
                   />
