@@ -57,6 +57,10 @@ export default function Page() {
     phone: "",
     facebook: "",
     instagram: "",
+    accountNumber: "",
+    accountName: "",
+    bankName: "",
+    bsbNumber: "",
   });
   const { data: serviceData } = useGetServicesesQuery([
     { name: "name", value: searchParams.main },
@@ -84,6 +88,10 @@ export default function Page() {
         license,
         phone,
         website,
+        accountNumber,
+        accountName,
+        bankName,
+        bsbNumber,
       } = user?.business as TBusiness;
       setBusinessData({
         name,
@@ -93,12 +101,16 @@ export default function Page() {
         mainService,
         mobile,
         openHour,
-        services: services.length ? [...services] : [""],
+        services: services?.length ? [...services] : [""],
         facebook: facebook || "",
         instagram: instagram || "",
         license: license || "",
         phone: phone || "",
         website: website || "",
+        accountNumber: accountNumber || "",
+        accountName: accountName || "",
+        bankName: bankName || "",
+        bsbNumber: bsbNumber || "",
       });
       setSearchParams({ main: mainService.name });
       setBusinessData((c) => c);
@@ -401,7 +413,73 @@ export default function Page() {
                 setAllAddress={setAllAddress}
               />
             </div>
-            <h3 className="text-xl font-medium col-span-2">
+            <h3 className="text-xl font-medium col-span-2 -mb-4">
+              Bank Details
+            </h3>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">
+                Account Number
+              </label>
+              <input
+                type="text"
+                name="accountNumber"
+                placeholder="Bank account number"
+                value={businessData?.accountNumber}
+                onChange={(e) =>
+                  setBusinessData({
+                    ...businessData,
+                    accountNumber: e.target.value,
+                  })
+                }
+                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+              />
+            </div>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">Account Name</label>
+              <input
+                type="text"
+                name="accountName"
+                placeholder="Bank account name"
+                value={businessData?.accountName}
+                onChange={(e) =>
+                  setBusinessData({
+                    ...businessData,
+                    accountName: e.target.value,
+                  })
+                }
+                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+              />
+            </div>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">Bank Name</label>
+              <input
+                type="text"
+                name="bankName"
+                placeholder="Bank name"
+                value={businessData?.bankName}
+                onChange={(e) =>
+                  setBusinessData({ ...businessData, bankName: e.target.value })
+                }
+                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+              />
+            </div>
+            <div className="w-full flex flex-col">
+              <label className="font-medium text-black-500">BSB Number</label>
+              <input
+                type="text"
+                name="bsbNumber"
+                placeholder="BSB number"
+                value={businessData?.bsbNumber}
+                onChange={(e) =>
+                  setBusinessData({
+                    ...businessData,
+                    bsbNumber: e.target.value,
+                  })
+                }
+                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+              />
+            </div>
+            <h3 className="text-xl font-medium col-span-2 -mb-4">
               Social media links
             </h3>
             <div className="w-full flex flex-col">

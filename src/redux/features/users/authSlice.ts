@@ -31,6 +31,10 @@ export type TBusiness = {
     image?: string;
     email?: string;
   };
+  accountNumber?: string;
+  accountName?: string;
+  bankName?: string;
+  bsbNumber?: string;
 };
 export type TUser = {
   id: string;

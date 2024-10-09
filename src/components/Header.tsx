@@ -105,7 +105,7 @@ export default function Header() {
                 {searchActive && (
                   <ul className="absolute bg-white shadow-md w-full text-lg rounded-b-lg max-h-60 overflow-y-auto">
                     {businessData?.data &&
-                      search.length > 0 &&
+                      search?.length > 0 &&
                       businessData?.data.map((business: any, index: number) => (
                         <li
                           key={index}
@@ -136,7 +136,7 @@ export default function Header() {
                           </div>
                         </li>
                       ))}
-                    {servicesData?.data.length > 0 && (
+                    {servicesData?.data?.length > 0 && (
                       <li className="text-white py-2 bg-black">Services</li>
                     )}
                     {servicesData?.data.map((service: any, index: number) => (

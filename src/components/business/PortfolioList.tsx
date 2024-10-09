@@ -7,7 +7,7 @@ function PortfolioList({ businessId }: { businessId: string }) {
   const { data, isLoading, isError } = useGetPortfoliosQuery(businessId, {
     skip: !businessId,
   });
-  if (data?.data.length === 0)
+  if (data?.data?.length === 0)
     return (
       <h2 className="text-2xl font-medium text-center mt-4">
         No portfolio found

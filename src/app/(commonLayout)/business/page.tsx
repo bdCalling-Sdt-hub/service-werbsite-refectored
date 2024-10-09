@@ -79,7 +79,7 @@ export default function BusinessList({
         isLoading={isLoading}
         isError={isError}
         height="h-[80vh]"
-        dataEmpty={business.length < 1}
+        dataEmpty={business?.length < 1}
       >
         <section className="flex flex-col gap-8 mt-5">
           {business.map((singleBusines, indx) => (

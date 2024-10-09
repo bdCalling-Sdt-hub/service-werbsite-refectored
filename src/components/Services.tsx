@@ -99,7 +99,7 @@ export default function Services() {
           </button>
         ))}
       </div>
-      {services.length === 0 && (
+      {services?.length === 0 && (
         <p className="text-center w-full py-8">No services found</p>
       )}
       <div className="my-8 grid lg:grid-cols-4 2xl:grid-cols-5 gap-6 justify-between">

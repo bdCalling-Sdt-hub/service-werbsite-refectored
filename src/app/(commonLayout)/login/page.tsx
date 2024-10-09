@@ -24,7 +24,6 @@ export default function Page({
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
   const [credential, setCredential] = useState({ email: "", password: "" });
-
   // console.log(searchParams?.redirect_path?.split("-").join("/"));
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     setIsLoading(true);
@@ -54,7 +53,7 @@ export default function Page({
         if (searchParams?.redirect_path) {
           router.push(
             searchParams?.redirect_path?.split("-").join("/") +
-              window.location.hash 
+              window.location.hash
           );
           return;
         }
