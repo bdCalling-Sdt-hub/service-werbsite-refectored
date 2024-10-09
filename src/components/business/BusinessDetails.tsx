@@ -32,7 +32,7 @@ function BusinessDetails({
         <div className="space-y-4">
           <h2 className="font-medium text-xl ">My Services</h2>
           <ul className="flex flex-wrap items-center gap-3 text-white font-extralight">
-            {businesDetails?.services.map((skill: any, index: any) => (
+            {businesDetails?.services?.map((skill: any, index: any) => (
               <li
                 key={index}
                 className="p-1 px-2.5 bg-green-500 rounded-2xl text-[12px]"

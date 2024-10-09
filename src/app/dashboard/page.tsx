@@ -68,6 +68,7 @@ export default function Page() {
 
   useEffect(() => {
     if (user?.business) {
+      console.log(user);
       const {
         name,
         abn,
@@ -93,6 +94,7 @@ export default function Page() {
         bankName,
         bsbNumber,
       } = user?.business as TBusiness;
+
       setBusinessData({
         name,
         abn,
