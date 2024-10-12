@@ -3,7 +3,13 @@ import Bu from "./Button";
 import { FaCheck } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 
-const SubscriptionCard = ({ data }: { data: { [key: string]: any } }) => {
+const SubscriptionCard = ({
+  data,
+  currentSubscriptionId,
+}: {
+  data: { [key: string]: any };
+  currentSubscriptionId?: string;
+}) => {
   // console.log(data);
   return (
     <div className="rounded-3xl p-9 bg-white items-start text-start lg:w-[387px] lg:min-h-[400px] flex flex-col justify-between gap-5">
@@ -27,7 +33,11 @@ const SubscriptionCard = ({ data }: { data: { [key: string]: any } }) => {
           </span>
           /Month
         </p>
-        <Bu id={data?.id} minimumStar={data.minimumStart} />
+        <Bu
+          id={data?.id}
+          minimumStar={data.minimumStart}
+          currentSubscriptionId={currentSubscriptionId}
+        />
       </div>
     </div>
   );

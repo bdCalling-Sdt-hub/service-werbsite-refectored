@@ -1,4 +1,5 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
+import Cookies from "js-cookie";
 import React from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -9,7 +10,20 @@ const UpgradePlane = async () => {
     cache: "no-store",
   });
   const { data: subscriptionData } = await res.json();
-//   console.log(subscriptionData);
+
+  const currentSubscriptionResponse = await fetch(
+    `${apiUrl}subscriptions/current`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    }
+  );
+
+  const { data: currentSubscriptionData } =
+    await currentSubscriptionResponse.json();
+
   return (
     <div className="bg-green-50 ">
       <section className="lg:px-36 lg:py-16 px-2 py-3 text-center min-h-screen">
@@ -25,7 +39,11 @@ const UpgradePlane = async () => {
         <div className="flex flex-col lg:flex-row justify-center gap-4 mt-8">
           {subscriptionData?.map(
             (plan: { [key: string]: any }, index: number) => (
-              <SubscriptionCard key={index} data={plan} />
+              <SubscriptionCard
+                key={index}
+                data={plan}
+                currentSubscriptionId={currentSubscriptionData?.id}
+              />
             )
           )}
         </div>

@@ -10,16 +10,18 @@ if (!apiUrl) throw new Error("API URL is not defined");
 export default function Bu({
   id,
   minimumStar,
+  currentSubscriptionId,
 }: {
   id: string;
   minimumStar: number;
+  currentSubscriptionId?: string;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const neededStar = minimumStar > 40;
 
   async function handleCheckout() {
     try {
-      const curreentUrl = window.location.origin;
+      const currentUrl = window.location.origin;
       // return console.log(curreentUrl);
       const token = Cookies.get("token");
       setIsLoading(true);
@@ -31,8 +33,8 @@ export default function Bu({
         },
         body: JSON.stringify({
           subscriptionId: id,
-          cancelUrl: curreentUrl + "/dashboard/upgrade-plane",
-          successUrl: curreentUrl + "/dashboard",
+          cancelUrl: currentUrl + "/dashboard/upgrade-plane",
+          successUrl: currentUrl + "/dashboard",
         }),
       });
       const result = await res.json();
@@ -56,15 +58,61 @@ export default function Bu({
     }
   }
 
+  async function handelUpgrade() {
+    try {
+      const token = Cookies.get("token");
+      setIsLoading(true);
+      const res = await fetch(apiUrl + `payments`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subscriptionId: id,
+        }),
+      });
+      const result = await res.json();
+      if (result.ok) {
+        setIsLoading(false);
+        window.location.reload();
+      } else {
+        Swal.fire({
+          icon: "error",
+          text: "Internal Server Error!!",
+          // text: res.error?.data.message ,
+        });
+      }
+    } catch (error) {
+      setIsLoading(false);
+      Swal.fire({
+        icon: "error",
+        text: "Something went wrong. Please try again later.",
+      });
+    }
+  }
+
   return (
     <button
       disabled={neededStar || isLoading}
       className={`py-5 w-full bg-green-500 text-white rounded-xl disabled:bg-green-400 ${
         isLoading ? "disabled:cursor-wait" : "disabled:cursor-not-allowed"
       }`}
-      onClick={handleCheckout}
+      onClick={
+        currentSubscriptionId
+          ? currentSubscriptionId === id
+            ? () => {}
+            : handelUpgrade
+          : handleCheckout
+      }
     >
-      {neededStar ? `Mimum need ${minimumStar} stars` : "Get Started"}
+      {currentSubscriptionId
+        ? currentSubscriptionId === id
+          ? "Active"
+          : "Upgrade"
+        : neededStar
+        ? `Minimum need ${minimumStar} stars`
+        : "Get Started"}
     </button>
   );
 }
