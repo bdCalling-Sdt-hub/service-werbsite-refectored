@@ -50,14 +50,16 @@ export default function Page({
         setIsLoading(false);
         Cookies.set("token", result.data.token);
         dispatch(setUser({ user: result.data?.user, isLoading: false }));
-        if (searchParams?.redirect_path) {
+
+        if (window?.location?.search) {
           router.push(
-            searchParams?.redirect_path?.split("-").join("/") +
+            window?.location?.search.split("=")[1]?.split("-").join("/") +
               window.location.hash
           );
           return;
         }
-        // console.log(result)
+        
+
         if (result.data.user.type === "PROVIDER") {
           if (result.data.user.business) {
             router.push("/dashboard");

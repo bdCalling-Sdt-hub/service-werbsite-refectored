@@ -18,19 +18,20 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 const Review = ({ params }: { params: { [key: string]: string } }) => {
-  const currentPath = usePathname();
   const router = useRouter();
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
-  const [modal, setModal] = useState(false);
   const [rating, setRating] = useState(0);
   const { data, isLoading, isError } = useGetSingleCommunicationQuery(
     params.commuId,
     { skip: !params.commuId }
   );
+
   const { user, isLoading: userLoading } = useAppSelector(
     (state) => state.auth
   );
+
   const [mutation, { isLoading: muLoding, error }] = useCreateReviewMutation();
+  
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
@@ -69,17 +70,7 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
       });
     }
   }
-  useEffect(() => {
-    if (
-      (!user && !userLoading) ||
-      (!isLoading && user?.id !== data?.data?.userId)
-    ) {
-      return redirect(
-        "/login?redirect_path=" + currentPath.slice(1).split("/").join("-")
-      );
-    }
-  }, [user, userLoading, data?.data]);
-  // console.log({ data, isLoading, isError });
+  
   return (
     <div className="min-h-[80vh] flex justify-center items-center">
       <LoaderWraperComp isLoading={isLoading || userLoading} isError={isError}>

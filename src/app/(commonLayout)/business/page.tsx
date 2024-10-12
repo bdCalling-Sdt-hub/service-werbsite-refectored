@@ -45,6 +45,7 @@ export default function BusinessList({
         // console.log(e);
       });
   }, []);
+  
   const handleSeemore = async () => {
     try {
       const res = await fetch(
