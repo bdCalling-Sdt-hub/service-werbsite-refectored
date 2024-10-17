@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Bu from "./Button";
-import { FaCheck } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
 
 const SubscriptionCard = ({
@@ -36,7 +35,6 @@ const SubscriptionCard = ({
         <Bu
           id={data?.id}
           minimumStar={data.minimumStart}
-          currentSubscriptionId={currentSubscriptionId}
         />
       </div>
     </div>

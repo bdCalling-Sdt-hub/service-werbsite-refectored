@@ -70,6 +70,16 @@ export default function Page() {
         setIsLoading(false);
         return;
       }
+
+      if(!allAddress.latitude || !allAddress.longitude){
+        Swal.fire({
+          icon: "error",
+          text: "Please select a valid address from Street Address drop down.",
+        });
+        setIsLoading(false);
+        return;
+      }
+
       if (!businessData.mainServiceId) {
         Swal.fire({
           icon: "error",
@@ -210,8 +220,7 @@ export default function Page() {
             autoComplete="off"
             value={businessData.abn}
             onChange={(e) => {
-              var regex = /[0-9]|\./;
-              if (e.target.value && !regex.test(e.target.value)) return;
+              if (e.target.value && isNaN(Number(e.target.value))) return;
               setBusinessData({ ...businessData, abn: e.target.value });
             }}
             required
@@ -236,8 +245,7 @@ export default function Page() {
             autoComplete="off"
             value={businessData.mobile}
             onChange={(e) => {
-              // var regex = /[0-9]|\./;
-              // if (e.target.value && !regex.test(e.target.value)) return;
+              if (e.target.value && isNaN(Number(e.target.value))) return;
               setBusinessData({ ...businessData, mobile: e.target.value });
             }}
             required
@@ -250,8 +258,7 @@ export default function Page() {
             autoComplete="off"
             value={businessData.phone}
             onChange={(e) => {
-              // var regex = /[0-9]|\./;
-              // if (e.target.value && !regex.test(e.target.value)) return;
+              if (e.target.value && isNaN(Number(e.target.value))) return;
               setBusinessData({ ...businessData, phone: e.target.value });
             }}
             className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"

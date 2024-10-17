@@ -1,6 +1,6 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
 import Cookies from "js-cookie";
-import React from "react";
+import React, { cache } from "react";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -10,19 +10,6 @@ const UpgradePlane = async () => {
     cache: "no-store",
   });
   const { data: subscriptionData } = await res.json();
-
-  const currentSubscriptionResponse = await fetch(
-    `${apiUrl}subscriptions/current`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${Cookies.get("token")}`,
-      },
-    }
-  );
-
-  const { data: currentSubscriptionData } =
-    await currentSubscriptionResponse.json();
 
   return (
     <div className="bg-green-50 ">
@@ -42,7 +29,6 @@ const UpgradePlane = async () => {
               <SubscriptionCard
                 key={index}
                 data={plan}
-                currentSubscriptionId={currentSubscriptionData?.data?.id}
               />
             )
           )}

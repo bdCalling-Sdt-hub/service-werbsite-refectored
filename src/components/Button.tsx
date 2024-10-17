@@ -10,11 +10,9 @@ if (!apiUrl) throw new Error("API URL is not defined");
 export default function Bu({
   id,
   minimumStar,
-  currentSubscriptionId,
 }: {
   id: string;
   minimumStar: number;
-  currentSubscriptionId?: string;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const neededStar = minimumStar > 40;
@@ -91,6 +89,8 @@ export default function Bu({
       });
     }
   }
+
+  const currentSubscriptionId = undefined;
 
   return (
     <button
