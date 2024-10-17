@@ -42,7 +42,7 @@ const UpgradePlane = async () => {
               <SubscriptionCard
                 key={index}
                 data={plan}
-                currentSubscriptionId={currentSubscriptionData?.id}
+                currentSubscriptionId={currentSubscriptionData?.data?.id}
               />
             )
           )}

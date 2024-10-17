@@ -18,11 +18,6 @@ export default function Bu({
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const neededStar = minimumStar > 40;
-  console.log({
-    id,
-    minimumStar,
-    currentSubscriptionId,
-  });
 
   async function handleCheckout() {
     try {
