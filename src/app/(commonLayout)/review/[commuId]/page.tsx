@@ -31,7 +31,7 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
   );
 
   const [mutation, { isLoading: muLoding, error }] = useCreateReviewMutation();
-  
+
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
@@ -41,11 +41,25 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
           text: "Please select a rate from rating star!",
         });
       }
-      const formData = new FormData(e.target as HTMLFormElement);
+
+      if (!formData.discount) {
+        return Swal.fire({
+          icon: "error",
+          text: "Please select a discount!",
+        });
+      }
+
+      if (!formData.message) {
+        return Swal.fire({
+          icon: "error",
+          text: "Please write a review!",
+        });
+      }
+
       const res = await mutation({
         communicationId: params.commuId,
         rating: rating,
-        message: formData.get("message"),
+        ...formData,
       });
       // console.log(res);
       if (res?.data?.ok) {
@@ -70,7 +84,7 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
       });
     }
   }
-  
+
   return (
     <div className="min-h-[80vh] flex justify-center items-center">
       <LoaderWraperComp isLoading={isLoading || userLoading} isError={isError}>
@@ -105,6 +119,35 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
           <div className="flex justify-start items-center gap-3">
             <p>Take Rating :</p>{" "}
             <RattingStar rating={rating} setRating={setRating} />
+          </div>
+          <div className="flex justify-start items-center gap-3">
+            <p>Discount :</p>{" "}
+            <div className="flex items-center gap-2 font-semibold">
+              <div>
+                <input
+                  type="radio"
+                  name="discount"
+                  className="mr-1"
+                  required
+                  onChange={(e) => setFormData((c) => ({ ...c, discount: 0 }))}
+                />
+                <label>None</label>
+              </div>
+              {[5, 10, 15].map((d, i) => (
+                <div key={i}>
+                  <input
+                    type="radio"
+                    name="discount"
+                    className="mr-1"
+                    required
+                    onChange={(e) =>
+                      setFormData((c) => ({ ...c, discount: d }))
+                    }
+                  />
+                  <label>{d}%</label>
+                </div>
+              ))}
+            </div>
           </div>
           <textarea
             name="message"
