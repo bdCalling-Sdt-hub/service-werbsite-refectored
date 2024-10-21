@@ -73,7 +73,12 @@ export default function Nav() {
                 )}
               </>
             ) : (
-              <></>
+              <Link
+                href="/bit-wallet"
+                className="font-medium hover:text-green-400 transition-all lg:block hidden"
+              >
+                Bit
+              </Link>
             )}
           </ul>
           <div
