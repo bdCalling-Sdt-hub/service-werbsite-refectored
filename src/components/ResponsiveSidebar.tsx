@@ -45,6 +45,11 @@ const ResponsiveSidebar = () => {
       icon: FaCloudArrowUp,
       path: "/dashboard/upgrade-plane",
     },
+    // {
+    //   name: "Account",
+    //   icon: GrMoney,
+    //   path: "/dashboard/bit-wallet",
+    // },
     {
       name: "Account",
       icon: GrMoney,

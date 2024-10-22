@@ -4,10 +4,10 @@ import { IoMdCheckmark } from "react-icons/io";
 
 const SubscriptionCard = ({
   data,
-  currentSubscriptionId,
+  starQty,
 }: {
   data: { [key: string]: any };
-  currentSubscriptionId?: string;
+  starQty: number;
 }) => {
   // console.log(data);
   return (
@@ -32,10 +32,7 @@ const SubscriptionCard = ({
           </span>
           /Month
         </p>
-        <Bu
-          id={data?.id}
-          minimumStar={data.minimumStart}
-        />
+        <Bu id={data?.id} minimumStar={data.minimumStart} starQty={starQty} />
       </div>
     </div>
   );

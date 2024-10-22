@@ -74,10 +74,10 @@ export default function Nav() {
               </>
             ) : (
               <Link
-                href="/bit-wallet"
+                href="/add-bit-wallet"
                 className="font-medium hover:text-green-400 transition-all lg:block hidden"
               >
-                Bit
+                Bit Wallet
               </Link>
             )}
           </ul>

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAppSelector } from "@/redux/hooks";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -10,13 +11,15 @@ if (!apiUrl) throw new Error("API URL is not defined");
 export default function Bu({
   id,
   minimumStar,
+  starQty,
 }: {
   id: string;
   minimumStar: number;
+  starQty: number;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const neededStar = minimumStar > 40;
-
+  const neededStar = minimumStar > starQty;
+  const { user } = useAppSelector((state) => state.auth);
   async function handleCheckout() {
     try {
       const currentUrl = window.location.origin;
@@ -90,7 +93,10 @@ export default function Bu({
     }
   }
 
-  const currentSubscriptionId = undefined;
+  const currentSubscriptionId =
+    user?.business?.payments && user?.business?.payments[0]
+      ? user?.business?.payments[0].subscription.id
+      : undefined;
 
   return (
     <button

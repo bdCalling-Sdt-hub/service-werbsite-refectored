@@ -35,6 +35,7 @@ export type TBusiness = {
   accountName?: string;
   bankName?: string;
   bsbNumber?: string;
+  payments?: Array<any>;
 };
 export type TUser = {
   id: string;

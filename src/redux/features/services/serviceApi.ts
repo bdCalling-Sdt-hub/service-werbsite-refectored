@@ -2,7 +2,6 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const serviceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    
     getServiceses: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
