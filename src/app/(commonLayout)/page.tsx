@@ -11,7 +11,7 @@ export default async function page() {
       <Header />
       <Services />
       <section className="lg:px-[150px] lg:py-[30px] px-2 py-4 pb-[156px] bg-mastard-50 flex flex-col items-center">
-        <h2 className="uppercase font-semibold text-5xl">Client Review</h2>
+        <h2 className="uppercase font-semibold text-5xl">Service Provider of the Month</h2>
         <p className="font-Montserrat pt-4">
           Best Affordable services Provider
         </p>
