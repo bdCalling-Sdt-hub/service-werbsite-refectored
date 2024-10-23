@@ -115,6 +115,8 @@ export default function Bu({
       {currentSubscriptionId
         ? currentSubscriptionId === id
           ? "Active"
+          : neededStar
+          ? `Minimum need ${minimumStar} stars`
           : "Upgrade"
         : neededStar
         ? `Minimum need ${minimumStar} stars`

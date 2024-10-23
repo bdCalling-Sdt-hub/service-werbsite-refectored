@@ -8,7 +8,7 @@ import { FaCloudArrowUp, FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoMdArrowDropdown, IoMdNotificationsOutline } from "react-icons/io";
-import { MdPreview } from "react-icons/md";
+import { MdCurrencyBitcoin, MdPreview } from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
 
 const ResponsiveSidebar = () => {
@@ -45,11 +45,11 @@ const ResponsiveSidebar = () => {
       icon: FaCloudArrowUp,
       path: "/dashboard/upgrade-plane",
     },
-    // {
-    //   name: "Account",
-    //   icon: GrMoney,
-    //   path: "/dashboard/bit-wallet",
-    // },
+    {
+      name: "Bits",
+      icon: MdCurrencyBitcoin,
+      path: "/dashboard/bits",
+    },
     {
       name: "Account",
       icon: GrMoney,

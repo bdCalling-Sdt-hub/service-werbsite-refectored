@@ -6,7 +6,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 const PageHeading = ({ title, backPath }: {title: string; backPath?: string}) => {
   const router = useRouter();
   return (
-    <div className=" text-primary flex items-center gap-1">
+    <div className=" text-primary flex items-center gap-1 pt-4">
       {/* <button
         className="outline-none px-2"
         onClick={() => router.push(backPath || "/")}
