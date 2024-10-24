@@ -36,7 +36,7 @@ export default function Nav() {
     };
   }, []);
   return (
-    <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-white fixed z-30 w-full text-white">
+    <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white">
       <Link href="/">
         <Image
           src="/LOGO.png"
