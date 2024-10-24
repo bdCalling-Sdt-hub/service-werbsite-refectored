@@ -6,7 +6,7 @@ import { createElement, ReactNode, useState } from "react";
 import { FaUserTie } from "react-icons/fa";
 import { FaCloudArrowUp, FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
-import { HiMenuAlt3 } from "react-icons/hi";
+import { HiMenuAlt3, HiOutlineSpeakerphone } from "react-icons/hi";
 import { IoMdArrowDropdown, IoMdNotificationsOutline } from "react-icons/io";
 import { MdCurrencyBitcoin, MdPreview } from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
@@ -44,6 +44,11 @@ const ResponsiveSidebar = () => {
       name: "Upgrade Plan",
       icon: FaCloudArrowUp,
       path: "/dashboard/upgrade-plane",
+    },
+    {
+      name: "Job Posts",
+      icon: HiOutlineSpeakerphone,
+      path: "/dashboard/job-posts",
     },
     {
       name: "Bits",
