@@ -7,17 +7,11 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 const BitCard = ({ data }: { data: TBit }) => {
-  const {
-    description,
-    image,
-    communicationPreference,
-    user,
-    service,
-  } = data;
+  const { description, image, communicationPreference, user, service } = data;
   //   console.log(data);
   return (
     <div className="my-8 p-6 flex justify-start gap-4 hover:bg-gray-50 hover:shadow transition-all">
-      <div className=" max-w-20 w-full h-full overflow-hidden">
+      <div className="max-w-20 w-full h-full overflow-hidden">
         <Image
           src={user.image ? apiUrl + "/" + user.image : profileDemo}
           width={500}
@@ -26,11 +20,16 @@ const BitCard = ({ data }: { data: TBit }) => {
           alt=""
         />
       </div>
-      <div className="space-y-5 ">
-        <div className="col-span-8 space-y-2">
-          <p className="font-semibold">
-            {user.firstName} {user?.lastName}
-          </p>
+      <div className="flex-1 space-y-5 ">
+        <div className="space-y-2 mt-3.5">
+          <div className="w-full flex justify-between gap-3">
+            <p className="font-semibold">
+              {user.firstName} {user?.lastName}
+            </p>
+            <p className="text-gray-600 text-sm">
+              {new Date(data?.createdAt).toDateString()}
+            </p>
+          </div>
           <p>
             {communicationPreference === "call" ? "Phone" : "Email"} :
             {communicationPreference === "call" ? (
@@ -47,7 +46,7 @@ const BitCard = ({ data }: { data: TBit }) => {
           </p>
         </div>
         <div className="space-y-3">
-          <p>
+          {/* <p>
             Service : <span className="text-gray-600">{service.name}</span>
           </p>
           <p>
@@ -55,7 +54,7 @@ const BitCard = ({ data }: { data: TBit }) => {
             <span className="text-gray-600">
               {new Date(data.createdAt).toLocaleString()}
             </span>
-          </p>
+          </p> */}
           <p>
             Description : <span className="text-gray-600">{description}</span>
           </p>

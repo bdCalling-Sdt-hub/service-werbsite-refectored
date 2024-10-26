@@ -13,8 +13,6 @@ import { TGPlaceAddress } from "@/types";
 import Image from "next/image";
 import authUndraw from "@/assets/images/auth-undraw.png";
 
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 

@@ -68,7 +68,7 @@ export default function Page() {
 
   useEffect(() => {
     if (user?.business) {
-      console.log(user);
+      // console.log(user);
       const {
         name,
         abn,
