@@ -7,7 +7,6 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 export default function ReviewCart({ reviewData }: any) {
-  console.log(reviewData);
   return (
     <div className="rounded p-4 lg:p-6 flex justify-start gap-4 border">
       <div className="min-w-[50px] w-[60px] lg:min-w-[70px] lg:w-[70px] h-[50px] lg:h-[70px] border border-blue-500/10 rounded-full">
@@ -19,8 +18,8 @@ export default function ReviewCart({ reviewData }: any) {
           }
           alt={"review"}
           className="rounded-full h-full w-full object-cover"
-          width={1000}
-          height={1000}
+          width={100}
+          height={100}
           priority
         />
       </div>
@@ -30,9 +29,7 @@ export default function ReviewCart({ reviewData }: any) {
           {reviewData?.user?.lastName}
         </h5>
         <div className="flex items-center gap-1 pb-2">
-          {generateStars(reviewData?.rating).map((star, index) => (
-            <span key={index}>{star}</span>
-          ))}
+          {generateStars(reviewData?.rating)}
         </div>
         <p className="text-gray-600">{reviewData?.message}</p>
       </div>

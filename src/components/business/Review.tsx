@@ -41,9 +41,7 @@ function Review({
           <div>
             {data?.data?.ratings?.map((rate: any, indx: number) => (
               <div key={indx} className="flex items-center my-4">
-                {generateStars(rate.star || 0).map((star, index) => (
-                  <span key={index}>{star}</span>
-                ))}
+                {generateStars(rate.star || 0)}
                 <span className="ml-2">
                   [{isNaN(rate?.total) ? 0 : rate?.total}]
                 </span>
