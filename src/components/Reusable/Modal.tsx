@@ -34,7 +34,7 @@ const Modal = ({ isOpen, onClose, children, className }: TModal) => {
     <ModalContext.Provider value={{ onClose }}>
       <div
         onClick={handleOutsideClose}
-        className={`fixed inset-0 flex justify-center items-center bg-gray-800/70 z-[999] ${
+        className={`fixed inset-0 flex justify-center items-center bg-gray-800/70 z-[999] transition-all ${
           isOpen ? "visible" : "invisible"
         }`}
       >

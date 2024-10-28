@@ -12,6 +12,7 @@ const jobsApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["job"],
     }),
+
     getjobs: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -28,6 +29,16 @@ const jobsApi = baseApi.injectEndpoints({
       },
       providesTags: ["business"],
     }),
+    applyJob: builder.mutation({
+      query: (data) => {
+        return {
+          url: `job-applications`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["job"],
+    }),
     // getSingleBunsiness: builder.query({
     //   query: (id) => {
     //     return {
@@ -40,4 +51,4 @@ const jobsApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { usePostJobMutation, useGetjobsQuery } = jobsApi;
+export const { usePostJobMutation, useGetjobsQuery , useApplyJobMutation } = jobsApi;

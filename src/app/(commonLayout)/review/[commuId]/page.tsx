@@ -30,7 +30,7 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
     (state) => state.auth
   );
 
-  const [mutation, { isLoading: muLoding, error }] = useCreateReviewMutation();
+  const [mutation, { isLoading: muLoding }] = useCreateReviewMutation();
 
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
