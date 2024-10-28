@@ -7,6 +7,7 @@ import JobCard from "./JobCard";
 
 const JobList = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  // const router = useRouter()
   const { data, isLoading, isError } = useGetjobsQuery([
     {
       name: "limit",
@@ -21,10 +22,10 @@ const JobList = () => {
     //   value: "",
     // },
   ]);
-  console.log(data);
+  // console.log(router.pathname);
 
   return (
-    <LoaderWraperComp isLoading={isLoading} isError={isError}>
+    <LoaderWraperComp isLoading={isLoading} isError={isError} height="h-[80vh]">
       <div className="px-[32px] py-[32px] space-y-6">
         {data?.data?.map((job: any, index: number) => (
           <JobCard job={job} key={index} />

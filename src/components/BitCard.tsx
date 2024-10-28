@@ -21,7 +21,7 @@ const BitCard = ({ data }: { data: TBit }) => {
         />
       </div>
       <div className="flex-1 space-y-5 ">
-        <div className="space-y-2 mt-3.5">
+        <div className="space-y-2">
           <div className="w-full flex justify-between gap-3">
             <p className="font-semibold">
               {user.firstName} {user?.lastName}

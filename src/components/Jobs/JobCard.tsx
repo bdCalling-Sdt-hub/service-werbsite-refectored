@@ -3,18 +3,16 @@ import Image from "next/image";
 import profileDemo from "../../assets/images/profile-demo.jpg";
 import Link from "next/link";
 import { TUniObject } from "@/types";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCurrentUser } from "@/redux/features/users/authSlice";
+import { usePathname } from "next/navigation";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 const JobCard = ({ job }: { job: TUniObject }) => {
-  const { user } = useAppSelector(selectCurrentUser);
-//   console.log(user);
+  const pathName = usePathname();
   return (
     <div className="my-8 p-6 border space-y-5 hover:bg-gray-50 hover:shadow transition-all">
-      {user?.type === "PROVIDER" ? (
+      {pathName === "/dashboard/job-posts" ? (
         <div className="space-y-3 flex-1">
           <div className="flex justify-between gap-4">
             <h1 className="text-2xl font-semibold">{job?.title}</h1>
@@ -43,7 +41,7 @@ const JobCard = ({ job }: { job: TUniObject }) => {
                 alt=""
               />
             </div>
-            <div className="flex-1 space-y-3  mt-3.5">
+            <div className="flex-1 space-y-3 ">
               <div className="flex justify-between gap-4">
                 <p className="font-semibold">{job.business?.name || "N/A"} </p>
                 <p className="text-sm">
