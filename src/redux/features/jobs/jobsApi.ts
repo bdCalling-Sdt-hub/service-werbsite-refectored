@@ -2,17 +2,6 @@ import { baseApi } from "@/redux/api/baseApi";
 
 const jobsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    postJob: builder.mutation({
-      query: (data) => {
-        return {
-          url: `jobs`,
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["job"],
-    }),
-
     getjobs: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -27,7 +16,17 @@ const jobsApi = baseApi.injectEndpoints({
           params,
         };
       },
-      providesTags: ["business"],
+      providesTags: ["job"],
+    }),
+    postJob: builder.mutation({
+      query: (data) => {
+        return {
+          url: `jobs`,
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["job"],
     }),
     applyJob: builder.mutation({
       query: (data) => {
@@ -39,16 +38,31 @@ const jobsApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["job"],
     }),
-    // getSingleBunsiness: builder.query({
-    //   query: (id) => {
-    //     return {
-    //       url: `businesses/${id}`,
-    //       method: "GET",
-    //     };
-    //   },
-    //   providesTags: ["message"],
-    // }),
+    getApplicationByJobId: builder.query({
+      query: (id) => {
+        return {
+          url: `job-applications?jobId=${id}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["job"],
+    }),
+    jobDelete: builder.mutation({
+      query: (id: string) => {
+        return {
+          url: `jobs/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["job"],
+    }),
   }),
 });
 
-export const { usePostJobMutation, useGetjobsQuery , useApplyJobMutation } = jobsApi;
+export const {
+  usePostJobMutation,
+  useGetjobsQuery,
+  useApplyJobMutation,
+  useGetApplicationByJobIdQuery,
+useJobDeleteMutation
+} = jobsApi;

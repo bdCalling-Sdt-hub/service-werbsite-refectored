@@ -16,7 +16,7 @@ const BitCard = ({ data }: { data: TBit }) => {
           src={user.image ? apiUrl + "/" + user.image : profileDemo}
           width={500}
           height={500}
-          className="w-full h-full object-cover rounded"
+          className="w-full h-full object-cover rounded-full"
           alt=""
         />
       </div>
