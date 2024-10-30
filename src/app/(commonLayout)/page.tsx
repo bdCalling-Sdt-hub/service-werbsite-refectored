@@ -65,7 +65,7 @@ export default async function page() {
                   id="premium-product"
                   className="h-16 w-16"
                   fill="#FFC403"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="#FFC403"
                 >
                   <path
