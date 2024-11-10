@@ -40,7 +40,7 @@ const NotificationCart = ({
           <p className="text-[16px] font-medium">
             {data?.user?.firstName} {data?.user?.lastName}
           </p>
-          <p>{data?.user?.mobile || "N/A"}</p>
+          <p className="text-gray-600">{data?.user?.email}</p>
           <p className="text-sm text-gray-700 mt-3">{data?.message}</p>
           {/* <h6 className="text-[#181414] ">
             You have received{" "}

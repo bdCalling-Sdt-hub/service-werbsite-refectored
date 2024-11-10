@@ -36,13 +36,13 @@ export default function Nav() {
     };
   }, []);
   return (
-    <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 bg-green-900 fixed z-30 w-full text-white">
+    <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 fixed z-30 w-full bg-slate-100 shadow-lg">
       <Link href="/">
         <Image
           src="/LOGO.png"
           alt="logo"
-          className="w-36 lg:w-56"
-          width={1000}
+          className="w-20 lg:w-40"
+          width={200}
           height={1000}
           priority
         />

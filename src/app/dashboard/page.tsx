@@ -609,7 +609,7 @@ export default function Page() {
               </div>
             </div>
             <div className="col-span-2 w-full h-80">
-              <h3 className="text-xl font-medium pb-4">About About Company</h3>
+              <h3 className="text-xl font-medium pb-4">About Company</h3>
               <ReactQuill
                 theme="snow"
                 value={businessData.about}

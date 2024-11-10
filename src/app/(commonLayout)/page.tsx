@@ -19,15 +19,42 @@ export default async function page() {
   return (
     <>
       <Header />
-      <Services />
-      <section className="lg:px-[150px] lg:py-[30px] px-2 py-4 pb-[156px] bg-slate-100 flex flex-col items-center">
+      <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 flex justify-center gap-16 bg-yellow-100">
+        <div>
+          <h3 className="text-5xl font-semibold">
+            Benefits for our service providers
+          </h3>
+          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-inside ml-10">
+            <li>full rs</li>
+            <li>Online referral system</li>
+            <li>Spacial promotions</li>
+            <li>Create work relationships from</li>
+            <li>Discount Benefits</li>
+            <li>Full markting tools with </li>
+          </ul>
+        </div>
+        <Image src="/man.png" alt="logo" width={250} height={1000} />
+      </section>
+      <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 flex justify-center gap-16">
+        <Image src="/boy.png" alt="logo" width={250} height={1000} />
+        <div>
+          <h3 className="text-5xl font-semibold">Benefits for our customers</h3>
+          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-inside ml-10">
+            <li>Direct call to service providers</li>
+            <li>Discount option available from service providers</li>
+            <li>Price wining option available on feedback</li>
+            <li>Ask bids of your service providers from your suburb</li>
+          </ul>
+        </div>
+      </section>
+      <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
         <h2 className="uppercase font-semibold text-5xl">
           Service Provider of the Month
         </h2>
         <p className="font-Montserrat pt-4">
           Top 10 service providers of the month
         </p>
-        <div className="mt-12 grid grid-cols-2 gap-5">
+        <div className="mt-12 grid grid-cols-3 gap-5">
           {result.data.map((business: any, index) => (
             <div
               key={index}
@@ -39,20 +66,22 @@ export default async function page() {
                   alt="placeholder"
                   width={200}
                   height={200}
-                  className="rounded-lg "
+                  className="rounded-lg"
                 />
-                <div className="flex justify-start gap-1.5">
+                <div className="flex justify-start">
                   {generateStars(5)}
                   {`[${business._count?.reviews}]`}
                 </div>
               </div>
               <div className="flex flex-col gap-2 w-4/5">
                 <Link href={"/business/" + business.id}>
-                  <h3 className="text-2xl font-semibold hover:text-green-400 transition-all">{business.name}</h3>
+                  <h3 className="text-2xl font-semibold hover:text-green-400 transition-all">
+                    {business.name}
+                  </h3>
                 </Link>
-                <p>{business.address}</p>
-                <p>{business.user.email}</p>
-                <p>{business.mobile}</p>
+                <p className="text-gray-700">{business.address}</p>
+                <p className="text-gray-600">{business.user.email}</p>
+                <p className="text-gray-600">{business.mobile}</p>
               </div>
               <div className="absolute top-0 right-0 mt-2">
                 <span className="absolute rounded-full bg-white w-6 h-6 right-5 top-[10px] flex items-center justify-center text-lg font-medium">
@@ -99,6 +128,26 @@ export default async function page() {
             </div>
           ))}
         </div>
+      </section>
+      <Services />
+      <section className="lg:px-[150px] lg:py-[30px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
+        <h2 className="uppercase font-semibold text-5xl">Client Review</h2>
+        <p className="font-Montserrat pt-4">
+          Best Affordable services Provider
+        </p>
+        {/* <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-6 mt-12">
+          {reviewsWithProvider.map((review) => (
+            <ReviewCart
+              key={review._id.toString()}
+              businessName={review.provider.businessName}
+              review={review.review}
+              image={review.userId.image}
+              name={review.userId.name}
+              address={review.userId.address}
+              date={review.createdAt.toString().slice(0, 10)}
+            />
+          ))}
+        </div> */}
       </section>
     </>
   );

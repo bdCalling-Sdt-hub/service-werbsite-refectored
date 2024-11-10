@@ -25,3 +25,12 @@
 .custom-quill .ql-container {
   border: none !important;
 }
+
+.custom-bg {
+  background: rgb(239, 192, 0);
+  background: linear-gradient(
+    150deg,
+    rgba(239, 192, 0, 1) 50%,
+    rgba(42, 94, 116, 1) 50%
+  );
+}

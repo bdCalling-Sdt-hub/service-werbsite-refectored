@@ -63,11 +63,13 @@ export default function Header() {
       <div className="relative hidden lg:block h-40 w-full ">
         <Image src="/header.png" alt="header" fill />
       </div>
-      <div className="text-center py-36 flex flex-col items-center bg-mastard-500 mx-auto">
-        <h1 className="text-green-800 text-3xl lg:text-5xl font-semibold">
-          Choose Your Best & Affordable Service
-          <br />
-          Provider Your Way
+      <div
+        className="text-center py-36 flex flex-col items-center mx-auto custom-bg"
+      >
+        <h1 className="text-white text-3xl lg:text-5xl font-semibold">
+          The Best & Affordable Services Platform
+          {/* <br />
+          Provider Your Way */}
         </h1>
         <p className="my-4 font-Montserrat">
           Now You Can Connect instantly Service Provider in Your Area
