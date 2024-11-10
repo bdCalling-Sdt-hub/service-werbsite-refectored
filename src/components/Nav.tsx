@@ -41,7 +41,7 @@ export default function Nav() {
         <Image
           src="/LOGO.png"
           alt="logo"
-          className="w-20 lg:w-40"
+          className="w-28 lg:w-40"
           width={200}
           height={1000}
           priority

@@ -24,22 +24,22 @@ export default async function page() {
           <h3 className="text-5xl font-semibold">
             Benefits for our service providers
           </h3>
-          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-inside ml-10">
+          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-outside ml-10">
             <li>full rs</li>
             <li>Online referral system</li>
             <li>Spacial promotions</li>
             <li>Create work relationships from</li>
             <li>Discount Benefits</li>
-            <li>Full markting tools with </li>
+            <li>Full marketing tools with </li>
           </ul>
         </div>
-        <Image src="/man.png" alt="logo" width={250} height={1000} />
+        <Image src="/man.png" alt="logo" className="lg:block hidden" width={250} height={1000} />
       </section>
       <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 flex justify-center gap-16">
-        <Image src="/boy.png" alt="logo" width={250} height={1000} />
+        <Image src="/boy.png" alt="logo" className="lg:block hidden" width={250} height={1000} />
         <div>
           <h3 className="text-5xl font-semibold">Benefits for our customers</h3>
-          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-inside ml-10">
+          <ul className="my-5 text-xl font-medium flex flex-col gap-3 list-disc list-outside ml-10">
             <li>Direct call to service providers</li>
             <li>Discount option available from service providers</li>
             <li>Price wining option available on feedback</li>
@@ -54,7 +54,7 @@ export default async function page() {
         <p className="font-Montserrat pt-4">
           Top 10 service providers of the month
         </p>
-        <div className="mt-12 grid grid-cols-3 gap-5">
+        <div className="mt-12 grid lg:grid-cols-3 gap-5">
           {result.data.map((business: any, index) => (
             <div
               key={index}
