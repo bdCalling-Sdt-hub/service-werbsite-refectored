@@ -17,7 +17,7 @@ export default function ServiceCart({
     <div
       data-tooltip-id={id}
       data-tooltip-content={description}
-      className="p-5 bg-cover bg-serviceCartBG bg-bottom aspect-[1.23/1] relative"
+      className="p-2 lg:p-5 bg-cover bg-serviceCartBG bg-bottom aspect-[1.23/1] relative"
     >
       <Tooltip id={id} />
       <Image

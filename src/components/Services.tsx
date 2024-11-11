@@ -11,6 +11,7 @@ export default function Services() {
   >([]);
   const [active, setActive] = useState<string>("All");
   const [page, setPage] = useState<null | number>(1);
+  const [open, setOpen] = useState<boolean>(false);
 
   const characters = [
     "All",
@@ -84,7 +85,7 @@ export default function Services() {
     <section className=" lg:px-[150px] lg:py-[30px] px-2 py-4">
       <h2 className="uppercase font-semibold text-5xl">Services</h2>
       <p className="font-Montserrat pt-4">Best Affordable services Provider</p>
-      <div className="flex flex-wrap items-center gap-5 mt-5">
+      <div className="flex-wrap items-center gap-5 mt-5 hidden lg:flex">
         {characters.map((character, index) => (
           <button
             key={index}
@@ -99,6 +100,58 @@ export default function Services() {
           </button>
         ))}
       </div>
+
+      <div className="flex items-center justify-between gap-2 p-3 rounded-xl border ml-auto w-24 h-9 relative lg:hidden" onClick={()=>setOpen(!open)}>
+        <span>{active}</span>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M5 8C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5ZM7 13C6.44772 13 6 12.5523 6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7ZM9 17C9 17.5523 9.44772 18 10 18H14C14.5523 18 15 17.5523 15 17C15 16.4477 14.5523 16 14 16H10C9.44772 16 9 16.4477 9 17Z"
+            fill="#58AB7F"
+          />
+          <mask
+            id="mask0_742_1974"
+            maskUnits="userSpaceOnUse"
+            x="4"
+            y="6"
+            width="16"
+            height="12"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M5 8C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H19C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5ZM7 13C6.44772 13 6 12.5523 6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7ZM9 17C9 17.5523 9.44772 18 10 18H14C14.5523 18 15 17.5523 15 17C15 16.4477 14.5523 16 14 16H10C9.44772 16 9 16.4477 9 17Z"
+              fill="white"
+            />
+          </mask>
+          <g mask="url(#mask0_742_1974)"></g>
+        </svg>
+        <div
+          className={`grid grid-cols-2 w-full absolute top-8 left-0 gap-3 bg-white overflow-y-auto ${open?"h-[300px] p-4 border":"h-[0px] p-0"} transition-all duration-300 ease-in-out`}
+        >
+          {characters.map((character, index) => (
+            <button
+              key={index}
+              className={`rounded-full font-medium text-xs w-6 h-6 mx-auto ${
+                active === character
+                  ? "bg-green-500 text-white"
+                  : "text-green-500 bg-green-50 hover:bg-green-400 hover:text-white"
+              }`}
+              onClick={() => setActive(character)}
+            >
+              {character}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {services?.length === 0 && (
         <p className="text-center w-full py-8">No services found</p>
       )}

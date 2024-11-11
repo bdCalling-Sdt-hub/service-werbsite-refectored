@@ -60,8 +60,17 @@ export default function Header() {
 
   return (
     <header>
-      <div className="relative hidden lg:block h-40 w-full ">
+      <div className="relative hidden lg:flex h-40 w-full">
         <Image src="/header.png" alt="header" fill />
+        {/* {Array(10).fill(0).map((_, index) => (
+          <Image
+            key={index}
+            src={`/services/${index+1}.jpg`}
+            alt="header"
+            height={160}
+            width={100}
+          />
+        ))} */}
       </div>
       <div
         className="text-center py-36 flex flex-col items-center mx-auto custom-bg"
@@ -235,7 +244,7 @@ export default function Header() {
                 )}
               </div>
             </div>
-            <button className="flex items-center gap-2 rounded-[3px] py-3 px-3 bg-green-900 text-white">
+            <button className="flex items-center gap-2 rounded-[3px] py-3 px-3 bg-[#efc000] text-white">
               Search{" "}
               <svg
                 width="20"

@@ -30,7 +30,7 @@
   background: rgb(239, 192, 0);
   background: linear-gradient(
     115deg,
-    rgba(239, 192, 0, 1) 50%,
-    rgba(42, 94, 116, 1) 50%
+    rgb(239, 192, 0) 50%,
+    rgb(42, 94, 116) 50%
   );
 }
