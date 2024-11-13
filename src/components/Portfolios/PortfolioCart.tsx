@@ -54,9 +54,6 @@ export default function PortfolioCart({
           className="w-full h-full"
           priority
         />
-        <p className="bg-green-500 py-2 absolute bottom-0 w-full text-center text-white">
-          {data.name}
-        </p>
       </div>
       {!pathname.includes("business") && (
         <button

@@ -80,7 +80,7 @@ export default function Page() {
           onSubmit={handelSubmit}
         >
           <h2 className="text-2xl lg:text-4xl font-medium text-center mb-6">
-            Bit Wallet Form
+            Post for Bids
           </h2>
           <div className="grid grid-cols-10 gap-4 items-center">
             <label className="col-span-2" htmlFor="businessMainCategory">

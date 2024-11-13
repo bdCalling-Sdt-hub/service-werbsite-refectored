@@ -84,7 +84,7 @@ export default function Nav() {
                   href="/add-bit-wallet"
                   className="font-medium hover:text-green-400 transition-all lg:block hidden"
                 >
-                  Bit Wallet
+                  Bid
                 </Link>
               </>
             )}
@@ -190,10 +190,10 @@ export default function Nav() {
         <div className="flex justify-between lg:gap-6 gap-2 text-green-600 font-medium ">
           <Link
             href="/login"
-            className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-green-600 bg-green-50"
+            className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 bg-mastard-500"
           >
             Login{" "}
-            <svg
+            {/* <svg
               width="20"
               height="20"
               viewBox="0 0 20 20"
@@ -207,13 +207,13 @@ export default function Nav() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            </svg>
+            </svg> */}
           </Link>
           <Link
             href="/register?provider=true"
-            className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-green-600 bg-green-50"
+            className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3  bg-mastard-500"
           >
-            <svg
+            {/* <svg
               width="20"
               height="20"
               viewBox="0 0 20 20"
@@ -228,7 +228,7 @@ export default function Nav() {
                 d="M3 18C3 14.134 6.13401 11 10 11C13.866 11 17 14.134 17 18H3Z"
                 fill="#058240"
               />
-            </svg>
+            </svg> */}
             <span className="lg:block hidden">Join as a Professional</span>
             <span className="lg:hidden block">Join</span>
           </Link>

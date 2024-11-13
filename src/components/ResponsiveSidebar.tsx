@@ -51,7 +51,7 @@ const ResponsiveSidebar = () => {
       path: "/dashboard/job-posts",
     },
     {
-      name: "Bits",
+      name: "Bids from Customers",
       icon: MdCurrencyBitcoin,
       path: "/dashboard/bits",
     },

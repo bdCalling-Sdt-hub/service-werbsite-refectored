@@ -84,11 +84,11 @@ export default function BusinessContact({
   // console.log(search);
   return (
     <>
-      <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center  gap-4 text-white font-light">
+      <div className="flex flex-row justify-center lg:justify-start items-center  gap-4 text-white font-light">
         {/* <a href={"tel:" + number} target="_blank" className="line-clamp-1"> */}
         <button
           onClick={handleCall}
-          className="flex items-center justify-center gap-2 w-52 h-16 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-2 w-32 h-12 lg:w-52 lg:h-16 bg-green-500 rounded-md"
         >
           <svg
             width="24"
@@ -105,7 +105,7 @@ export default function BusinessContact({
           Call Now
         </button>
         <button
-          className="flex items-center  justify-center gap-2 w-52 h-16 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-2 w-44 h-12 lg:w-52 lg:h-16 bg-green-500 rounded-md"
           onClick={() => {
             if (user?.id) {
               handleModalClose();

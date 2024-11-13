@@ -17,9 +17,10 @@ export default async function page() {
 
   const result = (await response.json()) as { data: any[] };
 
-  const benefit: { [key: string]: { image: string; benefits: string[] } } = {
+  const benefit: { [key: string]: { image: string; header:string; benefits: string[] } } = {
     customer: {
       image: "/customer.jpg",
+      header: "Benefits for customers",
       benefits: [
         "Direct call to service providers",
         "Discount option available from service providers",
@@ -29,6 +30,7 @@ export default async function page() {
     },
     provider: {
       image: "/provider.jpg",
+      header: "Benefits for service providers",
       benefits: [
         "Full referral system",
         "Online booking system",
@@ -62,7 +64,7 @@ export default async function page() {
     <>
       <Header />
       <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 flex lg:flex-row flex-col justify-center gap-16">
-        {Object.keys(benefit).map((key) => (
+        {Object.keys(benefit).map((key,i) => (
           <div key={key} className="flex gap-5">
             <Image
               src={benefit[key as keyof typeof benefit].image}
@@ -72,10 +74,8 @@ export default async function page() {
               height={1000}
             />
             <div>
-              <h3 className="text-5xl font-semibold">
-                Benefits for our customers
-              </h3>
-              <ul className="my-5 text-xl font-medium flex flex-col gap-3 ml-5">
+              <h3 className="text-2xl lg:text-4xl font-semibold">{benefit[key as keyof typeof benefit].header}</h3>
+              <ul className="my-2 lg:my-5 lg:text-xl font-medium flex flex-col gap-3 ml-5">
                 {benefit[key as keyof typeof benefit].benefits.map(
                   (benefit, index) => (
                     <li key={index} className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export default async function page() {
                           className="h-5 w-5"
                         >
                           <path
-                            fill="#2a5e74"
+                            fill={i===0?"#efc000":"#2a5e74"}
                             d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"
                           ></path>
                         </svg>
@@ -103,12 +103,9 @@ export default async function page() {
         ))}
       </section>
       <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
-        <h2 className="uppercase font-semibold text-5xl">
-          Service Provider of the Month
+        <h2 className="uppercase font-semibold text-center text-2xl lg:text-5xl">
+        Top 3 service providers of last month
         </h2>
-        <p className="font-Montserrat pt-4">
-          Top 10 service providers of the month
-        </p>
         <div className="mt-12 grid lg:grid-cols-3 gap-5">
           {result.data.map((business: any, index) => (
             <div
@@ -127,7 +124,7 @@ export default async function page() {
                 </div>
                 <div className="flex flex-col gap-2 w-4/5">
                   <Link href={"/business/" + business.id}>
-                    <h3 className="text-2xl font-semibold hover:text-green-400 transition-all">
+                    <h3 className="text-xl uppercase lg:text-2xl font-semibold hover:text-green-400 transition-all">
                       {business.name}
                     </h3>
                   </Link>
@@ -136,8 +133,8 @@ export default async function page() {
                     {generateStars(5)}
                     {`[${business._count?.reviews}]`}
                   </div>
-                  <p className="text-gray-600">{business.user.email}</p>
-                  <p className="text-gray-600">{business.mobile}</p>
+                  <p className="text-gray-600 text-sm lg:text-base">{business.user.email}</p>
+                  <p className="text-gray-600 text-sm lg:text-base">{business.mobile}</p>
                 </div>
               </div>
               <div className="absolute top-0 right-0 mt-2">
@@ -183,14 +180,14 @@ export default async function page() {
                 </svg>
               </div>
 
-              <p className="text-gray-700 mt-2">{business.address}</p>
+              <p className="text-gray-700 mt-2 text-sm lg:text-base">{business.address}</p>
             </div>
           ))}
         </div>
       </section>
       <Services />
       <section className="lg:px-[150px] lg:py-[30px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
-        <h2 className="uppercase font-semibold text-5xl">Client Review</h2>
+        <h2 className="uppercase font-semibold text-3xl lg:text-5xl">Client Reviews</h2>
         <p className="font-Montserrat pt-4">
           Best Affordable services Provider
         </p>

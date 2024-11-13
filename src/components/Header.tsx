@@ -73,8 +73,15 @@ export default function Header() {
         ))} */}
       </div>
       <div
-        className="text-center py-36 flex flex-col items-center mx-auto custom-bg"
+        className="text-center py-24 flex flex-col items-center mx-auto custom-bg"
       >
+        <Image
+          src="/BASP.png"
+          alt="logo"
+          width={500}
+          height={200}
+          className="mb-6 px-4"
+        />
         <h1 className="text-white text-3xl lg:text-5xl font-semibold">
           The Best & Affordable Services Platform
           {/* <br />
@@ -115,7 +122,7 @@ export default function Header() {
                   placeholder="What services are you looking for"
                 />
                 {searchActive && (
-                  <ul className="absolute bg-white shadow-md w-full text-lg rounded-b-lg max-h-60 overflow-y-auto">
+                  <ul className="absolute bg-white shadow-md w-full text-lg rounded-b-lg max-h-60 overflow-y-auto z-10">
                     {businessData?.data &&
                       search?.length > 0 &&
                       businessData?.data.map((business: any, index: number) => (
@@ -244,9 +251,9 @@ export default function Header() {
                 )}
               </div>
             </div>
-            <button className="flex items-center gap-2 rounded-[3px] py-3 px-3 bg-[#efc000] text-white">
+            <button className="flex items-center gap-2 rounded-[3px] h-12 py-2 px-5 bg-[#efc000] text-green-500 font-semibold text-lg">
               Search{" "}
-              <svg
+              {/* <svg
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"
@@ -260,7 +267,7 @@ export default function Header() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-              </svg>
+              </svg> */}
             </button>
           </form>
           {searchQuery?.message && (

@@ -12,19 +12,19 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
   return (
     <div className="p-6 flex flex-col lg:flex-row items-center lg:items-start  gap-4 rounded-xl border-2 border-green-500 hover:bg-green-50 transition-all">
       <Link href={"/business/" + data.id}>
-        <div className="w-[150px] h-[150px]">
+        <div className="lg:w-[150px] h-full">
           <Image
             src={data.user?.image ? apiUrl + data?.user?.image : businessLogo}
             alt={data.name}
-            className="rounded-full w-full h-full content-evenly"
+            className="rounded-full lg:w-36 lg:h-36 w-32 h-32 content-evenly"
             width={150}
             height={150}
             priority
           />
         </div>
       </Link>
-      <div className="space-y-6 lg:space-y-4">
-        <div className="flex justify-start items-end gap-3">
+      <div className="space-y-2 lg:space-y-4">
+        <div className="flex lg:flex-row flex-col lg:justify-start justify-center items-center lg:items-end gap-3">
           <Link
             href={"/business/" + data.id}
             className="text-2xl font-medium hover:text-green-500"
@@ -80,7 +80,7 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
           />
           {
             <Link href={`/business/${data.id}`}>
-              <button className="flex items-center justify-center gap-2 w-52 h-16 bg-green-500 rounded-md text-white ">
+              <button className="flex items-center justify-center gap-2 w-32 h-12 lg:w-52 lg:h-16 bg-green-500 rounded-md text-white ">
                 See more...
               </button>
             </Link>

@@ -89,14 +89,6 @@ export default function Page({
 
   return (
     <div className="flex items-center justify-center lg:px-10">
-      <div className="w-3/4 lg:w-3/6 pl-6 hidden lg:block">
-        <Image
-          src={authUndraw}
-          alt="authentication"
-          width={1000}
-          height={1000}
-        />
-      </div>
       <div className="min-h-screen w-full flex flex-col justify-center items-center px-3 py-10">
         <form
           className="max-w-screen-md w-full rounded-2xl border-green-500 mx-auto border p-11 grid grid-cols-2 gap-8"
@@ -359,6 +351,14 @@ export default function Page({
           </p>
         </form>
         <HomeBackButton />
+      </div>
+      <div className="w-3/4 lg:w-3/6 pl-6 hidden lg:block">
+        <Image
+          src={authUndraw}
+          alt="authentication"
+          width={1000}
+          height={1000}
+        />
       </div>
     </div>
   );

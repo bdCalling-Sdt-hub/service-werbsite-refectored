@@ -61,14 +61,6 @@ export default function AddPortfolio() {
           className="flex flex-col gap-4 text-lg items-start mt-8"
           onSubmit={handleSubmit}
         >
-          <label htmlFor="">Portfolio name</label>
-          <input
-            type="text"
-            name="name"
-            required
-            className="border border-black-500 rounded-md p-4 w-full"
-            placeholder="Enter Portfolio name"
-          />
           <label htmlFor="">Upload image</label>
           <input
             type="file"

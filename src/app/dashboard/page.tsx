@@ -225,7 +225,7 @@ export default function Page() {
     }
   }
   return (
-    <section className="rounded-2xl p-8 lg:p-14 max-w-4xl lg:max-w-5xl mx-auto">
+    <section className="rounded-2xl p-8 lg:p-14 max-w-5xl mx-auto">
       <h1 className="font-medium text-2xl lg:text-4xl py-10">
         Business Information
       </h1>
@@ -263,7 +263,7 @@ export default function Page() {
             </div>
           </div>
           {/* business information */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-7 gap-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
             <div className="w-full flex flex-col">
               <label className="font-medium text-black-500">
                 Business Name
@@ -413,72 +413,6 @@ export default function Page() {
               <GooglePlaceAddress
                 allAddress={allAddress}
                 setAllAddress={setAllAddress}
-              />
-            </div>
-            <h3 className="text-xl font-medium col-span-2 -mb-4">
-              Bank Details
-            </h3>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
-                Account Number
-              </label>
-              <input
-                type="text"
-                name="accountNumber"
-                placeholder="Bank account number"
-                value={businessData?.accountNumber}
-                onChange={(e) =>
-                  setBusinessData({
-                    ...businessData,
-                    accountNumber: e.target.value,
-                  })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Account Name</label>
-              <input
-                type="text"
-                name="accountName"
-                placeholder="Bank account name"
-                value={businessData?.accountName}
-                onChange={(e) =>
-                  setBusinessData({
-                    ...businessData,
-                    accountName: e.target.value,
-                  })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Bank Name</label>
-              <input
-                type="text"
-                name="bankName"
-                placeholder="Bank name"
-                value={businessData?.bankName}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, bankName: e.target.value })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">BSB Number</label>
-              <input
-                type="text"
-                name="bsbNumber"
-                placeholder="BSB number"
-                value={businessData?.bsbNumber}
-                onChange={(e) =>
-                  setBusinessData({
-                    ...businessData,
-                    bsbNumber: e.target.value,
-                  })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
               />
             </div>
             <h3 className="text-xl font-medium col-span-2 -mb-4">
