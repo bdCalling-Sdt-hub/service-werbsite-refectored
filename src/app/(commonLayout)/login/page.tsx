@@ -40,7 +40,7 @@ export default function Page({
         }),
       });
       const result = await res.json();
-      
+
       if (result.statusCode === 401) {
         setIsLoading(false);
         router.push("/verify?id=" + result.data?.id);
@@ -52,14 +52,19 @@ export default function Page({
         Cookies.set("token", result.data.token);
         dispatch(setUser({ user: result.data?.user, isLoading: false }));
 
-        if (window?.location?.search) {
+        const search = window.location.search;
+
+        if (search) {
+          const firstEqualIndex = search.indexOf("=");
+
           router.push(
-            window?.location?.search.split("=")[1]?.split("-").join("/") +
-              window.location.hash
+            search
+              .slice(firstEqualIndex + 1)
+              ?.split("-")
+              .join("/") + window.location.hash
           );
           return;
         }
-        
 
         if (result.data.user.type === "PROVIDER") {
           if (result.data.user.business) {

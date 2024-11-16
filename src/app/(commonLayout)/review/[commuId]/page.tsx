@@ -42,7 +42,7 @@ const Review = ({ params }: { params: { [key: string]: string } }) => {
         });
       }
 
-      if (!formData.discount) {
+      if (!formData.discount && formData.discount !== 0) {
         return Swal.fire({
           icon: "error",
           text: "Please select a discount!",

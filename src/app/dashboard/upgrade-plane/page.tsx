@@ -35,7 +35,7 @@ const UpgradePlane = async () => {
           <br />
           as a creative entrepreneurs. Everything you need.
         </p>
-        <div className="flex flex-col lg:flex-row justify-center gap-4 mt-8">
+        <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-4 mt-8">
           {subscriptionData?.map(
             (plan: { [key: string]: any }, index: number) => (
               <SubscriptionCard key={index} data={plan} starQty={starData.totalStar || 0} />

@@ -117,12 +117,12 @@ export default function Nav() {
                 />
               )}
             </svg>
-            <div className="w-[60px] h-[60px] rounded-full overflow-hidden">
+            <div className="w-11 h-11 rounded-full overflow-hidden">
               <Image
                 src={user.image ? apiUrl + user.image : profileDemo}
                 alt="user"
-                width={60}
-                height={60}
+                width={44}
+                height={44}
                 className="rounded-full w-full h-full select-none object-cover"
               />
             </div>

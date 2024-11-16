@@ -230,9 +230,9 @@ export default function Page() {
         Business Information
       </h1>
       <LoaderWraperComp isError={false} isLoading={userDataLoading}>
-        <form className=" flex flex-col gap-8" onSubmit={handelEdit}>
+        <form className="flex flex-col gap-8" onSubmit={handelEdit}>
           {/* profile information */}
-          <div className=" grid grid-cols-1 lg:grid-cols-2 gap-x-7 gap-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
             <div className="w-full flex flex-col">
               <label className="font-medium text-black-500">First Name</label>
               <input
@@ -261,11 +261,11 @@ export default function Page() {
                 placeholder="Name"
               />
             </div>
-          </div>
-          {/* business information */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
             <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
+              <label
+                className="font-medium text-black-500"
+                htmlFor="businessName"
+              >
                 Business Name
               </label>
               <input
@@ -281,7 +281,10 @@ export default function Page() {
               />
             </div>
             <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
+              <label
+                className="font-medium text-black-500"
+                htmlFor="businessMainCategory"
+              >
                 Business Main Category
               </label>
               <div className="relative">
@@ -332,7 +335,9 @@ export default function Page() {
               </div>
             </div>
             <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Business ABN</label>
+              <label className="font-medium text-black-500" htmlFor="abn">
+                Business ABN
+              </label>
               <input
                 type="text"
                 name="abn"
@@ -347,7 +352,7 @@ export default function Page() {
               />
             </div>
             <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">
+              <label className="font-medium text-black-500" htmlFor="license">
                 Business License(If any)
               </label>
               <input
@@ -408,152 +413,176 @@ export default function Page() {
                 className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
               />
             </div>
-            <h3 className="text-xl font-medium col-span-2">Business Address</h3>
-            <div className="col-span-2 space-y-7">
-              <GooglePlaceAddress
-                allAddress={allAddress}
-                setAllAddress={setAllAddress}
-              />
-            </div>
-            <h3 className="text-xl font-medium col-span-2 -mb-4">
-              Social media links
-            </h3>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Website</label>
-              <input
-                type="text"
-                name="website"
-                placeholder="Business Website (If any)"
-                value={businessData.website}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, website: e.target.value })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Facebook</label>
-              <input
-                type="text"
-                name="facebook"
-                placeholder="Facebook Link (If any)"
-                value={businessData.facebook}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, facebook: e.target.value })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full flex flex-col">
-              <label className="font-medium text-black-500">Insagram</label>
-              <input
-                type="text"
-                name="instagram"
-                placeholder="Instagram Link (If any)"
-                value={businessData.instagram}
-                onChange={(e) =>
-                  setBusinessData({
-                    ...businessData,
-                    instagram: e.target.value,
-                  })
-                }
-                className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
-              />
-            </div>
-            <div className="w-full col-span-2 flex flex-col">
-              <h3 className="text-xl font-medium mb-4">Add your services</h3>
-              {businessData.services?.map((service: any, index: any) => (
-                <div className="flex w-full items-center gap-2" key={index}>
-                  <input
-                    type="text"
-                    placeholder="Enter service name"
-                    className="h-12 w-full focus:outline-none p-3 rounded border-[#343333] border mt-2 "
-                    defaultValue={service}
-                    onChange={(e) => {
-                      const services = businessData.services || [];
-                      businessData.services[index] = e.target.value;
-                      setBusinessData({ ...businessData, services });
-                    }}
-                  />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    id="minus-circle"
-                    className="h-10 w-10 cursor-pointer"
-                    onClick={() => {
-                      const services = businessData.services || [];
-                      businessData.services.splice(index, 1);
-                      setBusinessData({ ...businessData, services });
-                    }}
-                  >
-                    <path
-                      fill="#B5B5B5"
-                      d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm4-9H8a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Z"
-                    ></path>
-                  </svg>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => {
-                  const services = businessData?.services || [];
-                  services.push("");
-                  setBusinessData({ ...businessData, services });
-                }}
-                className="px-3 py-2.5 w-[calc(100%-46px)] rounded border-[#343333] border font-medium mt-2 text-center"
-              >
-                Add new service
-              </button>
-            </div>
-            <div className="my-10 flex items-center gap-4 relative">
-              <Image
-                src={
-                  imageFile
-                    ? URL.createObjectURL(imageFile)
-                    : user?.image
-                    ? apiUrl + "/" + user?.image
-                    : profileDemo
-                }
-                alt="profile"
-                className="rounded border"
-                width={120}
-                height={120}
-              />
-              <div>
+          </div>
+          <h3 className="text-xl font-medium col-span-2">Business Address</h3>
+          <div className="col-span-2 space-y-7">
+            <GooglePlaceAddress
+              allAddress={allAddress}
+              setAllAddress={setAllAddress}
+            />
+          </div>
+
+
+
+
+
+
+
+
+          <h3 className="text-xl font-medium col-span-2 -mb-4">
+            Social media links
+          </h3>
+          <div className="w-full flex flex-col">
+            <label className="font-medium text-black-500">Website</label>
+            <input
+              type="text"
+              name="website"
+              placeholder="Business Website (If any)"
+              value={businessData.website}
+              onChange={(e) =>
+                setBusinessData({
+                  ...businessData,
+                  website: e.target.value,
+                })
+              }
+              className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+            />
+          </div>
+          <div className="w-full flex flex-col">
+            <label className="font-medium text-black-500">Facebook</label>
+            <input
+              type="text"
+              name="facebook"
+              placeholder="Facebook Link (If any)"
+              value={businessData.facebook}
+              onChange={(e) =>
+                setBusinessData({
+                  ...businessData,
+                  facebook: e.target.value,
+                })
+              }
+              className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+            />
+          </div>
+          <div className="w-full flex flex-col">
+            <label className="font-medium text-black-500">Insagram</label>
+            <input
+              type="text"
+              name="instagram"
+              placeholder="Instagram Link (If any)"
+              value={businessData.instagram}
+              onChange={(e) =>
+                setBusinessData({
+                  ...businessData,
+                  instagram: e.target.value,
+                })
+              }
+              className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
+            />
+          </div>
+
+
+
+
+
+
+
+
+          <div className="w-full col-span-2 flex flex-col">
+            <h3 className="text-xl font-medium mb-4">Add your services</h3>
+            {businessData.services?.map((service: any, index: any) => (
+              <div className="flex w-full items-center gap-2" key={index}>
                 <input
-                  type="file"
-                  accept="image/*"
-                  multiple={false}
-                  name="profileImage"
-                  className="hidden"
-                  ref={fileInputRef}
+                  type="text"
+                  placeholder="Enter service name"
+                  className="h-12 w-full focus:outline-none p-3 rounded border-[#343333] border mt-2 "
+                  defaultValue={service}
                   onChange={(e) => {
-                    if (e.target.files) {
-                      setImageFile(e.target.files[0]);
-                    }
+                    const services = businessData.services || [];
+                    businessData.services[index] = e.target.value;
+                    setBusinessData({ ...businessData, services });
                   }}
                 />
-                <button
-                  type="button"
-                  onClick={() => fileInputRef?.current?.click()}
-                  className="rounded-t-[3px] py-2 px-3 border-white bg-green-400 text-white font-light flex items-center gap-1"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  id="minus-circle"
+                  className="h-10 w-10 cursor-pointer"
+                  onClick={() => {
+                    const services = businessData.services || [];
+                    businessData.services.splice(index, 1);
+                    setBusinessData({ ...businessData, services });
+                  }}
                 >
-                  Upload Logo <PiCameraPlusBold />
-                </button>
+                  <path
+                    fill="#B5B5B5"
+                    d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm4-9H8a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Z"
+                  ></path>
+                </svg>
               </div>
-            </div>
-            <div className="col-span-2 w-full h-80">
-              <h3 className="text-xl font-medium pb-4">About Company</h3>
-              <ReactQuill
-                theme="snow"
-                value={businessData.about}
-                onChange={(value) =>
-                  setBusinessData({ ...businessData, about: value })
-                }
-                className="h-3/4"
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                const services = businessData?.services || [];
+                services.push("");
+                setBusinessData({ ...businessData, services });
+              }}
+              className="px-3 py-2.5 w-[calc(100%-46px)] rounded border-[#343333] border font-medium mt-2 text-center"
+            >
+              Add new service
+            </button>
+          </div>
+
+          <div className="my-10 flex flex-col lg:flex-row items-center gap-4 relative">
+            <Image
+              src={
+                imageFile
+                  ? URL.createObjectURL(imageFile)
+                  : user?.image
+                  ? apiUrl + "/" + user?.image
+                  : profileDemo
+              }
+              alt="profile"
+              className="rounded border"
+              width={120}
+              height={120}
+            />
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                multiple={false}
+                name="profileImage"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={(e) => {
+                  if (e.target.files) {
+                    setImageFile(e.target.files[0]);
+                  }
+                }}
               />
+              <button
+                type="button"
+                onClick={() => fileInputRef?.current?.click()}
+                className="rounded-t-[3px] py-2 px-3 border-white bg-green-400 text-white font-light flex items-center gap-1"
+              >
+                Upload Logo <PiCameraPlusBold />
+              </button>
             </div>
           </div>
+          <div className="col-span-2 w-full h-80">
+            <h3 className="text-xl font-medium pb-4">About Company</h3>
+            <ReactQuill
+              theme="snow"
+              value={businessData.about}
+              onChange={(value) =>
+                setBusinessData({ ...businessData, about: value })
+              }
+              className="h-3/4"
+            />
+          </div>
+
           <div className="mt-3 flex justify-center lg:justify-start">
             <button
               disabled={isLoading}

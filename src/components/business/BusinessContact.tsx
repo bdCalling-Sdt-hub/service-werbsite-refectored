@@ -26,7 +26,7 @@ export default function BusinessContact({
   const [modal, setModal] = useState(false);
   const handleModalClose = () => {
     setModal((prev) => !prev);
-    router.push(currentPath)
+    router.push(currentPath+location.search);
   };
   const { user } = useAppSelector((state) => state.auth);
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -76,19 +76,19 @@ export default function BusinessContact({
       }
     });
   }
-  useEffect(()=> {
-    if (window.location.hash === "#send-message") {
-      setModal(true)
+  useEffect(() => {
+    if (window.location.hash === "#" + businessId) {
+      setModal(true);
     }
-  }, [])
+  }, []);
   // console.log(search);
   return (
     <>
-      <div className="flex flex-row justify-center lg:justify-start items-center  gap-4 text-white font-light">
+      <div className="flex flex-row justify-center lg:justify-start items-center gap-2 lg:gap-4 text-white font-light lg:text-base text-xs">
         {/* <a href={"tel:" + number} target="_blank" className="line-clamp-1"> */}
         <button
           onClick={handleCall}
-          className="flex items-center justify-center gap-2 w-32 h-12 lg:w-52 lg:h-16 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-green-500 rounded-md"
         >
           <svg
             width="24"
@@ -105,7 +105,7 @@ export default function BusinessContact({
           Call Now
         </button>
         <button
-          className="flex items-center justify-center gap-2 w-44 h-12 lg:w-52 lg:h-16 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-green-500 rounded-md"
           onClick={() => {
             if (user?.id) {
               handleModalClose();
@@ -113,7 +113,9 @@ export default function BusinessContact({
               router.push(
                 "/login?redirect_path=/" +
                   currentPath.slice(1).split("/").join("-") +
-                  location.search +"#send-message"
+                  location.search +
+                  "#" +
+                  businessId
               );
             }
           }}

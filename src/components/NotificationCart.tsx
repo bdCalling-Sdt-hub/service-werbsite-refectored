@@ -22,11 +22,11 @@ const NotificationCart = ({
     <>
       <div
         // onClick={() => setModal(true)}
-        className={`flex items-start justify-start gap-4 px-4 lg:px-8 py-4 hover:shadow-md border-b ${
+        className={`flex items-start justify-start gap-2 lg:gap-4 px-4 lg:px-8 py-4 hover:shadow-md border-b ${
           index !== 0 && "hover:border-t border-gray-50"
         } duration-300`}
       >
-        <div className="w-[70px] min-w-[70px] h-[70px] min-h-[70px] relative">
+        <div className="w-[60px] h-[60px] relative">
           <Image
             src={data.user?.image ? apiUrl + data?.user?.image : businessLogo}
             alt={data.name}
@@ -36,11 +36,11 @@ const NotificationCart = ({
             priority
           />
         </div>
-        <div className="">
-          <p className="text-[16px] font-medium">
+        <div>
+          <p className="font-medium">
             {data?.user?.firstName} {data?.user?.lastName}
           </p>
-          <p className="text-gray-600">{data?.user?.email}</p>
+          <p className="text-gray-600 text-sm">{data?.user?.email}</p>
           <p className="text-sm text-gray-700 mt-3">{data?.message}</p>
           {/* <h6 className="text-[#181414] ">
             You have received{" "}

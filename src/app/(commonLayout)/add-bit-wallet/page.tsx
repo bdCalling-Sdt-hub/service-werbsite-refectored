@@ -80,7 +80,7 @@ export default function Page() {
           onSubmit={handelSubmit}
         >
           <h2 className="text-2xl lg:text-4xl font-medium text-center mb-6">
-            Post for Bids
+            Ask bid for service
           </h2>
           <div className="grid grid-cols-10 gap-4 items-center">
             <label className="col-span-2" htmlFor="businessMainCategory">
@@ -89,7 +89,7 @@ export default function Page() {
             <div className="relative col-span-8">
               <input
                 type="text"
-                placeholder="Serivice"
+                placeholder="Service"
                 autoComplete="off"
                 onFocus={() => setFocus((c) => ({ ...c, mainCate: true }))}
                 onBlur={() =>
@@ -250,7 +250,7 @@ export default function Page() {
           </div>
           <div className="flex gap-4 py-4">
             <label className="col-span-2">
-              Commnication preference :
+              Communication preference :
             </label>
             <div className="col-span-8 space-y-1 flex justify-start items-center gap-5">
               <div className="w-20 flex justify-between gap-3 items-center">
