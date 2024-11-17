@@ -162,7 +162,7 @@ const Account = () => {
           />
         </div>
         <div className="col-span-2 flex justify-end">
-          <button className="bg-green-500 text-white py-3 rounded px-8">
+          <button className="bg-mastard-500 text-green-500 py-3 rounded px-8">
             Save
           </button>
         </div>

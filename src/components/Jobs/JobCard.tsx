@@ -99,14 +99,14 @@ const JobCard = ({ job }: { job: TUniObject }) => {
             <div className="pt-5 flex justify-end gap-5">
               <button
                 onClick={() => handleDeleteJob(job.id)}
-                className=" bg-red-500 active:bg-red-600 disabled:cursor-not-allowed w-fit px-8 py-3 text-white rounded-md font-light outline-non flex justify-center items-center gap-2"
+                className=" bg-red-500 active:bg-red-600 disabled:cursor-not-allowed w-fit px-8 py-3 text-green-500 rounded-md font-light outline-non flex justify-center items-center gap-2"
               >
                 Delete
               </button>
               <Link href={`/dashboard/job-posts/application/${job.id}`}>
                 <button
                   // onClick={() => rou}
-                  className=" bg-green-500 active:bg-green-600 disabled:cursor-not-allowed w-fift px-8 py-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+                  className="bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed w-fift px-8 py-3 text-green-500 rounded-md font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
                 >
                   View Application
                 </button>
@@ -152,7 +152,7 @@ const JobCard = ({ job }: { job: TUniObject }) => {
                 <div className="pt-5">
                   <button
                     onClick={() => setModal(true)}
-                    className=" bg-green-500 active:bg-green-600 disabled:cursor-not-allowed w-40 px-8 py-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+                    className=" bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed w-40 px-8 py-3 text-green-500 rounded-md font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
                   >
                     Apply Now
                   </button>
@@ -182,7 +182,7 @@ const JobCard = ({ job }: { job: TUniObject }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed py-3 px-10 mx-auto text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+            className="bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed py-3 px-10 mx-auto text-green-500 rounded-md col-span-2 font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
           >
             Submit Document
             {isLoading ? <CustomSpinner /> : <LuSendHorizonal />}

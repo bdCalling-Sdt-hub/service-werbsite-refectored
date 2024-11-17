@@ -84,11 +84,11 @@ export default function BusinessContact({
   // console.log(search);
   return (
     <>
-      <div className="flex flex-row justify-center lg:justify-start items-center gap-2 lg:gap-4 text-white font-light lg:text-base text-xs">
+      <div className="flex flex-row justify-center lg:justify-start items-center gap-2 lg:gap-4 text-green-500 font-light lg:text-base text-xs">
         {/* <a href={"tel:" + number} target="_blank" className="line-clamp-1"> */}
         <button
           onClick={handleCall}
-          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 rounded-md"
         >
           <svg
             width="24"
@@ -105,7 +105,7 @@ export default function BusinessContact({
           Call Now
         </button>
         <button
-          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-green-500 rounded-md"
+          className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 text-green-500 rounded-md"
           onClick={() => {
             if (user?.id) {
               handleModalClose();
@@ -160,7 +160,7 @@ export default function BusinessContact({
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-green-500 active:bg-green-600 disabled:cursor-not-allowed py-3 px-10 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+            className="bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed py-3 px-10 text-green-500 rounded-md col-span-2 font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
           >
             Send
             {isLoading ? <CustomSpinner /> : <LuSendHorizonal />}

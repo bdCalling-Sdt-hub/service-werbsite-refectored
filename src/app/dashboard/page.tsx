@@ -565,7 +565,7 @@ export default function Page() {
               <button
                 type="button"
                 onClick={() => fileInputRef?.current?.click()}
-                className="rounded-t-[3px] py-2 px-3 border-white bg-green-400 text-white font-light flex items-center gap-1"
+                className="rounded-t-[3px] py-2 px-3 border-white bg-mastard-500 text-green-500 font-light flex items-center gap-1"
               >
                 Upload Logo <PiCameraPlusBold />
               </button>
@@ -586,7 +586,7 @@ export default function Page() {
           <div className="mt-3 flex justify-center lg:justify-start">
             <button
               disabled={isLoading}
-              className="w-[220px] bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md col-span-2 font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+              className="w-[220px] bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed p-3 text-green-500 rounded-md col-span-2 font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
             >
               Save Changes {isLoading && <CustomSpinner />}
             </button>

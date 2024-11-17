@@ -20,7 +20,7 @@ function BusinessRegisterSuggation() {
               Close
             </button>
             <button
-              className="px-6 py-2 bg-red-500 rounded-full text-white"
+              className="px-6 py-2 bg-mastard-500 rounded-full text-green-500"
               onClick={() => router.push("/register-business")}
             >
               Register

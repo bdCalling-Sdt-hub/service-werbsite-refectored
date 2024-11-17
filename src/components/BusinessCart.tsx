@@ -84,7 +84,7 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
         />
         {
           <Link href={`/business/${data.id}`}>
-            <button className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-green-500 rounded-md text-white lg:text-base text-xs">
+            <button className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 rounded-md text-green-500 lg:text-base text-xs">
               See more...
             </button>
           </Link>

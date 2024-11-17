@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { businessId: string } }) {
               >
                 {tab}
                 <div
-                  className={`h-[2.5px] lg:h-[3.6px] group-hover:w-full mx-auto bg-green-600 delay-75 ease-in duration-100 group-hover:shadow-md mt-1 ${
+                  className={`h-[2.5px] lg:h-[3.6px] group-hover:w-full mx-auto bg-mastard-500 text-green-500 delay-75 ease-in duration-100 group-hover:shadow-md mt-1 ${
                     tab === activeTab ? "w-full" : "w-0"
                   }`}
                 />

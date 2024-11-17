@@ -143,7 +143,7 @@ export default function AddJob() {
           <button
             type="submit"
             disabled={muLoading}
-            className="ml-auto bg-green-500 active:bg-green-600 disabled:cursor-not-allowed w-40 px-8 py-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+            className="ml-auto bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed w-40 px-8 py-3 text-green-500 rounded-md font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
           >
             Submit
             {muLoading && <CustomSpinner />}

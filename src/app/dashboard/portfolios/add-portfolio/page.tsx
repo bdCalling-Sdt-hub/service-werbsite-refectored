@@ -72,7 +72,7 @@ export default function AddPortfolio() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-green-500 active:bg-green-600 disabled:cursor-not-allowed p-3 text-white rounded-md font-light outline-non disabled:bg-green-500 flex justify-center items-center gap-2"
+            className="w-full bg-mastard-500 active:bg-mastard-600 disabled:cursor-not-allowed p-3 text-green-500 rounded-md font-light outline-non disabled:bg-green-500 disabled:text-white flex justify-center items-center gap-2"
           >
             Add Portfolio
             {isLoading && <CustomSpinner />}

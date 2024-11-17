@@ -31,7 +31,7 @@ export default function Page() {
             )
           )}
           <button
-            className="w-full bg-green-500 rounded-md flex flex-col items-center justify-center text-white h-[275px] gap-2"
+            className="w-full bg-mastard-500 rounded-md flex flex-col items-center justify-center text-green-500 h-[275px] gap-2"
             onClick={() => router.push("portfolios/add-portfolio")}
           >
             <BsFillCloudPlusFill size={34} />

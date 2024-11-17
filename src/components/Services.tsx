@@ -90,8 +90,8 @@ export default function Services() {
             key={index}
             className={`rounded-full font-medium text-xs w-6 h-6 lg:text-lg lg:w-8 lg:h-8 ${
               active === character  
-                ? "bg-green-500 text-white"
-                : "text-green-500 bg-green-50 hover:bg-green-400 hover:text-white"
+                ? "bg-mastard-500 text-green-500"
+                : "text-green-500 bg-mastard-50 hover:bg-green-400 hover:text-white"
             }`}
             onClick={() => setActive(character)}
           >
@@ -117,7 +117,7 @@ export default function Services() {
       {page && (
         <button
           onClick={loadMore}
-          className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-3 px-5 border-white bg-green-600 active:bg-green-700 text-white  ml-auto"
+          className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-3 px-5 border-white bg-mastard-500 active:bg-mastard-600 text-green-500  ml-auto"
         >
           See more{" "}
           <svg

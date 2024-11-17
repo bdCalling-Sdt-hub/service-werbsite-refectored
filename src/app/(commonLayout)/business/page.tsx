@@ -89,7 +89,7 @@ export default function BusinessList({
           {page && (
             <button
               onClick={handleSeemore}
-              className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-3 px-5 border-white bg-green-600 text-white  mx-auto"
+              className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-3 px-5 border-white bg-mastard-500 text-green-500  mx-auto"
             >
               See more{" "}
               <svg

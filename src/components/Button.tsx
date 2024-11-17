@@ -101,7 +101,7 @@ export default function Bu({
   return (
     <button
       disabled={neededStar || isLoading}
-      className={`py-5 w-full bg-green-500 text-white rounded-xl disabled:bg-green-400 ${
+      className={`py-5 w-full bg-mastard-500 text-green-500 rounded-xl disabled:bg-green-400 ${
         isLoading ? "disabled:cursor-wait" : "disabled:cursor-not-allowed"
       }`}
       onClick={

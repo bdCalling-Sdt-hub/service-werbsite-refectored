@@ -251,7 +251,7 @@ export default function Header() {
                 )}
               </div>
             </div>
-            <button className="flex items-center gap-2 rounded-[3px] h-12 py-2 px-5 bg-[#efc000] text-green-500 font-semibold text-lg">
+            <button className="flex items-center gap-2 rounded-[3px] h-12 py-2 px-5 bg-mastard-500 text-green-500 font-semibold text-lg">
               Search{" "}
               {/* <svg
                 width="20"
