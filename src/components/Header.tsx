@@ -72,9 +72,7 @@ export default function Header() {
           />
         ))} */}
       </div>
-      <div
-        className="text-center py-24 flex flex-col items-center mx-auto custom-bg"
-      >
+      <div className="text-center py-24 flex flex-col items-center mx-auto custom-bg">
         <Image
           src="/BASP.png"
           alt="logo"
@@ -96,7 +94,7 @@ export default function Header() {
             onSubmit={handelSubmit}
           >
             <div className="flex flex-col lg:flex-row items-center text-black-500">
-              <div className="relative">
+              <div className="relative mb-1 lg:mb-0">
                 <input
                   type="text"
                   name="search"
@@ -118,7 +116,7 @@ export default function Header() {
                       message: "",
                     }));
                   }}
-                  className="lg:w-[391px] h-12 focus:outline-none p-3 rounded border-[#343333] border border-r-0 font-medium"
+                  className="w-[208px] lg:w-[391px] h-12 focus:outline-none p-3 rounded border-[#343333] border border-r-0 font-medium"
                   placeholder="What services are you looking for"
                 />
                 {searchActive && (
@@ -192,11 +190,26 @@ export default function Header() {
                         setFocus((c) => ({ ...c, postalCode: false }));
                       }, 300)
                     }
+                    onFocus={() =>
+                      setFocus((c) => ({ ...c, postalCode: true }))
+                    }
                     onChange={(e) => {
+                      if (
+                        e.target.value &&
+                        e.target.value.length < searchQuery?.postalCode.length
+                      ) {
+                        setAllAddress((c) => ({ ...c, postalCode: "" }));
+                        setSearchQuery((c) => ({
+                          ...c,
+                          postalCode: e.target.value,
+                        }));
+                        return;
+                      }
                       if (e.target.value && isNaN(Number(e.target.value)))
                         return;
 
-                      setFocus((c) => ({ ...c, postalCode: true }));
+                      if (e.target.value.length > 4) return;
+
                       setAllAddress((c) => ({ ...c, postalCode: "" }));
                       setSearchQuery((c) => ({
                         ...c,
