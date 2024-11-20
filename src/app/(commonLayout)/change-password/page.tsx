@@ -44,12 +44,14 @@ export default function Page({
           text: "New password and confirm password not matched",
         });
       }
+      const verifyToken = Cookies.get("verify-token");
       const token = Cookies.get("token");
       const res = await fetch(apiUrl + `users/${searchParams.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          Authorization:
+            "Bearer " + `${searchParams?.from === "nav" ? token : verifyToken}`,
         },
         body: JSON.stringify(credential),
       });
@@ -57,6 +59,7 @@ export default function Page({
       if (result.statusCode === 200) {
         setIsLoading(false);
         Cookies.set("token", JSON.stringify(null));
+        Cookies.set("verify-token", JSON.stringify(null));
         dispatch(setUser({ user: null, isLoading: false }));
         Swal.fire({
           icon: "success",

@@ -57,10 +57,10 @@ export default function Page() {
     phone: "",
     facebook: "",
     instagram: "",
-    accountNumber: "",
-    accountName: "",
-    bankName: "",
-    bsbNumber: "",
+    // accountNumber: "",
+    // accountName: "",
+    // bankName: "",
+    // bsbNumber: "",
   });
   const { data: serviceData } = useGetServicesesQuery([
     { name: "name", value: searchParams.main },
@@ -89,10 +89,10 @@ export default function Page() {
         license,
         phone,
         website,
-        accountNumber,
-        accountName,
-        bankName,
-        bsbNumber,
+        // accountNumber,
+        // accountName,
+        // bankName,
+        // bsbNumber,
       } = user?.business as TBusiness;
 
       setBusinessData({
@@ -109,10 +109,10 @@ export default function Page() {
         license: license || "",
         phone: phone || "",
         website: website || "",
-        accountNumber: accountNumber || "",
-        accountName: accountName || "",
-        bankName: bankName || "",
-        bsbNumber: bsbNumber || "",
+        // accountNumber: accountNumber || "",
+        // accountName: accountName || "",
+        // bankName: bankName || "",
+        // bsbNumber: bsbNumber || "",
       });
       setSearchParams({ main: mainService.name });
       setBusinessData((c) => c);
@@ -422,13 +422,6 @@ export default function Page() {
             />
           </div>
 
-
-
-
-
-
-
-
           <h3 className="text-xl font-medium col-span-2 -mb-4">
             Social media links
           </h3>
@@ -480,13 +473,6 @@ export default function Page() {
               className="h-12 focus:outline-none p-3 rounded border-[#343333] border mt-2"
             />
           </div>
-
-
-
-
-
-
-
 
           <div className="w-full col-span-2 flex flex-col">
             <h3 className="text-xl font-medium mb-4">Add your services</h3>

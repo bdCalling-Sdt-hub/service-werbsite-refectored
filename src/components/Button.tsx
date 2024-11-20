@@ -116,10 +116,10 @@ export default function Bu({
         ? currentSubscriptionId === id
           ? "Active"
           : neededStar
-          ? `Minimum need ${minimumStar} stars`
+          ? <span className="text-white font-normal">Minimum need ${minimumStar} stars</span>
           : "Upgrade"
         : neededStar
-        ? `Minimum need ${minimumStar} stars`
+        ? <span className="text-white font-normal">Minimum need ${minimumStar} stars</span>
         : "Get Started"}
     </button>
   );

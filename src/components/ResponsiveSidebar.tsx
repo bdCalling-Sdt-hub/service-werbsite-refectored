@@ -8,6 +8,7 @@ import { FaCloudArrowUp, FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
 import { HiMenuAlt3, HiOutlineSpeakerphone } from "react-icons/hi";
 import { IoMdArrowDropdown, IoMdNotificationsOutline } from "react-icons/io";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { MdCurrencyBitcoin, MdPreview } from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
 
@@ -54,6 +55,11 @@ const ResponsiveSidebar = () => {
       name: "Bids from Customers",
       icon: MdCurrencyBitcoin,
       path: "/dashboard/bits",
+    },
+    {
+      name: "Promotion",
+      icon: IoShieldCheckmarkOutline,
+      path: "/dashboard/promotion",
     },
     {
       name: "Account",

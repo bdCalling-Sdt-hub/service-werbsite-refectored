@@ -103,7 +103,7 @@ export default function Services() {
       {services?.length === 0 && (
         <p className="text-center w-full py-8">No services found</p>
       )}
-      <div className="my-8 grid grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 justify-between">
+      <div className="my-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-7 gap-3 md:gap-4 justify-between">
         {services.map((service) => (
           <ServiceCart
             key={service.id}

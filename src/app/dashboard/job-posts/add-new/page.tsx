@@ -4,12 +4,11 @@ import "react-quill/dist/quill.snow.css";
 import { CustomSpinner } from "@/components/CustomSpinner";
 import { usePostBitMutation } from "@/redux/features/bits/bitsApi";
 import Swal from "sweetalert2";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { selectCurrentUser } from "@/redux/features/users/authSlice";
 import { usePostJobMutation } from "@/redux/features/jobs/jobsApi";
-import { join } from "path";
+import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;

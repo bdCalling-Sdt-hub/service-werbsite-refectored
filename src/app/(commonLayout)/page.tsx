@@ -17,7 +17,9 @@ export default async function page() {
 
   const result = (await response.json()) as { data: any[] };
 
-  const benefit: { [key: string]: { image: string; header:string; benefits: string[] } } = {
+  const benefit: {
+    [key: string]: { image: string; header: string; benefits: string[] };
+  } = {
     customer: {
       image: "/customer.jpg",
       header: "Benefits for customers",
@@ -45,26 +47,29 @@ export default async function page() {
   const reviews = [
     {
       name: "Alice Williams",
-      review: "A fantastic platform! I was able to quickly find reliable service providers for my home repairs. The process was smooth, and the reviews helped me choose the best option. Highly recommended!",
-      rating: 5
+      review:
+        "A fantastic platform! I was able to quickly find reliable service providers for my home repairs. The process was smooth, and the reviews helped me choose the best option. Highly recommended!",
+      rating: 5,
     },
     {
       name: "James Carter",
-      review: "This website saved me so much time. I found multiple options for cleaning services in my area and could easily contact them through the platform. Very convenient!",
-      rating: 5
+      review:
+        "This website saved me so much time. I found multiple options for cleaning services in my area and could easily contact them through the platform. Very convenient!",
+      rating: 5,
     },
     {
       name: "Sophia Lee",
-      review: "Great experience! The website is user-friendly, and I could compare service providers before making a choice. Got in touch with a few providers, and the response was quick. Will definitely use it again.",
-      rating: 5
-    }
+      review:
+        "Great experience! The website is user-friendly, and I could compare service providers before making a choice. Got in touch with a few providers, and the response was quick. Will definitely use it again.",
+      rating: 5,
+    },
   ];
 
   return (
     <>
       <Header />
       <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 flex lg:flex-row flex-col justify-center gap-16">
-        {Object.keys(benefit).map((key,i) => (
+        {Object.keys(benefit).map((key, i) => (
           <div key={key} className="flex gap-5">
             <Image
               src={benefit[key as keyof typeof benefit].image}
@@ -74,7 +79,9 @@ export default async function page() {
               height={1000}
             />
             <div>
-              <h3 className="text-2xl lg:text-4xl font-semibold">{benefit[key as keyof typeof benefit].header}</h3>
+              <h3 className="text-2xl lg:text-4xl font-semibold">
+                {benefit[key as keyof typeof benefit].header}
+              </h3>
               <ul className="my-2 lg:my-5 lg:text-xl font-medium flex flex-col gap-3 ml-5">
                 {benefit[key as keyof typeof benefit].benefits.map(
                   (benefit, index) => (
@@ -88,7 +95,7 @@ export default async function page() {
                           className="h-5 w-5"
                         >
                           <path
-                            fill={i===0?"#efc000":"#2a5e74"}
+                            fill={i === 0 ? "#efc000" : "#2a5e74"}
                             d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"
                           ></path>
                         </svg>
@@ -104,7 +111,7 @@ export default async function page() {
       </section>
       <section className="lg:px-[150px] lg:py-[72px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
         <h2 className="uppercase font-semibold text-center text-2xl lg:text-5xl">
-        Top 3 service providers of last month
+          Top 3 service providers of last month
         </h2>
         <div className="mt-12 grid lg:grid-cols-3 gap-5">
           {result.data.map((business: any, index) => (
@@ -133,8 +140,12 @@ export default async function page() {
                     {generateStars(5)}
                     {`[${business._count?.reviews}]`}
                   </div>
-                  <p className="text-gray-600 text-sm lg:text-base">{business.user.email}</p>
-                  <p className="text-gray-600 text-sm lg:text-base">{business.mobile}</p>
+                  <p className="text-gray-600 text-sm lg:text-base">
+                    {business.user.email}
+                  </p>
+                  <p className="text-gray-600 text-sm lg:text-base">
+                    {business.mobile}
+                  </p>
                 </div>
               </div>
               <div className="absolute top-0 right-0 mt-2">
@@ -180,36 +191,40 @@ export default async function page() {
                 </svg>
               </div>
 
-              <p className="text-gray-700 mt-2 text-sm lg:text-base">{business.address}</p>
+              <p className="text-gray-700 mt-2 text-sm lg:text-base">
+                {business.address}
+              </p>
             </div>
           ))}
         </div>
       </section>
       <Services />
       <section className="lg:px-[150px] lg:py-[30px] px-2 py-4 pb-[156px] bg-yellow-100 flex flex-col items-center">
-        <h2 className="uppercase font-semibold text-3xl lg:text-5xl">Client Reviews</h2>
+        <h2 className="uppercase font-semibold text-3xl lg:text-5xl">
+          Client Reviews
+        </h2>
         <p className="font-Montserrat pt-4">
           Best Affordable services Provider
         </p>
-        <div className="grid lg:grid-cols-3 mt-12 w-full justify-between gap-8">
-          {reviews.map(({name,rating,review}, index) => (
-              <div key={index} className="bg-white rounded-2xl p-4 mx-auto">
-                <div className="flex items-center gap-3">
-                  <Image
-                    src="/busnessLogo.png"
-                    alt="placeholder"
-                    width={60}
-                    height={60}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <p className="font-medium text-lg">{name}</p>
-                    <div className="flex">{generateStars(rating)}</div>
-                  </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 mt-12 w-full justify-between gap-8">
+          {reviews.map(({ name, rating, review }, index) => (
+            <div key={index} className="bg-white rounded-2xl p-4 mx-auto">
+              <div className="flex items-center gap-3">
+                <Image
+                  src="/busnessLogo.png"
+                  alt="placeholder"
+                  width={60}
+                  height={60}
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="font-medium text-lg">{name}</p>
+                  <div className="flex">{generateStars(rating)}</div>
                 </div>
-                <p className="mt-3 text-sm text-slate-700">{review}</p>
               </div>
-            ))}
+              <p className="mt-3 text-sm text-slate-700">{review}</p>
+            </div>
+          ))}
         </div>
       </section>
     </>

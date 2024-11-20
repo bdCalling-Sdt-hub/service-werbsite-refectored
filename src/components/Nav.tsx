@@ -63,7 +63,7 @@ export default function Nav() {
                 ) : (
                   <Link
                     href="/register-business"
-                    className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 border-green-600 text-green-600 bg-green-50"
+                    className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 text-green-600 bg-mastard-500"
                   >
                     <span className="lg:block hidden">
                       Business Registration

@@ -57,9 +57,9 @@ function VerifyAccountPage() {
       const result = await res.json();
       if (res.ok) {
         setIsLoading(false);
-        Cookies.set("token", result.data.token);
         dispatch(setUser({ user: result.data?.user, isLoading: false }));
         if (window.location.hash === "#from-register") {
+          Cookies.set("token", result.data.token);
           if (result.data.user.type === "PROVIDER") {
             if (result.data.user.business) {
               router.push("/dashboard");
@@ -72,6 +72,7 @@ function VerifyAccountPage() {
             router.push("/profile");
           }
         } else {
+          Cookies.set("verify-token", result.data.token);
           router.push(`/change-password?id=${userId}`);
         }
       } else {
