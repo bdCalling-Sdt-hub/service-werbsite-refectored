@@ -195,8 +195,10 @@ export default function Header() {
                     }
                     onChange={(e) => {
                       if (
-                        e.target.value &&
-                        e.target.value.length < searchQuery?.postalCode.length
+                        (e.target.value &&
+                          e.target.value.length <
+                            searchQuery?.postalCode?.length) ||
+                        0
                       ) {
                         setAllAddress((c) => ({ ...c, postalCode: "" }));
                         setSearchQuery((c) => ({

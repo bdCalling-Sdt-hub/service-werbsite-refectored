@@ -3,14 +3,15 @@ import Link from "next/link";
 import BusinessContact from "./business/BusinessContact";
 import businessLogo from "@/assets/images/business-image.png";
 import generateStars from "./business/generateStar";
-import { RiCustomerService2Line } from "react-icons/ri";
+import { Tooltip } from "react-tooltip";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
 function BusinessCart({ data }: { data: { [key: string]: any } }) {
+  console.log(data.promotion);
   return (
-    <div className="p-4 lg:p-6 rounded-xl border-2 border-green-500 hover:bg-green-50 transition-all">
+    <div className="p-4 lg:p-6 rounded-xl border-2 border-green-500 hover:bg-green-50 transition-all relative">
       <div className="flex items-start gap-3">
         <Link href={"/business/" + data.id}>
           <div className="lg:w-32 w-20 h-full">
@@ -90,6 +91,17 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
           </Link>
         }
       </div>
+      {data.promotion && (
+        <div
+          className="absolute top-1 lg:top-2 left-1 lg:left-auto lg:right-2 text-center"
+          data-tooltip-id={data.id}
+          data-tooltip-content={data?.promotion?.title}
+        >
+          <Tooltip id={data.id} />
+          <h6 className="text-xl lg:text-3xl">{data?.promotion?.discount}%</h6>
+          <p className="hidden lg:block text-base">DISCOUNT</p>
+        </div>
+      )}
     </div>
   );
 }
