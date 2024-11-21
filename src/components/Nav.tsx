@@ -11,6 +11,8 @@ import profileDemo from "@/assets/images/profile-demo.jpg";
 import { MdOutlineLogout } from "react-icons/md";
 import { BsKey } from "react-icons/bs";
 import { LuUserCheck2 } from "react-icons/lu";
+import { RiArrowDownSLine } from "react-icons/ri";
+import { sidevarMenus } from "./ResponsiveSidebar";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
@@ -47,20 +49,70 @@ export default function Nav() {
           priority
         />
       </Link>
-
+      <div className="group">
+        <button className="lg:font-medium text-sm lg:text-base px-4">
+          Customer{" "}
+          <RiArrowDownSLine
+            size={19}
+            className="text-gray-300 group-hover:text-gray-400 mt-0.5 inline-block transition-all"
+          />
+        </button>
+        <div className="hidden group-hover:block absolute z-50 pt-5 lg:pt-6">
+          <div className="flex flex-col items-start gap-0.5 bg-white px-4 py-4 min-w-[150px] w-fit rounded shadow">
+            <Link
+              href="/jobs"
+              className="hover:text-blue-800 transition-all w-full py-1.5"
+            >
+              Jobs
+            </Link>
+            <Link
+              href="/add-bit-wallet"
+              className="hover:text-blue-800 transition-all w-full py-1.5"
+            >
+              Bid
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div
+        className=" group"
+        // onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <button className="text-sm lg:text-base lg:font-medium">
+          Service Provider{" "}
+          <RiArrowDownSLine
+            size={19}
+            className="text-gray-300 group-hover:text-gray-400 mt-0.5 inline-block transition-all"
+          />
+        </button>
+        <div className="hidden group-hover:block absolute z-50 pt-6">
+          <div className="flex flex-col items-start gap-0.5 bg-white px-4 py-4 min-w-[150px] w-fit rounded shadow">
+            {sidevarMenus.map((item, index) => (
+              <Link
+                key={index}
+                href={item.path}
+                className="hover:text-blue-800 transition-all w-full py-1.5"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
       {user ? (
         <div className="flex items-center gap-7">
           <ul className="flex items-center gap-7">
             {user.type === "PROVIDER" ? (
               <>
                 {user.business ? (
-                  <Link
-                    href="/dashboard"
-                    className="font-medium hover:text-green-400 transition-all lg:block hidden"
-                  >
-                    Dashboard
-                  </Link>
+                  <></>
                 ) : (
+                  // <Link
+                  //   href="/dashboard"
+                  //   className="font-medium hover:text-green-400 transition-all lg:block hidden"
+                  // >
+                  //   Dashboard
+                  // </Link>
                   <Link
                     href="/register-business"
                     className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 text-green-600 bg-mastard-500"
@@ -74,18 +126,18 @@ export default function Nav() {
               </>
             ) : (
               <>
-                <Link
+                {/* <Link
                   href="/jobs"
                   className="font-medium hover:text-green-400 transition-all lg:block hidden"
                 >
-                 Jobs
+                  Jobs
                 </Link>
                 <Link
                   href="/add-bit-wallet"
                   className="font-medium hover:text-green-400 transition-all lg:block hidden"
                 >
                   Bid
-                </Link>
+                </Link> */}
               </>
             )}
           </ul>
@@ -93,8 +145,9 @@ export default function Nav() {
             className="flex items-center justify-center gap-2 cursor-pointer"
             onClick={() => setIsOpen((prev) => !prev)}
           >
-            <p className="font-medium">{user.firstName}</p>
+            <p className="font-medium hidden lg:block">{user.firstName}</p>
             <svg
+              className="hidden lg:block"
               width="20"
               height="20"
               viewBox="0 0 20 20"
@@ -129,7 +182,7 @@ export default function Nav() {
             {isOpen ? (
               <ul
                 ref={containerRef}
-                className="absolute bg-gray-200 rounded-sm py-2 top-[68px] lg:top-[84px] right-0 cursor-default flex flex-col z-10 text-black max-w-72 w-full shadow-xl divide-y-[0.2px] divide-emerald-400"
+                className="absolute bg-gray-200 rounded-sm py-2 top-[66px] lg:top-[74px] right-0 cursor-default flex flex-col z-10 text-black max-w-72 w-full shadow-xl divide-y-[0.2px] divide-emerald-400"
               >
                 <li
                   className="py-4 px-4 hover:text-green-500 hover:bg-gray-100 cursor-pointer flex justify-start items-center whitespace-pre gap-4 text-lg font-medium"
@@ -193,42 +246,11 @@ export default function Nav() {
             className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3 bg-mastard-500"
           >
             Login{" "}
-            {/* <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
-                stroke="#05763A"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg> */}
           </Link>
           <Link
             href="/register?provider=true"
             className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-2 px-3  bg-mastard-500"
           >
-            {/* <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 9C11.6569 9 13 7.65685 13 6C13 4.34315 11.6569 3 10 3C8.34315 3 7 4.34315 7 6C7 7.65685 8.34315 9 10 9Z"
-                fill="#058240"
-              />
-              <path
-                d="M3 18C3 14.134 6.13401 11 10 11C13.866 11 17 14.134 17 18H3Z"
-                fill="#058240"
-              />
-            </svg> */}
             <span className="lg:block hidden">Join as a Professional</span>
             <span className="lg:hidden block">Join</span>
           </Link>

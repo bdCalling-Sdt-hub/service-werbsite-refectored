@@ -12,6 +12,53 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { MdCurrencyBitcoin, MdPreview } from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
 
+export const sidevarMenus: TSideItem[] = [
+  {
+    name: "Business Information",
+    icon: RiDashboard2Line,
+    path: "/dashboard",
+  },
+  {
+    name: "Portfolios",
+    icon: FaUserTie,
+    path: "/dashboard/portfolios",
+  },
+  {
+    name: "Notification",
+    icon: IoMdNotificationsOutline,
+    path: "/dashboard/notification",
+  },
+  {
+    name: "Review & Rating",
+    icon: MdPreview,
+    path: "/dashboard/review-rating",
+  },
+  {
+    name: "Upgrade Plan",
+    icon: FaCloudArrowUp,
+    path: "/dashboard/upgrade-plane",
+  },
+  {
+    name: "Job Posts",
+    icon: HiOutlineSpeakerphone,
+    path: "/dashboard/job-posts",
+  },
+  {
+    name: "Bids from Customers",
+    icon: MdCurrencyBitcoin,
+    path: "/dashboard/bits",
+  },
+  {
+    name: "Promotion",
+    icon: IoShieldCheckmarkOutline,
+    path: "/dashboard/promotion",
+  },
+  {
+    name: "Account",
+    icon: GrMoney,
+    path: "/dashboard/account",
+  },
+];
 const ResponsiveSidebar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [toggle, setToggle] = useState<{ [key: string]: string }>({});
@@ -20,53 +67,7 @@ const ResponsiveSidebar = () => {
     setOpenDrawer(!openDrawer);
     setToggle({});
   };
-  const menus: TSideItem[] = [
-    {
-      name: "Business Information",
-      icon: RiDashboard2Line,
-      path: "/dashboard",
-    },
-    {
-      name: "Portfolios",
-      icon: FaUserTie,
-      path: "/dashboard/portfolios",
-    },
-    {
-      name: "Notification",
-      icon: IoMdNotificationsOutline,
-      path: "/dashboard/notification",
-    },
-    {
-      name: "Review & Rating",
-      icon: MdPreview,
-      path: "/dashboard/review-rating",
-    },
-    {
-      name: "Upgrade Plan",
-      icon: FaCloudArrowUp,
-      path: "/dashboard/upgrade-plane",
-    },
-    {
-      name: "Job Posts",
-      icon: HiOutlineSpeakerphone,
-      path: "/dashboard/job-posts",
-    },
-    {
-      name: "Bids from Customers",
-      icon: MdCurrencyBitcoin,
-      path: "/dashboard/bits",
-    },
-    {
-      name: "Promotion",
-      icon: IoShieldCheckmarkOutline,
-      path: "/dashboard/promotion",
-    },
-    {
-      name: "Account",
-      icon: GrMoney,
-      path: "/dashboard/account",
-    },
-  ];
+
   return (
     <div className="">
       {/* main content overlay */}
@@ -90,7 +91,7 @@ const ResponsiveSidebar = () => {
           </button>
         </div>
         <div className="w-full flex flex-col gap-y-1 mt-4 relative">
-          {menus.map(({ childrens, name, icon, path }, index) => (
+          {sidevarMenus.map(({ childrens, name, icon, path }, index) => (
             <div
               key={index}
               className={`lg:text-lg font-medium rounded select-none relative lg:overflow-hidden`}
