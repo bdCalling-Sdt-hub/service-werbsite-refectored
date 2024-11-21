@@ -126,7 +126,7 @@ export default function Page({
           />
           {!isProvider && (
             <div className="relative col-span-2 lg:col-span-1">
-              <span className="absolute left-2 top-4 font-semibold">+61</span>
+              <span className="absolute left-2 top-4">+61</span>
               <input
                 type="tel"
                 placeholder="Mobile"

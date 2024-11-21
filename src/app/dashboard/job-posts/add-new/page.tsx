@@ -94,6 +94,7 @@ export default function AddJob() {
           <div className="grid grid-cols-10 gap-4 items-center">
             <label className="col-span-2">Phone : </label>
             <div className="relative col-span-8">
+              <span className="absolute left-2.5 w-fit inset-0 flex items-center">+61</span>
               <input
                 type="text"
                 name="phone"
@@ -105,7 +106,7 @@ export default function AddJob() {
                 // }}
                 // value={searchQuery?.postalCode || ""}
                 required
-                className="p-3 w-full border border-black-500 rounded"
+                className="pl-10 p-3 w-full border border-black-500 rounded"
               />
             </div>
           </div>

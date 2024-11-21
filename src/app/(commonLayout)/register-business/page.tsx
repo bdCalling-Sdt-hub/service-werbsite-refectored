@@ -69,7 +69,7 @@ export default function Page() {
         return;
       }
 
-      if(!allAddress.latitude || !allAddress.longitude){
+      if (!allAddress.latitude || !allAddress.longitude) {
         Swal.fire({
           icon: "error",
           text: "Please select a valid address from Street Address drop down.",
@@ -236,31 +236,41 @@ export default function Page() {
             }
             className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
           />
-          <input
-            type="text"
-            name="mobile"
-            placeholder="Business Mobile"
-            autoComplete="off"
-            value={businessData.mobile}
-            onChange={(e) => {
-              if (e.target.value && isNaN(Number(e.target.value))) return;
-              setBusinessData({ ...businessData, mobile: e.target.value });
-            }}
-            required
-            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Business Phone (Optional)"
-            autoComplete="off"
-            value={businessData.phone}
-            onChange={(e) => {
-              if (e.target.value && isNaN(Number(e.target.value))) return;
-              setBusinessData({ ...businessData, phone: e.target.value });
-            }}
-            className="mt-1 p-3 w-full border border-black-500 rounded placeholder:text-black"
-          />
+          <div className="relative mt-1 ">
+            <span className="absolute left-2.5 inset-0 flex items-center w-fit">
+              +61
+            </span>
+            <input
+              type="tel"
+              name="mobile"
+              placeholder="Business Mobile"
+              autoComplete="off"
+              value={businessData.mobile}
+              onChange={(e) => {
+                if (e.target.value && isNaN(Number(e.target.value))) return;
+                setBusinessData({ ...businessData, mobile: e.target.value });
+              }}
+              required
+              className="pl-10 p-3 w-full border border-black-500 rounded placeholder:text-black"
+            />
+          </div>
+          <div className="relative mt-1 ">
+            <span className="absolute left-2.5 inset-0 flex items-center w-fit">
+              +61
+            </span>
+            <input
+              type="text"
+              name="phone"
+              placeholder="Business Phone (Optional)"
+              autoComplete="off"
+              value={businessData.phone}
+              onChange={(e) => {
+                if (e.target.value && isNaN(Number(e.target.value))) return;
+                setBusinessData({ ...businessData, phone: e.target.value });
+              }}
+              className="pl-10 p-3 w-full border border-black-500 rounded placeholder:text-black"
+            />
+          </div>
           <h3 className="text-xl font-medium">Business Address</h3>
           <GooglePlaceAddress
             allAddress={allAddress}

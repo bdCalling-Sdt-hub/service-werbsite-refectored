@@ -80,7 +80,7 @@ function BusinessDetails({
               />
             </svg>
             <a
-              href={"tel:" + businesDetails?.phone}
+              href={"tel:+61" + businesDetails?.phone}
               target="_blank"
               className="line-clamp-1"
             >

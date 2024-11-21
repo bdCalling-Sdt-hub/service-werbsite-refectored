@@ -33,7 +33,7 @@ const BitCard = ({ data }: { data: TBit }) => {
           <p>
             {communicationPreference === "call" ? "Phone" : "Email"} :
             {communicationPreference === "call" ? (
-              <a href={`tel:${user.mobile}`} className="hover:text-blue-500">
+              <a href={`tel:+61${user.mobile}`} className="hover:text-blue-500">
                 {" "}
                 {user.mobile}
               </a>

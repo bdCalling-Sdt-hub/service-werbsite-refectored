@@ -72,7 +72,7 @@ export default function BusinessContact({
       confirmButtonText: "📞 Call",
     }).then((result) => {
       if (result.isConfirmed) {
-        window.open(`tel:+880 1837551821`);
+        window.open(`tel:+61${number}`);
       }
     });
   }

@@ -159,8 +159,9 @@ export default function Page() {
               placeholder="Email"
             />
           </div>
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col relative">
             <label className="font-medium text-black-500">Mobile Number</label>
+            <span className="absolute left-2.5 top-11">+61</span>
             <input
               type="text"
               name="mobile"
@@ -168,7 +169,7 @@ export default function Page() {
               onChange={(e) =>
                 setUserData({ ...userData, mobile: e.target.value })
               }
-              className="h-12 focus:outline-none p-3 rounded border-[#343333] border font-medium mt-2"
+              className="h-12 focus:outline-none pl-10 p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Your Number"
             />
           </div>
