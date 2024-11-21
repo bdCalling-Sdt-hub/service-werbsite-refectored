@@ -36,7 +36,18 @@ export type TBusiness = {
   bankName?: string;
   bsbNumber?: string;
   payments?: Array<any>;
+  Promotions?: Array<{
+    id: string;
+    title: string;
+    discount: number;
+    startAt: string;
+    endAt: string;
+    isVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }>;
 };
+
 export type TUser = {
   id: string;
   firstName: string;

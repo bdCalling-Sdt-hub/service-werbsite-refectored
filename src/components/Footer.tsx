@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mt-28 bg-green-900 py-[76px] lg:px-36 px-8 grid lg:grid-cols-5 lg:gap-36 gap-8 text-white">
+    <footer className="mt-28 bg-[#285c72] py-[76px] lg:px-36 px-8 grid lg:grid-cols-5 lg:gap-36 gap-8 text-white">
       <div>
         <Image
           src="/LOGO.png"
