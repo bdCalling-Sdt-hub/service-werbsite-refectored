@@ -84,7 +84,7 @@ const Promotion = () => {
   return (
     <div className="min-h-[90vh]">
       <div className="px-[32px] py-[32px] border-b border-[#b7b6b6c9] flex justify-between items-center">
-        <PageHeading title={"Promotion List"} backPath="/dashboard" />
+        <PageHeading title={"Promotion"} backPath="/dashboard" />
       </div>
 
       {user?.business?.Promotions && user?.business?.Promotions.length > 0 ? (
@@ -162,7 +162,10 @@ const Promotion = () => {
               </div>
             </div>
             <div className="grid grid-cols-10 gap-4 items-center">
-              <label className="col-span-2">Start Date </label>
+              <label className="col-span-2">
+                Start Date <br />
+                (optional){" "}
+              </label>
               <div className="relative col-span-8">
                 <input
                   type="date"
@@ -174,7 +177,6 @@ const Promotion = () => {
                     }));
                   }}
                   autoComplete="off"
-                  required
                   className="p-3 w-full border border-black-500 rounded"
                 />
               </div>
@@ -198,12 +200,12 @@ const Promotion = () => {
               </div>
             </div>
             <div className="grid grid-cols-10 gap-4 items-center">
-              <label className="col-span-2">Discount </label>
+              <label className="col-span-2">Discount</label>
               <div className="relative col-span-8">
                 <input
                   type="text"
                   name="discount"
-                  placeholder="12.22"
+                  placeholder="Discount"
                   value={promotionData?.discount || ""}
                   onChange={(e) => {
                     if (
