@@ -59,6 +59,7 @@ export const sidevarMenus: TSideItem[] = [
     path: "/dashboard/account",
   },
 ];
+
 const ResponsiveSidebar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [toggle, setToggle] = useState<{ [key: string]: string }>({});

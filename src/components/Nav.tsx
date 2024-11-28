@@ -37,6 +37,7 @@ export default function Nav() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
   return (
     <nav className=" select-none flex items-center justify-between lg:px-10 lg:py-[12px] px-2 py-2 fixed z-30 w-full bg-slate-100 shadow-lg">
       <Link href="/">
@@ -51,7 +52,7 @@ export default function Nav() {
       </Link>
       <div className="group">
         <button className="lg:font-medium text-sm lg:text-base px-4">
-          Customer{" "}
+          For Customers{" "}
           <RiArrowDownSLine
             size={19}
             className="text-gray-300 group-hover:text-gray-400 mt-0.5 inline-block transition-all"
@@ -59,12 +60,6 @@ export default function Nav() {
         </button>
         <div className="hidden group-hover:block absolute z-50 pt-5 lg:pt-6">
           <div className="flex flex-col items-start gap-0.5 bg-white px-4 py-4 min-w-[150px] w-fit rounded shadow">
-            <Link
-              href="/jobs"
-              className="hover:text-blue-800 transition-all w-full py-1.5"
-            >
-              Jobs
-            </Link>
             <Link
               href="/add-bit-wallet"
               className="hover:text-blue-800 transition-all w-full py-1.5"
@@ -79,7 +74,7 @@ export default function Nav() {
         // onClick={() => setIsOpen((prev) => !prev)}
       >
         <button className="text-sm lg:text-base lg:font-medium">
-          Service Provider{" "}
+          For Service Provider{" "}
           <RiArrowDownSLine
             size={19}
             className="text-gray-300 group-hover:text-gray-400 mt-0.5 inline-block transition-all"
@@ -87,7 +82,10 @@ export default function Nav() {
         </button>
         <div className="hidden group-hover:block absolute z-50 pt-6">
           <div className="flex flex-col items-start gap-0.5 bg-white px-4 py-4 min-w-[150px] w-fit rounded shadow">
-            {sidevarMenus.map((item, index) => (
+            {[
+              { name: "Dashboard", path: "/dashboard" },
+              { name: "Plans", path: "/dashboard/upgrade-plane" },
+            ].map((item, index) => (
               <Link
                 key={index}
                 href={item.path}
@@ -98,6 +96,11 @@ export default function Nav() {
             ))}
           </div>
         </div>
+      </div>
+      <div>
+        <Link href="/jobs" className="font-medium">
+          Search Jobs
+        </Link>
       </div>
       {user ? (
         <div className="flex items-center gap-7">
