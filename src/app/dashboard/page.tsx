@@ -376,9 +376,11 @@ export default function Page() {
                 name="mobile"
                 placeholder="Business Mobile"
                 value={businessData.mobile}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, mobile: e.target.value })
-                }
+                onChange={(e) => {
+                  if (e.target.value && isNaN(Number(e.target.value))) return;
+                  setBusinessData({ ...businessData, mobile: e.target.value });
+                }}
+                maxLength={9}
                 required
                 className="h-12 focus:outline-none pl-10 p-3 rounded border-[#343333] border font-medium mt-2"
               />
@@ -393,9 +395,10 @@ export default function Page() {
                 name="phone"
                 placeholder="Business Phone"
                 value={businessData.phone}
-                onChange={(e) =>
-                  setBusinessData({ ...businessData, phone: e.target.value })
-                }
+                onChange={(e) => {
+                  setBusinessData({ ...businessData, phone: e.target.value });
+                }}
+                maxLength={9}
                 className="h-12 focus:outline-none pl-11 p-3 rounded border-[#343333] border font-medium mt-2"
               />
             </div>

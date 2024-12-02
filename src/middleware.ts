@@ -8,6 +8,7 @@ export default function middleware(req: any) {
   const isLoggedIn = req.cookies.get("token")?.value as string;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
+  // console.log({arguments, isAuthRoute, isLoggedIn });
   // If user exists redirect to `/home`
   if (isAuthRoute && isLoggedIn) {
     const data = isLoggedIn.split(".");
@@ -23,8 +24,7 @@ export default function middleware(req: any) {
     } catch (error) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
-
-    if(payload.type==="CUSTOMER" && nextUrl.pathname.includes("dashboard")){ 
+    if (payload.type === "CUSTOMER" && nextUrl.pathname.includes("dashboard")) {
       return NextResponse.redirect(new URL("/profile", req.url));
     }
 
@@ -38,5 +38,5 @@ export default function middleware(req: any) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:paths*", "/jobs", "/add-bit-wallet"],
+  matcher: ["/dashboard", "/dashboard/:paths*", "/jobs", "/add-bit-wallet"],
 };

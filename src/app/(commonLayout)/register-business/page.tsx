@@ -250,6 +250,7 @@ export default function Page() {
                 if (e.target.value && isNaN(Number(e.target.value))) return;
                 setBusinessData({ ...businessData, mobile: e.target.value });
               }}
+              maxLength={9}
               required
               className="pl-10 p-3 w-full border border-black-500 rounded placeholder:text-black"
             />
@@ -268,6 +269,7 @@ export default function Page() {
                 if (e.target.value && isNaN(Number(e.target.value))) return;
                 setBusinessData({ ...businessData, phone: e.target.value });
               }}
+              maxLength={9}
               className="pl-10 p-3 w-full border border-black-500 rounded placeholder:text-black"
             />
           </div>

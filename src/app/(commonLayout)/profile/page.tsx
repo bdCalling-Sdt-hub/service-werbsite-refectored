@@ -166,14 +166,15 @@ export default function Page() {
               type="text"
               name="mobile"
               value={userData.mobile ?? ""}
-              onChange={(e) =>
-                setUserData({ ...userData, mobile: e.target.value })
-              }
+              onChange={(e) => {
+                if (e.target.value && isNaN(Number(e.target.value))) return;
+                setUserData({ ...userData, mobile: e.target.value });
+              }}
+              maxLength={9}
               className="h-12 focus:outline-none pl-10 p-3 rounded border-[#343333] border font-medium mt-2"
               placeholder="Your Number"
             />
           </div>
-       
         </div>
         <div className="mt-3 flex justify-center lg:justify-start">
           <button
