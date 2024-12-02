@@ -24,9 +24,9 @@ export default function middleware(req: any) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // if(payload.type==="CUSTOMER"){
-      
-    // }
+    if(payload.type==="CUSTOMER" && nextUrl.pathname.includes("dashboard")){ 
+      return NextResponse.redirect(new URL("/profile", req.url));
+    }
 
     return NextResponse.redirect(new URL("/", req.url));
   }

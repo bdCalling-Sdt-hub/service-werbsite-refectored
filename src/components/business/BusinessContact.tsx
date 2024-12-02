@@ -26,7 +26,7 @@ export default function BusinessContact({
   const [modal, setModal] = useState(false);
   const handleModalClose = () => {
     setModal((prev) => !prev);
-    router.push(currentPath+location.search);
+    router.push(currentPath + location.search);
   };
   const { user } = useAppSelector((state) => state.auth);
   async function handelSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -48,8 +48,7 @@ export default function BusinessContact({
         handleModalClose();
         Swal.fire({
           icon: "error",
-          text: "Internal Server Error!!",
-          // text: res.error?.data.message ,
+          text: (res.error as any).data.message,
         });
       }
     } catch (error) {
