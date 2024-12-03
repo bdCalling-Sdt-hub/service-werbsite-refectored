@@ -126,12 +126,16 @@ export default function Page({
           />
           {!isProvider && (
             <div className="relative col-span-2 lg:col-span-1">
-              <span className="absolute left-2 top-4">+61</span>
+              <span className="absolute left-2.5 top-4">+61</span>
               <input
                 type="tel"
                 placeholder="Mobile"
                 value={data.mobile}
-                onChange={(e) => setData({ ...data, mobile: e.target.value })}
+                onChange={(e) => {
+                  if (e.target.value && isNaN(Number(e.target.value))) return;
+                  setData({ ...data, mobile: e.target.value });
+                }}
+                maxLength={9}
                 required
                 className="mt-1 p-3 w-full border border-black-500 rounded pl-10"
               />
