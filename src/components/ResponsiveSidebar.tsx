@@ -34,6 +34,11 @@ export const sidevarMenus: TSideItem[] = [
     path: "/dashboard/review-rating",
   },
   {
+    name: "Referrals",
+    icon: MdPreview,
+    path: "/dashboard/referrals",
+  },
+  {
     name: "Upgrade Plan",
     icon: FaCloudArrowUp,
     path: "/dashboard/upgrade-plane",
