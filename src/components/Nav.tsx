@@ -21,8 +21,10 @@ export default function Nav() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isMobileOpen, setIsMobileOpen] = React.useState(false);
   const { user } = useAppSelector((state) => state.auth);
   const containerRef = useRef<any>(null);
+  const mobileRef = useRef<any>(null);
   const handleOutsideClick = (e: any) => {
     if (
       containerRef.current &&
@@ -31,6 +33,20 @@ export default function Nav() {
       setIsOpen(false);
     }
   };
+  const handleOutsideClickForMobile = (e: any) => {
+    if (
+      mobileRef.current &&
+      !mobileRef.current.contains(e.target as Node)
+    ) {
+      setIsMobileOpen(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClickForMobile);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClickForMobile);
+    };
+  }, []);
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
@@ -320,7 +336,7 @@ export default function Nav() {
           </ul>
           <div
             className="flex items-center justify-center gap-2 cursor-pointer"
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={() => setIsMobileOpen((prev) => !prev)}
           >
             <p className="font-medium hidden lg:block">{user.firstName}</p>
             <svg
@@ -331,7 +347,7 @@ export default function Nav() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {isOpen ? (
+              {isMobileOpen ? (
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -356,9 +372,9 @@ export default function Nav() {
                 className="rounded-full w-full h-full select-none object-cover"
               />
             </div>
-            {isOpen ? (
+            {isMobileOpen ? (
               <ul
-                ref={containerRef}
+                ref={mobileRef}
                 className="absolute bg-gray-200 rounded-sm py-2 top-[66px] lg:top-[74px] right-0 cursor-default flex flex-col z-10 text-black max-w-72 w-full shadow-xl divide-y-[0.2px] divide-emerald-400"
               >
                 <li
