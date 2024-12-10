@@ -219,21 +219,6 @@ export default function BusinessList() {
           </div>
           <button className="flex items-center gap-2 rounded-[3px] h-12 py-2 px-5 bg-mastard-500 text-green-500 font-semibold text-lg">
             Search{" "}
-            {/* <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
-                  stroke="#FFFFFF"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg> */}
           </button>
         </form>
         {searchQuery?.message && (
@@ -255,46 +240,6 @@ export default function BusinessList() {
       ) : (
         <h2 className="text-2xl font-medium text-center mt-8">No services found</h2>
       )}
-      {/* <h1 className="text-lg lg:text-2xl ">
-        Search result for{" "}
-        <span className="font-medium">{searchParams.service_name}</span> in{" "}
-        <span className="font-medium">{searchParams.suburb}</span>.
-      </h1>
-      <LoaderWraperComp
-        isLoading={isLoading}
-        isError={isError}
-        height="h-[80vh]"
-        dataEmpty={business?.length < 1}
-      >
-        <section className="flex flex-col gap-8 mt-5">
-          {business.map((singleBusines, indx) => (
-            <BusinessCart key={indx} data={singleBusines} />
-          ))}
-          {page && (
-            <button
-              onClick={handleSeemore}
-              className="flex items-center gap-2 rounded-t-[3px] border-[.5px] border-b-2 py-3 px-5 border-white bg-mastard-500 text-green-500  mx-auto"
-            >
-              See more{" "}
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3.75 16.25L16.25 3.75M16.25 3.75H6.875M16.25 3.75V13.125"
-                  stroke="#FFFFFF"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          )}
-        </section>
-      </LoaderWraperComp> */}
     </div>
   );
 }
