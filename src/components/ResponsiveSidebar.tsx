@@ -11,6 +11,7 @@ import { IoMdArrowDropdown, IoMdNotificationsOutline } from "react-icons/io";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { MdCurrencyBitcoin, MdPreview } from "react-icons/md";
 import { RiDashboard2Line } from "react-icons/ri";
+import { RiUserReceivedLine } from "react-icons/ri";
 
 export const sidevarMenus: TSideItem[] = [
   {
@@ -35,7 +36,7 @@ export const sidevarMenus: TSideItem[] = [
   },
   {
     name: "Referrals",
-    icon: MdPreview,
+    icon: RiUserReceivedLine,
     path: "/dashboard/referrals",
   },
   {
