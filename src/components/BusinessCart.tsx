@@ -8,7 +8,13 @@ import { Tooltip } from "react-tooltip";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 if (!apiUrl) throw new Error("API URL is not defined");
 
-function BusinessCart({ data }: { data: { [key: string]: any } }) {
+function BusinessCart({
+  data,
+  refer = false,
+}: {
+  data: { [key: string]: any };
+  refer?: boolean;
+}) {
   console.log(data.promotion);
   return (
     <div className="p-4 lg:p-6 rounded-xl border-2 border-green-500 hover:bg-green-50 transition-all relative">
@@ -78,18 +84,25 @@ function BusinessCart({ data }: { data: { [key: string]: any } }) {
         </div>
       </div>
       <div className="flex gap-2 lg:gap-4 items-center mt-4">
-        <BusinessContact
-          email={data?.user?.email}
-          number={data.mobile}
-          businessId={data.id}
-        />
-        {
-          <Link href={`/business/${data.id}`}>
-            <button className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 rounded-md text-green-500 lg:text-base text-xs">
-              See more...
-            </button>
-          </Link>
-        }
+        {refer ? (
+          <button className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 rounded-md text-green-500 lg:text-base text-xs">
+            Refer
+          </button>
+        ) : (
+          <>
+            <BusinessContact
+              email={data?.user?.email}
+              number={data.mobile}
+              businessId={data.id}
+            />
+
+            <Link href={`/business/${data.id}`}>
+              <button className="flex items-center justify-center gap-1 lg:gap-2 px-4 py-2 lg:px-8 lg:py-3 bg-mastard-500 rounded-md text-green-500 lg:text-base text-xs">
+                See more...
+              </button>
+            </Link>
+          </>
+        )}
       </div>
       {data.promotion && (
         <div
