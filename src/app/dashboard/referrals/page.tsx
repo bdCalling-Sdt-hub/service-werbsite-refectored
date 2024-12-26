@@ -47,7 +47,7 @@ export default function Page() {
               { businessId, email, id, name, phone, userId, user, createdAt },
               index
             ) => (
-                <div key={index} className="border-b border-gray-300 py-4">
+              <div key={index} className="border-b border-gray-300 py-4">
                 <div className="flex items-center gap-4">
                   <Image
                     src={user.image ? apiUrl + "/" + user.image : "/user.png"}
@@ -61,11 +61,11 @@ export default function Page() {
                       {user.firstName} {user.lastName}
                     </p>
                     <p className="text-sm text-gray-500">
-                      <span className="font-medium">Joined On:</span> {new Date(createdAt).toLocaleDateString()}
+                      {new Date(createdAt).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
-              
+
                 <div className="mt-4 ml-14 p-4 border border-gray-300 rounded-lg bg-gray-50">
                   <h6 className="text-2xl font-medium text-gray-900 border-b pb-2 mb-3">
                     Referred Customer
